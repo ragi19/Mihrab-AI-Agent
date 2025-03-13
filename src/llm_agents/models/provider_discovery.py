@@ -2,13 +2,14 @@
 Provider discovery and automatic registration
 """
 
-import os
 import importlib
+import os
 import pkgutil
-from typing import Dict, Type, List, Optional
-from .providers.base import BaseProvider
-from .provider_registry import ProviderRegistry
+from typing import Dict, List, Optional, Type
+
 from ..utils.logging import get_logger
+from .provider_registry import ProviderRegistry
+from .providers.base import BaseProvider
 
 logger = get_logger("models.provider_discovery")
 

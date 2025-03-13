@@ -10,12 +10,12 @@ This example demonstrates sophisticated handoff patterns including:
 """
 
 import asyncio
-import os
 import logging
-import sys
+import os
 import re
-from typing import Dict, Any, List, Optional, Callable, Tuple, Union
+import sys
 from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 # Configure logging
 logging.basicConfig(
@@ -23,14 +23,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Import required modules
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.models.base import ModelCapability
 from llm_agents.core.memory import Memory
 from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.runtime.memory_runner import MemoryAgentRunner
 from llm_agents.core.message import Message, MessageRole
-from llm_agents.tools.standard import CalculatorTool, DateTimeTool
 from llm_agents.core.task_agent import ToolConfig
 
 # Import handoff components
@@ -38,11 +33,17 @@ from llm_agents.handoff import (
     HandoffAgent,
     HandoffConfig,
     HandoffInputData,
-    preserve_user_messages_only,
-    summarize_previous_responses,
-    remove_sensitive_information,
     preserve_context,
+    preserve_user_messages_only,
+    remove_sensitive_information,
+    summarize_previous_responses,
 )
+from llm_agents.models.base import ModelCapability
+
+# Import required modules
+from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from llm_agents.runtime.memory_runner import MemoryAgentRunner
+from llm_agents.tools.standard import CalculatorTool, DateTimeTool
 
 
 # Handoff conditions

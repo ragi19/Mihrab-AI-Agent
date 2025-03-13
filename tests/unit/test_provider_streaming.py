@@ -2,8 +2,10 @@
 Tests for provider streaming capabilities
 """
 
-import pytest
 from unittest.mock import AsyncMock, patch
+
+import pytest
+
 from llm_agents.core.message import Message, MessageRole
 from llm_agents.models import ModelCapability
 from llm_agents.models.providers.anthropic import ClaudeProvider

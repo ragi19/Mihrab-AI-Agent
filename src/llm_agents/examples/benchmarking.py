@@ -3,13 +3,15 @@ Example of benchmarking and profiling different models in the LLM Agents framewo
 """
 
 import asyncio
+import json
 import os
 import time
-import json
 from datetime import datetime
-from typing import Dict, List, Any
+from typing import Any, Dict, List
+
 from dotenv import load_dotenv
-from llm_agents import create_agent, Message, MessageRole
+
+from llm_agents import Message, MessageRole, create_agent
 from llm_agents.models.base import ModelCapability
 
 # Load environment variables from .env file

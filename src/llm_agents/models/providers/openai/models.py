@@ -2,11 +2,13 @@
 OpenAI model implementations
 """
 
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
+
 from openai import AsyncOpenAI
+
 from ....core.message import Message, MessageRole
-from ...base import BaseModel
 from ....core.types import ModelParameters
+from ...base import BaseModel
 
 
 class GPTModel(BaseModel):

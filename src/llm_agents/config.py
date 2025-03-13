@@ -5,7 +5,8 @@ Configuration management for the framework
 import json
 import os
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
 from .utils.logging import setup_logging
 
 

@@ -4,9 +4,9 @@ Example script demonstrating how to use the multi-agent system with tools.
 This example shows how to incorporate tools like the calculator into the multi-agent system.
 """
 import asyncio
-import os
 import logging
-from typing import Dict, Any, List, Optional
+import os
+from typing import Any, Dict, List, Optional
 
 # Configure logging
 logging.basicConfig(
@@ -14,14 +14,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Import required modules
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.models.base import ModelCapability
 from llm_agents.core.memory import Memory
 from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.runtime.memory_runner import MemoryAgentRunner
 from llm_agents.core.message import Message, MessageRole
 from llm_agents.core.task_agent import ToolConfig
+from llm_agents.models.base import ModelCapability
+
+# Import required modules
+from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from llm_agents.runtime.memory_runner import MemoryAgentRunner
 from llm_agents.tools.standard import CalculatorTool, DateTimeTool
 
 

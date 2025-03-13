@@ -4,11 +4,12 @@ Anthropic provider implementation
 
 from typing import Dict, List, Optional
 
-from llm_agents.core.message import Message
-from llm_agents.models.base import BaseModel
-from llm_agents.utils.tracing import TraceProvider, Span
-from llm_agents.core.types import ModelParameters
 import anthropic
+
+from llm_agents.core.message import Message
+from llm_agents.core.types import ModelParameters
+from llm_agents.models.base import BaseModel
+from llm_agents.utils.tracing import Span, TraceProvider
 
 
 class AnthropicProvider:

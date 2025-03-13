@@ -2,11 +2,12 @@
 Factory functions for creating agents and models
 """
 
-from typing import Optional, Dict, Any
-from .models.provider_registry import ProviderRegistry
+from typing import Any, Dict, Optional
+
+from .config import config
 from .core.agent import Agent
 from .core.chat_agent import ChatAgent
-from .config import config
+from .models.provider_registry import ProviderRegistry
 
 
 async def create_agent(

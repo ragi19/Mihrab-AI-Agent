@@ -2,14 +2,15 @@
 Agent runner implementation for managing agent execution
 """
 
-from typing import List, Optional, Dict, Any, Callable, Awaitable
 import asyncio
 import time
+from typing import Any, Awaitable, Callable, Dict, List, Optional
+
 from ..core.agent import Agent
 from ..core.message import Message
-from .context import RuntimeContext
 from ..utils.logging import get_logger
-from ..utils.tracing import TraceProvider, Trace
+from ..utils.tracing import Trace, TraceProvider
+from .context import RuntimeContext
 
 
 class AgentRunner:

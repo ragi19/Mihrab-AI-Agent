@@ -3,11 +3,12 @@ Base provider interface definition
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional, Type, Set
-from ..base import BaseModel, ModelError
-from ..types import ModelConfig, ModelInfo
+from typing import Any, Dict, Optional, Set, Type
+
 from ...core.types import ModelParameters
 from ...utils.logging import get_logger
+from ..base import BaseModel, ModelError
+from ..types import ModelConfig, ModelInfo
 
 
 class ProviderError(ModelError):

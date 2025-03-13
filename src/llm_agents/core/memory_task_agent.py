@@ -2,18 +2,18 @@
 Memory-enabled task agent with enhanced contextual memory
 """
 
-from typing import Dict, List, Any, Optional, Callable, Awaitable, Union, Set
-import json
 import asyncio
+import json
 import time
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Set, Union
 
-from .message import Message, MessageRole
-from .agent import Agent
-from .task_agent import TaskAgent, ToolConfig
-from .memory import Memory, MemoryEntry
 from ..models.base import BaseModel
 from ..utils.logging import get_logger
 from ..utils.tracing import TraceProvider
+from .agent import Agent
+from .memory import Memory, MemoryEntry
+from .message import Message, MessageRole
+from .task_agent import TaskAgent, ToolConfig
 
 
 class MemoryEnabledTaskAgent(TaskAgent):

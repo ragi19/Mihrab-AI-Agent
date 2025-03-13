@@ -2,23 +2,23 @@
 Memory-enabled agent runner with enhanced conversation management
 """
 
-from typing import Dict, List, Any, Optional, Union, Set, Callable
 import asyncio
+import contextlib
+import datetime
 import json
 import os
-import datetime
-from pathlib import Path
 import time
-import contextlib
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, Set, Union
 
 from ..core.agent import Agent
 from ..core.memory_task_agent import MemoryEnabledTaskAgent
 from ..core.message import Message, MessageRole
 from ..utils.logging import get_logger
-from ..utils.tracing import TraceProvider, Trace
-from .runner import AgentRunner
+from ..utils.tracing import Trace, TraceProvider
 from .context import RuntimeContext
 from .recovery import ConversationRecovery
+from .runner import AgentRunner
 
 logger = get_logger("runtime.memory_runner")
 

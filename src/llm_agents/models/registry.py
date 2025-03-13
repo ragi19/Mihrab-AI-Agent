@@ -3,8 +3,9 @@ Model registry for managing model configurations
 """
 
 from typing import Dict, Optional, Type
-from .types import ModelConfig
+
 from ..utils.logging import get_logger
+from .types import ModelConfig
 
 logger = get_logger("models.registry")
 

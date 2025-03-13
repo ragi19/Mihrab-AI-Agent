@@ -3,7 +3,7 @@ Async utilities for parallel execution and task management
 """
 
 import asyncio
-from typing import TypeVar, List, Callable, Awaitable, Optional
+from typing import Awaitable, Callable, List, Optional, TypeVar
 
 T = TypeVar("T")
 

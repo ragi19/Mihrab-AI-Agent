@@ -4,7 +4,8 @@ Model configuration and capabilities management
 
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Dict, Any, List, Set, Optional, Union, Type
+from typing import Any, Dict, List, Optional, Set, Type, Union
+
 from pydantic import BaseModel, Field, validator
 
 

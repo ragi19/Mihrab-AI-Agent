@@ -2,13 +2,14 @@
 Task-specialized agent implementation with advanced task management
 """
 
-from typing import List, Optional, Dict, Any, ContextManager, Callable, Union
+import contextlib
+from typing import Any, Callable, ContextManager, Dict, List, Optional, Union
+
+from ..models.base import BaseModel
+from ..utils.logging import get_logger
+from ..utils.tracing import Span, TraceProvider
 from .agent import Agent
 from .message import Message, MessageRole
-from ..models.base import BaseModel
-from ..utils.tracing import TraceProvider, Span
-from ..utils.logging import get_logger
-import contextlib
 
 
 class ToolConfig:

@@ -2,16 +2,17 @@
 Integration tests for memory-enabled task agent with multi-provider model
 """
 
-import pytest
 import asyncio
-from pathlib import Path
 import tempfile
+from pathlib import Path
+
+import pytest
 
 from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
+from llm_agents.core.message import Message, MessageRole
+from llm_agents.models.base import ModelCapability
 from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
 from llm_agents.runtime.memory_runner import MemoryAgentRunner
-from llm_agents.models.base import ModelCapability
-from llm_agents.core.message import Message, MessageRole
 
 
 async def create_test_agent():

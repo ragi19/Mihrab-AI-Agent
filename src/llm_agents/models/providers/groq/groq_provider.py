@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Dict, List, Optional, Union
 
-from groq import Groq, APIError
+from groq import APIError, Groq
 
 from ...base import BaseModel, ModelError, TokenLimitError
 

@@ -4,8 +4,10 @@ Basic example of using a chat agent with different providers
 
 import asyncio
 import os
+
 from dotenv import load_dotenv
-from llm_agents import create_agent, Message, MessageRole
+
+from llm_agents import Message, MessageRole, create_agent
 
 # Load environment variables from .env file
 load_dotenv()

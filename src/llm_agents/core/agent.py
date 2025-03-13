@@ -3,12 +3,12 @@ Base agent class providing core functionality for LLM-powered agents
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Callable, Awaitable, TypeVar, Generic
+from typing import Any, Awaitable, Callable, Dict, Generic, List, Optional, TypeVar
 
 from ..models.base import BaseModel
-from .message import Message
 from ..utils.logging import get_logger
-from ..utils.tracing import TraceProvider, Span, Trace
+from ..utils.tracing import Span, Trace, TraceProvider
+from .message import Message
 
 T = TypeVar("T")
 

@@ -2,10 +2,10 @@
 Configuration file generator utility
 """
 
-import os
 import json
+import os
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 DEFAULT_CONFIG = {
     "providers": {

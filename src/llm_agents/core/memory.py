@@ -2,13 +2,14 @@
 Advanced memory management system for LLM agents
 """
 
-from typing import Dict, List, Any, Optional, TypeVar, Generic
-from dataclasses import dataclass, field
-from datetime import datetime
 import json
 from collections import deque
-from ..utils.logging import get_logger
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, Generic, List, Optional, TypeVar
+
 from ..core.message import Message
+from ..utils.logging import get_logger
 
 T = TypeVar("T")
 

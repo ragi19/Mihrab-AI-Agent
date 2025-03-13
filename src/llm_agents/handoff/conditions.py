@@ -2,7 +2,7 @@
 Condition functions for handoffs
 """
 
-from typing import Dict, Any, List, Callable
+from typing import Any, Callable, Dict, List
 
 
 def keyword_based_condition(

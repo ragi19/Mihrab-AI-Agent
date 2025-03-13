@@ -2,11 +2,11 @@
 Provider statistics tracking for multi-provider model
 """
 
+import statistics
+import time
+from collections import deque
 from dataclasses import dataclass, field
 from typing import Dict
-import time
-import statistics
-from collections import deque
 
 
 @dataclass

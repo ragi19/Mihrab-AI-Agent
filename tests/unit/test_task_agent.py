@@ -2,14 +2,16 @@
 Unit tests for task agent implementations
 """
 
+import contextlib
+from unittest.mock import AsyncMock, MagicMock, Mock, create_autospec, patch
+
 import pytest
-from unittest.mock import Mock, AsyncMock, patch, create_autospec, MagicMock
-from llm_agents.core.task_agent import TaskAgent
+
 from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
 from llm_agents.core.message import Message, MessageRole
+from llm_agents.core.task_agent import TaskAgent
 from llm_agents.models.base import BaseModel
-from llm_agents.utils.tracing import TraceProvider, Trace, Span
-import contextlib
+from llm_agents.utils.tracing import Span, Trace, TraceProvider
 
 
 class MockContextManager:

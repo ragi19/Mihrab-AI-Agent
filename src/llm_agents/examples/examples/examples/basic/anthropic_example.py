@@ -4,9 +4,10 @@ Basic example using Anthropic models
 
 import asyncio
 import os
-from llm_agents.models.providers.anthropic import AnthropicProvider
+
 from llm_agents.core.agent import Agent
 from llm_agents.core.message import Message, MessageRole
+from llm_agents.models.providers.anthropic import AnthropicProvider
 from llm_agents.runtime.runner import AgentRunner
 
 

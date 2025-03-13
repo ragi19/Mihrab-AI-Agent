@@ -5,15 +5,15 @@ Core tracing functionality for capturing and exporting agent operations
 import abc
 import asyncio
 import contextvars
+import json
+import os
 import queue
 import threading
 import time
 import uuid
-import json
-import os
-from dataclasses import dataclass, field, asdict
-from typing import Any, Dict, Generic, List, Optional, TypeVar, Union
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
+from typing import Any, Dict, Generic, List, Optional, TypeVar, Union
 
 from .logging import get_logger
 

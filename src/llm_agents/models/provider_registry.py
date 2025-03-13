@@ -2,13 +2,13 @@
 Registry for managing and accessing provider implementations
 """
 
-from typing import Dict, Type, Any, Optional, Set, List, Union, Callable
 from dataclasses import dataclass
+from typing import Any, Callable, Dict, List, Optional, Set, Type, Union
 
+from ..utils.logging import get_logger
 from .base import BaseModel, ModelError
 from .config import ModelConfig, ModelRegistry, ProviderConfig
 from .types import ModelInfo
-from ..utils.logging import get_logger
 
 logger = get_logger("models.registry")
 

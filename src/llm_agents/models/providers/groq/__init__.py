@@ -2,13 +2,14 @@
 Groq provider implementation
 """
 
-from typing import Dict, Any, Set
+from typing import Any, Dict, Set
+
 from groq import AsyncGroq
 
+from ...provider_registry import ProviderInfo, ProviderRegistry
+from ...types import ModelCapability, ModelInfo
 from ..base import BaseProvider, ProviderError
-from ...types import ModelInfo, ModelCapability
 from .models import GroqModel
-from ...provider_registry import ProviderRegistry, ProviderInfo
 
 
 class GroqProvider(BaseProvider):

@@ -2,12 +2,12 @@
 Models package exports
 """
 
-from .base import BaseModel, ModelInfo, ModelError, TokenLimitError
-from .types import ModelCapability, TokenCount, ModelConfig
-from .registry import ModelRegistry
+from .base import BaseModel, ModelError, ModelInfo, TokenLimitError
+from .factory import ModelFactory, create_model
 from .provider_discovery import ProviderDiscovery
 from .provider_registry import ProviderRegistry
-from .factory import create_model, ModelFactory
+from .registry import ModelRegistry
+from .types import ModelCapability, ModelConfig, TokenCount
 
 __all__ = [
     "BaseModel",

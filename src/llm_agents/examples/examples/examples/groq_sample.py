@@ -3,10 +3,11 @@ Advanced sample usage of Groq provider demonstrating streaming responses
 with enhanced conversation memory and parameter control
 """
 
-import os
 import asyncio
-from llm_agents.models.providers.groq import GroqProvider
+import os
+
 from llm_agents.core.message import Message, MessageRole
+from llm_agents.models.providers.groq import GroqProvider
 
 
 async def main():

@@ -5,13 +5,14 @@ Advanced example demonstrating using multiple providers simultaneously
 import asyncio
 import os
 from typing import Dict, List
-from llm_agents.models.providers.openai import OpenAIProvider
-from llm_agents.models.providers.anthropic import AnthropicProvider
-from llm_agents.models.providers.groq import GroqProvider
+
 from llm_agents.core.agent import Agent, SimpleAgent
 from llm_agents.core.message import Message, MessageRole
-from llm_agents.runtime.runner import AgentRunner
+from llm_agents.models.providers.anthropic import AnthropicProvider
+from llm_agents.models.providers.groq import GroqProvider
+from llm_agents.models.providers.openai import OpenAIProvider
 from llm_agents.runtime.context import RuntimeContext
+from llm_agents.runtime.runner import AgentRunner
 from llm_agents.utils.async_utils import gather_with_concurrency
 
 

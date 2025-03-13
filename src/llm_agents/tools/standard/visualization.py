@@ -5,15 +5,16 @@ Data visualization tools for generating charts and graphs
 import base64
 import io
 import json
-from typing import Dict, Any, List, Optional, Union, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Union
+
 import matplotlib
 
 matplotlib.use("Agg")  # Use non-interactive backend
 import matplotlib.pyplot as plt
 import numpy as np
 
-from ..base import BaseTool
 from ...utils.logging import get_logger
+from ..base import BaseTool
 
 logger = get_logger("tools.visualization")
 

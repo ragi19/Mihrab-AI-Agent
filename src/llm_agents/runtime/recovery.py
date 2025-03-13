@@ -2,10 +2,11 @@
 Error recovery and retry mechanisms for agent execution
 """
 
-from typing import Callable, TypeVar, Optional, Dict, Any, Type, List, Union
 import asyncio
 import time
 from functools import wraps
+from typing import Any, Callable, Dict, List, Optional, Type, TypeVar, Union
+
 from ..core.message import Message
 from ..utils.logging import get_logger
 

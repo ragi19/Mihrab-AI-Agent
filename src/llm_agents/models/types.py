@@ -3,7 +3,8 @@ Core type definitions for model interfaces
 """
 
 from enum import IntEnum
-from typing import List, Dict, Any, Optional, Set
+from typing import Any, Dict, List, Optional, Set
+
 from pydantic import BaseModel
 
 

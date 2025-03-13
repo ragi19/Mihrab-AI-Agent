@@ -5,15 +5,15 @@ Test Groq Models
 This script tests that the Groq models are registered correctly.
 """
 
-import os
 import asyncio
+import os
 import unittest
 from typing import Set
 
 from llm_agents.models.provider_registry import ProviderRegistry
 from llm_agents.scripts.register_groq_models import (
-    register_additional_groq_models,
     AVAILABLE_GROQ_MODELS,
+    register_additional_groq_models,
 )
 
 

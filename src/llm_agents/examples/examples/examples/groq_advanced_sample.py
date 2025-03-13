@@ -2,13 +2,14 @@
 Advanced sample usage of Groq provider demonstrating multi-agent system
 """
 
-import os
 import asyncio
 import json
-from typing import List, Dict
-from llm_agents.models.providers.groq import GroqProvider
+import os
+from typing import Dict, List
+
 from llm_agents.core.message import Message, MessageRole
 from llm_agents.core.types import ModelParameters
+from llm_agents.models.providers.groq import GroqProvider
 from llm_agents.utils.async_utils import gather_with_concurrency
 
 

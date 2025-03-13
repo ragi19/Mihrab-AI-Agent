@@ -2,11 +2,12 @@
 Anthropic provider implementation
 """
 
-from typing import Dict, Any, Set
+from typing import Any, Dict, Set
+
 from anthropic import AsyncAnthropic
 
+from ...types import ModelCapability, ModelInfo
 from ..base import BaseProvider, ProviderError
-from ...types import ModelInfo, ModelCapability
 from .models import ClaudeModel
 
 

@@ -2,8 +2,10 @@
 Pytest configuration and fixtures
 """
 
+from typing import Any, Dict, List
+
 import pytest
-from typing import Dict, Any, List
+
 from llm_agents.core.message import Message, MessageRole
 from llm_agents.models.base import BaseModel
 

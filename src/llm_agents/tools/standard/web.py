@@ -2,16 +2,17 @@
 Standard web tools for HTTP requests and web interactions
 """
 
-import aiohttp
 import json
-import re
 import os
-from typing import Dict, Any, List, Optional, Union
-from urllib.parse import urlparse, urljoin
+import re
+from typing import Any, Dict, List, Optional, Union
+from urllib.parse import urljoin, urlparse
 
-from ..base import BaseTool
+import aiohttp
+
 from ...core.types import JSON
 from ...utils.logging import get_logger
+from ..base import BaseTool
 
 logger = get_logger("tools.web")
 

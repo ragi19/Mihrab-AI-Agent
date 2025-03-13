@@ -2,21 +2,21 @@
 Model provider implementations package
 """
 
-from .base import BaseProvider, ProviderError
-from .anthropic.provider import AnthropicProvider
 from .anthropic.models import ClaudeModel
+from .anthropic.provider import AnthropicProvider
+from .base import BaseProvider, ProviderError
 from .custom.models import CustomModel
 
 # Make sure to import relevant providers
 try:
-    from .openai.provider import OpenAIProvider
     from .openai.models import GPTModel
+    from .openai.provider import OpenAIProvider
 except ImportError:
     pass
 
 try:
-    from .groq.provider import GroqProvider
     from .groq.models import GroqModel
+    from .groq.provider import GroqProvider
 except ImportError:
     pass
 

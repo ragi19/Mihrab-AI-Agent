@@ -2,10 +2,11 @@
 Template for implementing custom model implementations
 """
 
-from typing import List, Optional, Any
-from ...base import BaseModel
+from typing import Any, List, Optional
+
 from ....core.message import Message, MessageRole
 from ....core.types import ModelParameters
+from ...base import BaseModel
 
 
 class CustomModel(BaseModel):

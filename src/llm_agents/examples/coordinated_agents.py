@@ -4,8 +4,10 @@ Example of using coordinated agent groups for multi-agent workflows
 
 import asyncio
 import os
+
 from dotenv import load_dotenv
-from llm_agents import create_agent, Message, MessageRole, CoordinatedAgentGroup
+
+from llm_agents import CoordinatedAgentGroup, Message, MessageRole, create_agent
 from llm_agents.models.base import ModelCapability
 
 # Load environment variables from .env file

@@ -2,8 +2,9 @@
 Template for implementing custom model providers
 """
 
-from typing import Dict, Any, Set
-from ...types import ModelInfo, ModelCapability
+from typing import Any, Dict, Set
+
+from ...types import ModelCapability, ModelInfo
 from ..base import BaseProvider, ProviderError
 from .models import CustomModel
 

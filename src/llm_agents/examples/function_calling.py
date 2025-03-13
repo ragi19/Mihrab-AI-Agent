@@ -3,11 +3,13 @@ Example of using function calling capabilities with supported providers
 """
 
 import asyncio
-import os
 import json
+import os
 from datetime import datetime
+
 from dotenv import load_dotenv
-from llm_agents import create_agent, Message, MessageRole
+
+from llm_agents import Message, MessageRole, create_agent
 from llm_agents.models.base import ModelCapability
 
 # Load environment variables from .env file

@@ -11,23 +11,23 @@ This example shows:
 """
 
 import asyncio
-import os
 import logging
-from typing import List, Dict, Any
+import os
 
 # Make sure the package is in the Python path
 import sys
 from pathlib import Path
+from typing import Any, Dict, List
 
 parent_dir = str(Path(__file__).resolve().parents[2])
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.models.base import ModelCapability
 from llm_agents.core.memory import Memory
 from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
 from llm_agents.core.message import Message, MessageRole
+from llm_agents.models.base import ModelCapability
+from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
 from llm_agents.runtime.memory_runner import MemoryAgentRunner
 
 # Configure logging

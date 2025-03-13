@@ -3,11 +3,12 @@ Web search tools
 """
 
 import json
-import aiohttp
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional
 
-from ..base import BaseTool
+import aiohttp
+
 from ...utils.logging import get_logger
+from ..base import BaseTool
 
 logger = get_logger("tools.search")
 

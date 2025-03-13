@@ -3,6 +3,7 @@ Example implementation of an agent that uses multiple providers
 """
 
 from typing import Dict
+
 from ...core.agent import Agent
 from ...core.message import Message, MessageRole
 from ...utils.logging import get_logger

@@ -2,20 +2,21 @@
 Multi-provider agent implementation for running multiple LLM providers in parallel
 """
 
-from typing import Dict, List, Optional, Set, Any, AsyncIterator
-from enum import Enum
-import time
 import random
+import time
 from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, AsyncIterator, Dict, List, Optional, Set
 
 from llm_agents.core.agent import Agent
 from llm_agents.core.message import Message, MessageRole
 from llm_agents.utils.async_utils import gather_with_concurrency
 from llm_agents.utils.logging import get_logger
-from .base import BaseModel, ModelError, ModelCapability
-from .provider_stats import ProviderStats
-from .factory import ModelFactory
+
 from ..core.types import ModelResponse
+from .base import BaseModel, ModelCapability, ModelError
+from .factory import ModelFactory
+from .provider_stats import ProviderStats
 
 logger = get_logger("models.multi_provider")
 

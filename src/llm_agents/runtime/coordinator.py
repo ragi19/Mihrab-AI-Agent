@@ -2,17 +2,17 @@
 Agent coordination utilities for multi-agent workflows
 """
 
-from typing import Dict, List, Any, Optional, Union, Callable, Awaitable, Set
 import asyncio
 import json
 from dataclasses import dataclass, field
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Set, Union
 
 from ..core.agent import Agent
+from ..core.memory_task_agent import MemoryEnabledTaskAgent
 from ..core.message import Message, MessageRole
 from ..core.task_agent import TaskAgent
-from ..core.memory_task_agent import MemoryEnabledTaskAgent
 from ..utils.logging import get_logger
-from ..utils.tracing import TraceProvider, Trace
+from ..utils.tracing import Trace, TraceProvider
 from .context import RuntimeContext
 
 logger = get_logger("runtime.coordinator")

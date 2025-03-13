@@ -4,10 +4,11 @@ Example demonstrating the use of the agent factory
 
 import asyncio
 import os
-from llm_agents.factory import create_agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.runtime.runner import AgentRunner
+
 from llm_agents.config import config
+from llm_agents.core.message import Message, MessageRole
+from llm_agents.factory import create_agent
+from llm_agents.runtime.runner import AgentRunner
 
 
 async def main():

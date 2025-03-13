@@ -2,11 +2,13 @@
 Anthropic model implementations
 """
 
-from typing import List, Optional, Dict
+from typing import Dict, List, Optional
+
 from anthropic import AsyncAnthropic
+
 from ....core.message import Message, MessageRole
-from ...base import BaseModel
 from ....core.types import ModelParameters
+from ...base import BaseModel
 
 
 class ClaudeModel(BaseModel):

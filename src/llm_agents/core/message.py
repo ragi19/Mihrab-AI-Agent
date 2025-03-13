@@ -3,9 +3,9 @@ Message data structures for agent communication
 """
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional
-from enum import Enum
 from datetime import datetime
+from enum import Enum
+from typing import Any, Dict, Optional
 
 
 class MessageRole(Enum):

@@ -2,7 +2,7 @@
 Configuration classes for the handoff system
 """
 
-from typing import Dict, Any, List, Optional, Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
 from ..core.message import Message
 

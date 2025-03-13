@@ -2,15 +2,14 @@
 HandoffAgent implementation for multi-agent systems
 """
 
-from typing import Dict, Any, List, Optional, Union, Tuple, Callable
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 from ..core.memory import Memory
 from ..core.memory_task_agent import MemoryEnabledTaskAgent
-from ..runtime.memory_runner import MemoryAgentRunner
 from ..core.message import Message, MessageRole
 from ..models.base import BaseModel
+from ..runtime.memory_runner import MemoryAgentRunner
 from ..utils.logging import get_logger
-
 from .config import HandoffConfig, HandoffInputData
 
 logger = get_logger("handoff.agent")
@@ -281,8 +280,8 @@ class HandoffAgent:
         Returns:
             Dictionary of extracted context
         """
-        import re
         import json
+        import re
 
         context = {}
 

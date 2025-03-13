@@ -3,12 +3,14 @@ Example of using vision capabilities with supported models
 """
 
 import asyncio
-import os
 import base64
-from typing import Optional
+import os
 from pathlib import Path
+from typing import Optional
+
 from dotenv import load_dotenv
-from llm_agents import create_agent, Message, MessageRole
+
+from llm_agents import Message, MessageRole, create_agent
 from llm_agents.models.base import ModelCapability
 
 # Load environment variables from .env file

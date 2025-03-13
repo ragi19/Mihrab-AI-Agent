@@ -2,7 +2,7 @@
 Core type definitions used throughout the framework
 """
 
-from typing import Dict, Any, TypeVar, Callable, Awaitable, Union, Optional, List
+from typing import Any, Awaitable, Callable, Dict, List, Optional, TypeVar, Union
 
 # Type aliases for common patterns
 JSON = Dict[str, Any]

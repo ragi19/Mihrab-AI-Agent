@@ -2,12 +2,14 @@
 Unit tests for provider implementations
 """
 
-import pytest
 from unittest.mock import AsyncMock, patch
+
+import pytest
+
 from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.providers.openai import OpenAIProvider
 from llm_agents.models.providers.anthropic import AnthropicProvider
 from llm_agents.models.providers.groq import GroqProvider
+from llm_agents.models.providers.openai import OpenAIProvider
 
 
 @pytest.mark.asyncio
@@ -96,18 +98,20 @@ async def test_token_counting():
 """
 Tests for provider framework functionality
 """
-import pytest
-from unittest.mock import Mock, patch
 from datetime import datetime, timedelta
+from unittest.mock import Mock, patch
+
+import pytest
+
 from llm_agents.models import (
+    BaseProvider,
     ModelCapability,
     ModelInfo,
-    ProviderRegistry,
     ProviderError,
-    BaseProvider,
+    ProviderRegistry,
 )
-from llm_agents.models.provider_stats import ProviderStatsManager
 from llm_agents.models.provider_discovery import ProviderDiscovery
+from llm_agents.models.provider_stats import ProviderStatsManager
 
 
 class MockProvider(BaseProvider):

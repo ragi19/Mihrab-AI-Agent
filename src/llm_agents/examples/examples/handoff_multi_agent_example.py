@@ -11,10 +11,10 @@ This example shows:
 """
 
 import asyncio
-import os
 import logging
+import os
 import sys
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 # Configure logging
 logging.basicConfig(
@@ -24,13 +24,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Import required modules
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.models.base import ModelCapability
 from llm_agents.core.memory import Memory
 from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.runtime.memory_runner import MemoryAgentRunner
 from llm_agents.core.message import Message, MessageRole
+from llm_agents.models.base import ModelCapability
+
+# Import required modules
+from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from llm_agents.runtime.memory_runner import MemoryAgentRunner
 
 print("Starting handoff multi-agent example...")
 

@@ -3,6 +3,7 @@ Unit tests for the Agent base class
 """
 
 import pytest
+
 from llm_agents.core.agent import Agent
 from llm_agents.core.message import Message, MessageRole
 

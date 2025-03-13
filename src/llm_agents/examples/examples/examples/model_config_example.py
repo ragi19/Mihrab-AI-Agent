@@ -2,24 +2,24 @@
 Example demonstrating the enhanced model configuration system
 """
 
-import os
 import asyncio
-from typing import Dict, Any, Set
+import os
+from typing import Any, Dict, Set
 
+from llm_agents.core.message import Message, MessageRole
 from llm_agents.models import (
+    AdapterRegistry,
     BaseModel,
-    ModelConfig,
-    ProviderConfig,
-    ModelRegistry,
-    ProviderRegistry,
     ModelCapability,
+    ModelConfig,
+    ModelRegistry,
+    ProviderConfig,
+    ProviderRegistry,
     create_model,
     create_model_from_config,
-    AdapterRegistry,
 )
 from llm_agents.models.providers import OpenAIAdapter
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.utils.logging import get_logger, configure_logging
+from llm_agents.utils.logging import configure_logging, get_logger
 
 # Configure logging
 configure_logging(log_level="INFO")

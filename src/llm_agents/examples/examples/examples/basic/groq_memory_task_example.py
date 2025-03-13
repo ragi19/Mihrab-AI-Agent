@@ -2,8 +2,8 @@
 Example demonstrating a multi-agent setup with Groq provider, memory capabilities, and task execution
 """
 
-import os
 import asyncio
+import os
 import sys
 from pathlib import Path
 
@@ -13,11 +13,11 @@ if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
 from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
+from llm_agents.core.message import Message, MessageRole
+from llm_agents.models.base import ModelCapability
 from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
 from llm_agents.runtime.memory_runner import MemoryAgentRunner
-from llm_agents.models.base import ModelCapability
 from llm_agents.tools.standard import CalculatorTool, DateTimeTool, WebSearchTool
-from llm_agents.core.message import Message, MessageRole
 from llm_agents.utils.logging import configure_logging, get_logger
 from llm_agents.utils.tracing import FileTraceProvider
 

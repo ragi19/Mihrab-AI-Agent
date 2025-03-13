@@ -2,13 +2,14 @@
 Chat-optimized agent implementation
 """
 
-from typing import List, Optional, Dict, Any, Callable, Awaitable
+from typing import Any, Awaitable, Callable, Dict, List, Optional
+
+from ..models.base import BaseModel
+from ..utils.logging import get_logger
+from ..utils.tokenization import count_tokens, truncate_text
+from ..utils.tracing import TraceProvider
 from .agent import Agent
 from .message import Message, MessageRole
-from ..models.base import BaseModel
-from ..utils.tokenization import count_tokens, truncate_text
-from ..utils.logging import get_logger
-from ..utils.tracing import TraceProvider
 
 
 class ChatAgent(Agent):

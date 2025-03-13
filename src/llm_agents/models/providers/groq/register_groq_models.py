@@ -6,9 +6,9 @@ This script registers additional Groq models that may not be included in the def
 It can be run directly or imported and used programmatically.
 """
 
-import os
 import logging
-from typing import Dict, Any, List, Optional, Set
+import os
+from typing import Any, Dict, List, Optional, Set
 
 # Configure logging
 logging.basicConfig(

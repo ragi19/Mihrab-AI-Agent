@@ -2,23 +2,25 @@
 Integration tests for multi-provider functionality
 """
 
-import pytest
 from unittest.mock import AsyncMock, patch
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.providers.openai import OpenAIProvider
-from llm_agents.models.providers.anthropic import AnthropicProvider
-from llm_agents.models.providers.groq import GroqProvider
-from llm_agents.examples.advanced.multi_provider_agent import MultiProviderAgent
-from llm_agents.runtime.runner import AgentRunner
+
+import pytest
+
 from llm_agents.core.agent import Agent
+from llm_agents.core.message import Message, MessageRole
+from llm_agents.examples.advanced.multi_provider_agent import MultiProviderAgent
 from llm_agents.models import (
     ModelCapability,
+    ModelCreationError,
     ProviderRegistry,
     create_model,
-    ModelCreationError,
 )
 from llm_agents.models.multi_provider import MultiProviderModel
 from llm_agents.models.provider_stats import ProviderStatsManager
+from llm_agents.models.providers.anthropic import AnthropicProvider
+from llm_agents.models.providers.groq import GroqProvider
+from llm_agents.models.providers.openai import OpenAIProvider
+from llm_agents.runtime.runner import AgentRunner
 
 
 class SimpleAgent(Agent):

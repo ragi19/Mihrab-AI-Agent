@@ -2,8 +2,9 @@
 Utilities for token counting and text manipulation
 """
 
+from typing import Dict, List, Optional
+
 import tiktoken
-from typing import List, Dict, Optional
 
 
 def count_tokens(text: str, model: str = "gpt-3.5-turbo") -> int:

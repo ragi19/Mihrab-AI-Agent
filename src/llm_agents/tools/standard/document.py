@@ -2,16 +2,16 @@
 Document processing tools for working with various file formats
 """
 
+import base64
+import json
+import mimetypes
 import os
 import re
-import json
-import base64
-from typing import Dict, Any, List, Optional, Union
 from pathlib import Path
-import mimetypes
+from typing import Any, Dict, List, Optional, Union
 
-from ..base import BaseTool
 from ...utils.logging import get_logger
+from ..base import BaseTool
 
 logger = get_logger("tools.document")
 

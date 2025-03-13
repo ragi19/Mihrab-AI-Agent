@@ -2,16 +2,16 @@
 Model adapter for providing a consistent interface across different model providers
 """
 
-from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional, List, Set, Type, Union, AsyncIterator
 import asyncio
 import inspect
+from abc import ABC, abstractmethod
 from functools import wraps
+from typing import Any, AsyncIterator, Dict, List, Optional, Set, Type, Union
 
 from ..core.message import Message
 from ..core.types import ModelParameters
 from ..utils.logging import get_logger
-from .base import BaseModel, ModelCapability, ModelInfo, ModelError
+from .base import BaseModel, ModelCapability, ModelError, ModelInfo
 from .config import ModelConfig
 
 logger = get_logger("models.adapter")
