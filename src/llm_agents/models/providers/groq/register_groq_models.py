@@ -12,8 +12,7 @@ from typing import Dict, Any, List, Optional, Set
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -24,24 +23,24 @@ from llm_agents.models.providers.groq.models import GroqModel
 
 # List of available Groq models
 AVAILABLE_GROQ_MODELS = [
-    "deepseek-r1-distill-llama-70b", 
-    "deepseek-r1-distill-qwen-32b", 
-    "distil-whisper-large-v3-en", 
-    "gemma2-9b-it", 
-    "llama-3.1-8b-instant", 
-    "llama-3.2-1b-preview", 
-    "llama-3.2-3b-preview", 
-    "llama-3.2-11b-vision-preview", 
-    "llama-3.2-90b-vision-preview", 
-    "llama-3.3-70b-specdec", 
-    "llama-3.3-70b-versatile", 
-    "llama-guard-3-8b", 
-    "llama3-8b-8192", 
-    "llama3-70b-8192", 
-    "mistral-saba-24b", 
-    "qwen-2.5-32b", 
-    "qwen-2.5-coder-32b", 
-    "qwen-qwq-32b"
+    "deepseek-r1-distill-llama-70b",
+    "deepseek-r1-distill-qwen-32b",
+    "distil-whisper-large-v3-en",
+    "gemma2-9b-it",
+    "llama-3.1-8b-instant",
+    "llama-3.2-1b-preview",
+    "llama-3.2-3b-preview",
+    "llama-3.2-11b-vision-preview",
+    "llama-3.2-90b-vision-preview",
+    "llama-3.3-70b-specdec",
+    "llama-3.3-70b-versatile",
+    "llama-guard-3-8b",
+    "llama3-8b-8192",
+    "llama3-70b-8192",
+    "mistral-saba-24b",
+    "qwen-2.5-32b",
+    "qwen-2.5-coder-32b",
+    "qwen-qwq-32b",
 ]
 
 # Model information mapping
@@ -49,42 +48,27 @@ MODEL_INFO = {
     "deepseek-r1-distill-llama-70b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "deepseek-r1-distill-qwen-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "distil-whisper-large-v3-en": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-3.2-1b-preview": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-3.2-3b-preview": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-3.2-11b-vision-preview": {
         "context_window": 8192,
@@ -92,8 +76,8 @@ MODEL_INFO = {
         "capabilities": {
             ModelCapability.CHAT,
             ModelCapability.STREAMING,
-            ModelCapability.IMAGE_INPUT
-        }
+            ModelCapability.IMAGE_INPUT,
+        },
     },
     "llama-3.2-90b-vision-preview": {
         "context_window": 8192,
@@ -101,58 +85,41 @@ MODEL_INFO = {
         "capabilities": {
             ModelCapability.CHAT,
             ModelCapability.STREAMING,
-            ModelCapability.IMAGE_INPUT
-        }
+            ModelCapability.IMAGE_INPUT,
+        },
     },
     "llama-3.3-70b-specdec": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-guard-3-8b": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "mistral-saba-24b": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "qwen-2.5-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "qwen-2.5-coder-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "qwen-qwq-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.STREAMING
-        }
-    }
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
+    },
 }
+
 
 def register_additional_groq_models():
     """Register additional Groq models that aren't in the default provider"""
@@ -162,11 +129,11 @@ def register_additional_groq_models():
         if provider_name == "groq":
             groq_provider = ProviderRegistry._initialized_providers.get("groq")
             break
-    
+
     if not groq_provider:
         logger.warning("Groq provider not found, cannot register additional models")
         return
-    
+
     # Define additional models
     additional_models = {}
     for model_name, info in MODEL_INFO.items():
@@ -176,9 +143,9 @@ def register_additional_groq_models():
             provider="groq",
             capabilities=info["capabilities"],
             context_window=info["context_window"],
-            max_tokens=info["max_tokens"]
+            max_tokens=info["max_tokens"],
         )
-    
+
     # Register each model with the Groq provider
     registered_count = 0
     for model_name, model_info in additional_models.items():
@@ -187,18 +154,26 @@ def register_additional_groq_models():
             logger.info(f"Registered additional Groq model: {model_name}")
             registered_count += 1
         else:
-            logger.warning(f"Could not register model {model_name}, register_model method not found")
-    
+            logger.warning(
+                f"Could not register model {model_name}, register_model method not found"
+            )
+
     # Update the provider info in the registry
-    if hasattr(ProviderRegistry, "_provider_info") and "groq" in ProviderRegistry._provider_info:
+    if (
+        hasattr(ProviderRegistry, "_provider_info")
+        and "groq" in ProviderRegistry._provider_info
+    ):
         provider_info = ProviderRegistry._provider_info["groq"]
         if hasattr(provider_info, "supported_models"):
             for model_name in additional_models:
                 provider_info.supported_models.add(model_name)
-            logger.info(f"Updated Groq provider supported models: {provider_info.supported_models}")
-    
+            logger.info(
+                f"Updated Groq provider supported models: {provider_info.supported_models}"
+            )
+
     logger.info(f"Successfully registered {registered_count} additional Groq models")
     return registered_count
+
 
 def list_available_models():
     """List all available Groq models"""
@@ -212,28 +187,29 @@ def list_available_models():
         print("Groq provider not found")
         return set()
 
+
 if __name__ == "__main__":
-    print("\n" + "="*80)
+    print("\n" + "=" * 80)
     print("Groq Model Registration Utility")
-    print("="*80)
-    
+    print("=" * 80)
+
     # Check for API key
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
         print("\nWarning: GROQ_API_KEY environment variable not found!")
         print("Please set your Groq API key using:")
         print("$env:GROQ_API_KEY = 'your-api-key'")
-    
+
     # Register additional models
     print("\nRegistering additional Groq models...")
     count = register_additional_groq_models()
-    
+
     if count > 0:
         print(f"\nSuccessfully registered {count} additional Groq models")
-        
+
         # List all available models
         list_available_models()
     else:
         print("\nNo additional models were registered")
-    
-    print("\nDone!") 
+
+    print("\nDone!")

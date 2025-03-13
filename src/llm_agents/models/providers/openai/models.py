@@ -1,14 +1,21 @@
 """
 OpenAI model implementations
 """
+
 from typing import List, Optional, Dict
 from openai import AsyncOpenAI
 from ....core.message import Message, MessageRole
 from ...base import BaseModel
 from ....core.types import ModelParameters
 
+
 class GPTModel(BaseModel):
-    def __init__(self, model_name: str, client: AsyncOpenAI, parameters: Optional[ModelParameters] = None):
+    def __init__(
+        self,
+        model_name: str,
+        client: AsyncOpenAI,
+        parameters: Optional[ModelParameters] = None,
+    ):
         super().__init__(model_name, parameters)
         self.client = client
 
@@ -17,11 +24,10 @@ class GPTModel(BaseModel):
         response = await self.client.chat.completions.create(
             model=self.model_name,
             messages=[msg.to_dict() for msg in messages],
-            **self.parameters
+            **self.parameters,
         )
         return Message(
-            role=MessageRole.ASSISTANT,
-            content=response.choices[0].message.content
+            role=MessageRole.ASSISTANT, content=response.choices[0].message.content
         )
 
     async def _generate(self, messages: List[Message]) -> Message:
@@ -29,11 +35,10 @@ class GPTModel(BaseModel):
         response = await self.client.chat.completions.create(
             model=self.model_name,
             messages=[msg.to_dict() for msg in messages],
-            **self.parameters
+            **self.parameters,
         )
         return Message(
-            role=MessageRole.ASSISTANT,
-            content=response.choices[0].message.content
+            role=MessageRole.ASSISTANT, content=response.choices[0].message.content
         )
 
     async def _prepare_messages(self, messages: List[Message]) -> List[Dict]:
@@ -43,13 +48,10 @@ class GPTModel(BaseModel):
     async def _make_api_call(self, messages: List[Dict]) -> Message:
         """Make API call to OpenAI"""
         response = await self.client.chat.completions.create(
-            model=self.model_name,
-            messages=messages,
-            **self.parameters
+            model=self.model_name, messages=messages, **self.parameters
         )
         return Message(
-            role=MessageRole.ASSISTANT,
-            content=response.choices[0].message.content
+            role=MessageRole.ASSISTANT, content=response.choices[0].message.content
         )
 
     async def count_tokens(self, text: str) -> int:

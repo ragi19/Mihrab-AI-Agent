@@ -1,6 +1,7 @@
 """
 Model provider implementations package
 """
+
 from .base import BaseProvider, ProviderError
 from .anthropic.provider import AnthropicProvider
 from .anthropic.models import ClaudeModel
@@ -25,25 +26,25 @@ except ImportError:
     pass
 
 __all__ = [
-    'BaseProvider',
-    'ProviderError',
-    'AnthropicProvider',
-    'ClaudeModel',
-    'CustomModel'
+    "BaseProvider",
+    "ProviderError",
+    "AnthropicProvider",
+    "ClaudeModel",
+    "CustomModel",
 ]
 
 # Add optional providers to __all__ if available
 try:
-    __all__.extend(['OpenAIProvider', 'GPTModel'])
+    __all__.extend(["OpenAIProvider", "GPTModel"])
 except NameError:
     pass
 
 try:
-    __all__.extend(['GroqProvider', 'GroqModel'])
+    __all__.extend(["GroqProvider", "GroqModel"])
 except NameError:
     pass
 
 try:
-    __all__.append('GrokModel')
+    __all__.append("GrokModel")
 except NameError:
     pass

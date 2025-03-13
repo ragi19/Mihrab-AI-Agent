@@ -1,13 +1,16 @@
 """
 Model configuration and capabilities management
 """
+
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import Dict, Any, List, Set, Optional, Union, Type
 from pydantic import BaseModel, Field, validator
 
+
 class ModelCapability(Enum):
     """Capabilities that a model might support"""
+
     TEXT_GENERATION = auto()
     CHAT_COMPLETION = auto()
     FUNCTION_CALLING = auto()
@@ -20,13 +23,14 @@ class ModelCapability(Enum):
     TOOL_USE = auto()
     STRUCTURED_OUTPUT = auto()
     MULTI_MODAL = auto()
-    
+
     def __str__(self) -> str:
         return self.name.lower()
 
 
 class ModelConfig(BaseModel):
     """Configuration for a specific model"""
+
     model_name: str
     provider_name: str
     parameters: Dict[str, Any] = Field(default_factory=dict)
@@ -38,11 +42,11 @@ class ModelConfig(BaseModel):
     supports_functions: bool = False
     supports_tools: bool = False
     token_limit: Optional[int] = None
-    
+
     class Config:
         arbitrary_types_allowed = True
-    
-    @validator('capabilities', pre=True)
+
+    @validator("capabilities", pre=True)
     def parse_capabilities(cls, v):
         """Convert capability strings to enum values"""
         if isinstance(v, set):
@@ -63,6 +67,7 @@ class ModelConfig(BaseModel):
 
 class ProviderConfig(BaseModel):
     """Configuration for a model provider"""
+
     name: str
     api_key: Optional[str] = None
     api_base: Optional[str] = None
@@ -73,15 +78,15 @@ class ProviderConfig(BaseModel):
     timeout: float = 60.0
     max_retries: int = 3
     additional_config: Dict[str, Any] = Field(default_factory=dict)
-    
+
     def get_model_config(self, model_name: str) -> Optional[ModelConfig]:
         """Get configuration for a specific model"""
         return self.models.get(model_name)
-    
+
     def supports_model(self, model_name: str) -> bool:
         """Check if this provider supports a specific model"""
         return model_name in self.models
-    
+
     def get_auth_params(self) -> Dict[str, Any]:
         """Get authentication parameters for this provider"""
         auth_params = {}
@@ -96,25 +101,28 @@ class ProviderConfig(BaseModel):
 
 class ModelRegistry:
     """Registry for model configurations"""
+
     _provider_configs: Dict[str, ProviderConfig] = {}
     _model_to_provider: Dict[str, str] = {}
-    
+
     @classmethod
     def register_provider(cls, provider_config: ProviderConfig) -> None:
         """Register a provider configuration"""
         cls._provider_configs[provider_config.name] = provider_config
-        
+
         # Update model to provider mapping
         for model_name in provider_config.models:
             cls._model_to_provider[model_name] = provider_config.name
-    
+
     @classmethod
     def get_provider_config(cls, provider_name: str) -> Optional[ProviderConfig]:
         """Get configuration for a specific provider"""
         return cls._provider_configs.get(provider_name)
-    
+
     @classmethod
-    def get_model_config(cls, model_name: str, provider_name: Optional[str] = None) -> Optional[ModelConfig]:
+    def get_model_config(
+        cls, model_name: str, provider_name: Optional[str] = None
+    ) -> Optional[ModelConfig]:
         """Get configuration for a specific model"""
         if provider_name:
             # Get from specific provider
@@ -129,17 +137,17 @@ class ModelRegistry:
                 if provider_config:
                     return provider_config.get_model_config(model_name)
         return None
-    
+
     @classmethod
     def find_provider_for_model(cls, model_name: str) -> Optional[str]:
         """Find a provider that supports a specific model"""
         return cls._model_to_provider.get(model_name)
-    
+
     @classmethod
     def list_providers(cls) -> List[str]:
         """List all registered providers"""
         return list(cls._provider_configs.keys())
-    
+
     @classmethod
     def list_models(cls, provider_name: Optional[str] = None) -> List[str]:
         """List all registered models, optionally filtered by provider"""
@@ -149,7 +157,7 @@ class ModelRegistry:
                 return list(provider_config.models.keys())
             return []
         return list(cls._model_to_provider.keys())
-    
+
     @classmethod
     def get_models_with_capability(cls, capability: ModelCapability) -> List[str]:
         """Get models that support a specific capability"""
@@ -166,30 +174,45 @@ DEFAULT_OPENAI_MODELS = {
     "gpt-4": ModelConfig(
         model_name="gpt-4",
         provider_name="openai",
-        capabilities=["text_generation", "chat_completion", "function_calling", "tool_use"],
+        capabilities=[
+            "text_generation",
+            "chat_completion",
+            "function_calling",
+            "tool_use",
+        ],
         context_window=8192,
         supports_streaming=True,
         supports_functions=True,
-        supports_tools=True
+        supports_tools=True,
     ),
     "gpt-4-turbo": ModelConfig(
         model_name="gpt-4-turbo",
         provider_name="openai",
-        capabilities=["text_generation", "chat_completion", "function_calling", "tool_use"],
+        capabilities=[
+            "text_generation",
+            "chat_completion",
+            "function_calling",
+            "tool_use",
+        ],
         context_window=128000,
         supports_streaming=True,
         supports_functions=True,
-        supports_tools=True
+        supports_tools=True,
     ),
     "gpt-3.5-turbo": ModelConfig(
         model_name="gpt-3.5-turbo",
         provider_name="openai",
-        capabilities=["text_generation", "chat_completion", "function_calling", "tool_use"],
+        capabilities=[
+            "text_generation",
+            "chat_completion",
+            "function_calling",
+            "tool_use",
+        ],
         context_window=16385,
         supports_streaming=True,
         supports_functions=True,
-        supports_tools=True
-    )
+        supports_tools=True,
+    ),
 }
 
 DEFAULT_ANTHROPIC_MODELS = {
@@ -200,7 +223,7 @@ DEFAULT_ANTHROPIC_MODELS = {
         context_window=200000,
         supports_streaming=True,
         supports_vision=True,
-        supports_tools=True
+        supports_tools=True,
     ),
     "claude-3-sonnet": ModelConfig(
         model_name="claude-3-sonnet",
@@ -209,7 +232,7 @@ DEFAULT_ANTHROPIC_MODELS = {
         context_window=200000,
         supports_streaming=True,
         supports_vision=True,
-        supports_tools=True
+        supports_tools=True,
     ),
     "claude-3-haiku": ModelConfig(
         model_name="claude-3-haiku",
@@ -218,8 +241,8 @@ DEFAULT_ANTHROPIC_MODELS = {
         context_window=200000,
         supports_streaming=True,
         supports_vision=True,
-        supports_tools=True
-    )
+        supports_tools=True,
+    ),
 }
 
 DEFAULT_GROQ_MODELS = {
@@ -228,22 +251,22 @@ DEFAULT_GROQ_MODELS = {
         provider_name="groq",
         capabilities=["text_generation", "chat_completion"],
         context_window=8192,
-        supports_streaming=True
+        supports_streaming=True,
     ),
     "mixtral-8x7b-32768": ModelConfig(
         model_name="mixtral-8x7b-32768",
         provider_name="groq",
         capabilities=["text_generation", "chat_completion"],
         context_window=32768,
-        supports_streaming=True
+        supports_streaming=True,
     ),
     "gemma-7b-it": ModelConfig(
         model_name="gemma-7b-it",
         provider_name="groq",
         capabilities=["text_generation", "chat_completion"],
         context_window=8192,
-        supports_streaming=True
-    )
+        supports_streaming=True,
+    ),
 }
 
 # Register default providers
@@ -255,27 +278,19 @@ DEFAULT_PROVIDERS = [
             "temperature": 0.7,
             "top_p": 1.0,
             "frequency_penalty": 0.0,
-            "presence_penalty": 0.0
-        }
+            "presence_penalty": 0.0,
+        },
     ),
     ProviderConfig(
         name="anthropic",
         models=DEFAULT_ANTHROPIC_MODELS,
-        default_parameters={
-            "temperature": 0.7,
-            "top_p": 0.9,
-            "max_tokens": 1024
-        }
+        default_parameters={"temperature": 0.7, "top_p": 0.9, "max_tokens": 1024},
     ),
     ProviderConfig(
         name="groq",
         models=DEFAULT_GROQ_MODELS,
-        default_parameters={
-            "temperature": 0.7,
-            "top_p": 1.0,
-            "max_tokens": 1024
-        }
-    )
+        default_parameters={"temperature": 0.7, "top_p": 1.0, "max_tokens": 1024},
+    ),
 ]
 
 # Register default providers
