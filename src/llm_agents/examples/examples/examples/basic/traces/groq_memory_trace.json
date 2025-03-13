@@ -1,0 +1,678 @@
+[
+  {
+    "id": "a82863b1-fa79-4105-91b7-c55819015e01",
+    "name": "memory_task_agent.process_message",
+    "group_id": "2209563809296",
+    "started_at": 1741805920.2030108,
+    "ended_at": 1741805920.9744325,
+    "duration": 0.7714216709136963,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "fa41a3d7-3408-4da5-814f-f27cd90080e9",
+        "trace_id": "a82863b1-fa79-4105-91b7-c55819015e01",
+        "name": "retrieve_memories",
+        "started_at": 1741805920.2030108,
+        "ended_at": 1741805920.2030108,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "hi iam ragi"
+        }
+      },
+      {
+        "id": "222132d6-d631-4115-a7b6-fd43ee8ed0b4",
+        "trace_id": "a82863b1-fa79-4105-91b7-c55819015e01",
+        "name": "process_with_tools",
+        "started_at": 1741805920.2030108,
+        "ended_at": 1741805920.9744325,
+        "duration": 0.7714216709136963,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "ab827716-e3f8-4ad4-b309-b7f1725a1e4b",
+        "trace_id": "a82863b1-fa79-4105-91b7-c55819015e01",
+        "name": "store_memory",
+        "started_at": 1741805920.9744325,
+        "ended_at": 1741805920.9744325,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "27878bf0-91df-4674-923b-693af40fce77",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741805920.2030108,
+    "ended_at": 1741805920.9744325,
+    "duration": 0.7714216709136963,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "0a4fcdd3-5e4c-41e2-a530-df3d22c448f8",
+    "name": "memory_task_agent.process_message",
+    "group_id": "2536451625840",
+    "started_at": 1741805990.432602,
+    "ended_at": 1741805991.128665,
+    "duration": 0.6960630416870117,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "4d28a9cb-6457-46dd-98d6-17765333b0a7",
+        "trace_id": "0a4fcdd3-5e4c-41e2-a530-df3d22c448f8",
+        "name": "retrieve_memories",
+        "started_at": 1741805990.432602,
+        "ended_at": 1741805990.432602,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "hi iam ragi"
+        }
+      },
+      {
+        "id": "cd6008c8-fbc2-4d88-b051-e517c82d37b1",
+        "trace_id": "0a4fcdd3-5e4c-41e2-a530-df3d22c448f8",
+        "name": "process_with_tools",
+        "started_at": 1741805990.432602,
+        "ended_at": 1741805991.128665,
+        "duration": 0.6960630416870117,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "5a5dfb3d-4e5e-47bf-b20e-824cd0d1351e",
+        "trace_id": "0a4fcdd3-5e4c-41e2-a530-df3d22c448f8",
+        "name": "store_memory",
+        "started_at": 1741805991.128665,
+        "ended_at": 1741805991.128665,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "d65c2891-344d-4c57-acac-dcaf97dea93d",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741805990.432602,
+    "ended_at": 1741805991.128665,
+    "duration": 0.6960630416870117,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "6e3e2e5f-b067-4982-8f80-b0ed0a5fe1f3",
+    "name": "memory_task_agent.process_message",
+    "group_id": "1534745924512",
+    "started_at": 1741806127.9364483,
+    "ended_at": 1741806128.5804152,
+    "duration": 0.6439669132232666,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "39abd15c-c9b6-4272-afd0-b4b12b098cfa",
+        "trace_id": "6e3e2e5f-b067-4982-8f80-b0ed0a5fe1f3",
+        "name": "retrieve_memories",
+        "started_at": 1741806127.9364483,
+        "ended_at": 1741806127.9364483,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "hi iam ragi"
+        }
+      },
+      {
+        "id": "fb2caa0d-3218-4908-a892-dd5e99933a1d",
+        "trace_id": "6e3e2e5f-b067-4982-8f80-b0ed0a5fe1f3",
+        "name": "process_with_tools",
+        "started_at": 1741806127.9364483,
+        "ended_at": 1741806128.5804152,
+        "duration": 0.6439669132232666,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "a0f1413b-45c2-45e6-87a4-fd158c4de041",
+        "trace_id": "6e3e2e5f-b067-4982-8f80-b0ed0a5fe1f3",
+        "name": "store_memory",
+        "started_at": 1741806128.5804152,
+        "ended_at": 1741806128.5804152,
+        "duration": 0.0,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "7754dda5-c487-4c4f-96d1-c701398fbe6b",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806127.9364483,
+    "ended_at": 1741806128.5804152,
+    "duration": 0.6439669132232666,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "0e5af1f9-642e-4b95-971c-0a4a27eec2ec",
+    "name": "memory_task_agent.process_message",
+    "group_id": "1534745924512",
+    "started_at": 1741806133.945818,
+    "ended_at": 1741806134.4270232,
+    "duration": 0.4812052249908447,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "29667b87-12cb-4ec2-a7e2-0250eb1f9f50",
+        "trace_id": "0e5af1f9-642e-4b95-971c-0a4a27eec2ec",
+        "name": "retrieve_memories",
+        "started_at": 1741806133.945818,
+        "ended_at": 1741806133.945818,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "whats my name"
+        }
+      },
+      {
+        "id": "6057e12e-d883-4c01-bea9-1fcbf78847cf",
+        "trace_id": "0e5af1f9-642e-4b95-971c-0a4a27eec2ec",
+        "name": "process_with_tools",
+        "started_at": 1741806133.945818,
+        "ended_at": 1741806134.4270232,
+        "duration": 0.4812052249908447,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "9a90aef4-db66-454b-9c12-c17c881078df",
+        "trace_id": "0e5af1f9-642e-4b95-971c-0a4a27eec2ec",
+        "name": "store_memory",
+        "started_at": 1741806134.4270232,
+        "ended_at": 1741806134.4270232,
+        "duration": 0.0,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "6d61d6a2-f850-4981-9416-d828f9287298",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806133.945818,
+    "ended_at": 1741806134.4270232,
+    "duration": 0.4812052249908447,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "a545786b-8cf2-4a53-9cfa-d50b0a79ebf6",
+    "name": "memory_task_agent.process_message",
+    "group_id": "1534745924512",
+    "started_at": 1741806155.9133754,
+    "ended_at": 1741806156.4338274,
+    "duration": 0.5204520225524902,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "fea68375-2ca9-4914-ac4f-bbe313194bfe",
+        "trace_id": "a545786b-8cf2-4a53-9cfa-d50b0a79ebf6",
+        "name": "retrieve_memories",
+        "started_at": 1741806155.9133754,
+        "ended_at": 1741806155.9133754,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "i like eating alot "
+        }
+      },
+      {
+        "id": "8375f957-9c9c-42b7-a6d6-573db16e0c7d",
+        "trace_id": "a545786b-8cf2-4a53-9cfa-d50b0a79ebf6",
+        "name": "process_with_tools",
+        "started_at": 1741806155.9133754,
+        "ended_at": 1741806156.4338274,
+        "duration": 0.5204520225524902,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "167e44a3-5805-4e83-bd23-b77619f2faed",
+        "trace_id": "a545786b-8cf2-4a53-9cfa-d50b0a79ebf6",
+        "name": "store_memory",
+        "started_at": 1741806156.4338274,
+        "ended_at": 1741806156.4338274,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "635a45b3-6cd9-477c-94fd-ecef6e78b211",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806155.9133754,
+    "ended_at": 1741806156.4338274,
+    "duration": 0.5204520225524902,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "cfb656a1-83a7-46c2-b9a9-a0b4aefab37e",
+    "name": "memory_task_agent.process_message",
+    "group_id": "1534745924512",
+    "started_at": 1741806165.856972,
+    "ended_at": 1741806166.4759839,
+    "duration": 0.6190118789672852,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "1eeb8783-2d61-4bad-8c2b-4f4465771539",
+        "trace_id": "cfb656a1-83a7-46c2-b9a9-a0b4aefab37e",
+        "name": "retrieve_memories",
+        "started_at": 1741806165.856972,
+        "ended_at": 1741806165.856972,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "what i like"
+        }
+      },
+      {
+        "id": "6f200528-2216-4286-93e2-2201f47ce0f0",
+        "trace_id": "cfb656a1-83a7-46c2-b9a9-a0b4aefab37e",
+        "name": "process_with_tools",
+        "started_at": 1741806165.856972,
+        "ended_at": 1741806166.4749029,
+        "duration": 0.6179308891296387,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "1a39379c-9ff1-425e-a534-340ab3196141",
+        "trace_id": "cfb656a1-83a7-46c2-b9a9-a0b4aefab37e",
+        "name": "store_memory",
+        "started_at": 1741806166.4749029,
+        "ended_at": 1741806166.4759839,
+        "duration": 0.0010809898376464844,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "637cd5e3-3afe-4854-8f77-8c0a020442f5",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806165.856972,
+    "ended_at": 1741806166.4759839,
+    "duration": 0.6190118789672852,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "09ed7df5-0d77-4cd7-81c5-8a1e91d28d22",
+    "name": "memory_task_agent.process_message",
+    "group_id": "1857762972384",
+    "started_at": 1741806260.9859688,
+    "ended_at": 1741806261.7094593,
+    "duration": 0.7234904766082764,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "94169ecb-eaef-41d8-8696-96f7cba1614e",
+        "trace_id": "09ed7df5-0d77-4cd7-81c5-8a1e91d28d22",
+        "name": "retrieve_memories",
+        "started_at": 1741806260.9874787,
+        "ended_at": 1741806260.9874787,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "hi how are you "
+        }
+      },
+      {
+        "id": "9bc09cfd-928d-4a6f-a462-54bc93b798e7",
+        "trace_id": "09ed7df5-0d77-4cd7-81c5-8a1e91d28d22",
+        "name": "process_with_tools",
+        "started_at": 1741806260.9874787,
+        "ended_at": 1741806261.7094593,
+        "duration": 0.7219805717468262,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "069d9e8c-a07b-49b1-b5d0-b6eca4f24aa3",
+        "trace_id": "09ed7df5-0d77-4cd7-81c5-8a1e91d28d22",
+        "name": "store_memory",
+        "started_at": 1741806261.7094593,
+        "ended_at": 1741806261.7094593,
+        "duration": 0.0,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "e713f487-b649-42bc-9ec9-fb1d2ade7876",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806260.9859688,
+    "ended_at": 1741806261.7094593,
+    "duration": 0.7234904766082764,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "405643ad-1051-47ea-beec-7a5ddb735e55",
+    "name": "memory_task_agent.process_message",
+    "group_id": "1857762972384",
+    "started_at": 1741806285.4194498,
+    "ended_at": 1741806285.920355,
+    "duration": 0.5009052753448486,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "89ab0533-464d-4ce0-999f-d8f88783a4d4",
+        "trace_id": "405643ad-1051-47ea-beec-7a5ddb735e55",
+        "name": "retrieve_memories",
+        "started_at": 1741806285.4194498,
+        "ended_at": 1741806285.4194498,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "whats my name"
+        }
+      },
+      {
+        "id": "db57edb0-dc11-4383-8530-eb340a66ca5d",
+        "trace_id": "405643ad-1051-47ea-beec-7a5ddb735e55",
+        "name": "process_with_tools",
+        "started_at": 1741806285.4194498,
+        "ended_at": 1741806285.920355,
+        "duration": 0.5009052753448486,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "5c6dc281-16fb-4c00-9dc4-aa6dd9691a6e",
+        "trace_id": "405643ad-1051-47ea-beec-7a5ddb735e55",
+        "name": "store_memory",
+        "started_at": 1741806285.920355,
+        "ended_at": 1741806285.920355,
+        "duration": 0.0,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "7617efbd-56ad-4082-ad72-e7768390acec",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806285.4194498,
+    "ended_at": 1741806285.920355,
+    "duration": 0.5009052753448486,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "b68a346d-b2c6-4648-80ae-666f177949f3",
+    "name": "memory_task_agent.process_message",
+    "group_id": "2273608684112",
+    "started_at": 1741806369.9263759,
+    "ended_at": 1741806370.7660313,
+    "duration": 0.8396553993225098,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "830be8a8-0bdd-40ed-93a6-2d8c108024a4",
+        "trace_id": "b68a346d-b2c6-4648-80ae-666f177949f3",
+        "name": "retrieve_memories",
+        "started_at": 1741806369.9263759,
+        "ended_at": 1741806369.9263759,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "hi how are you"
+        }
+      },
+      {
+        "id": "5d9545b8-943d-409b-a1a1-32a3c0585805",
+        "trace_id": "b68a346d-b2c6-4648-80ae-666f177949f3",
+        "name": "process_with_tools",
+        "started_at": 1741806369.9263759,
+        "ended_at": 1741806370.7660313,
+        "duration": 0.8396553993225098,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "a9e8c8ea-d909-49b1-ae48-9dadf8f0a49f",
+        "trace_id": "b68a346d-b2c6-4648-80ae-666f177949f3",
+        "name": "store_memory",
+        "started_at": 1741806370.7660313,
+        "ended_at": 1741806370.7660313,
+        "duration": 0.0,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "28385ad8-3e1a-4ee9-a87d-fd06919e60db",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806369.9263759,
+    "ended_at": 1741806370.7660313,
+    "duration": 0.8396553993225098,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "1c8cf2df-fb45-4674-939f-6f9f89734e74",
+    "name": "memory_task_agent.process_message",
+    "group_id": "2273608684112",
+    "started_at": 1741806378.1183228,
+    "ended_at": 1741806379.221774,
+    "duration": 1.1034512519836426,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "ab7c9ab7-2457-4da2-aba5-24c11dc58afe",
+        "trace_id": "1c8cf2df-fb45-4674-939f-6f9f89734e74",
+        "name": "retrieve_memories",
+        "started_at": 1741806378.1183228,
+        "ended_at": 1741806378.1183228,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "iam too sad"
+        }
+      },
+      {
+        "id": "b902c1b9-1f0e-41bf-94f5-d4f5c23f1f1a",
+        "trace_id": "1c8cf2df-fb45-4674-939f-6f9f89734e74",
+        "name": "process_with_tools",
+        "started_at": 1741806378.1183228,
+        "ended_at": 1741806379.221774,
+        "duration": 1.1034512519836426,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "fe07ed29-257e-4779-a054-340fb774f9a5",
+        "trace_id": "1c8cf2df-fb45-4674-939f-6f9f89734e74",
+        "name": "store_memory",
+        "started_at": 1741806379.221774,
+        "ended_at": 1741806379.221774,
+        "duration": 0.0,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "dbff0ac5-16b8-40e1-9654-85a7ca37c9bc",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806378.1183228,
+    "ended_at": 1741806379.221774,
+    "duration": 1.1034512519836426,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "27ef6888-accb-4db7-b5b6-634c553bd933",
+    "name": "memory_task_agent.process_message",
+    "group_id": "2273608684112",
+    "started_at": 1741806388.8083975,
+    "ended_at": 1741806389.8201523,
+    "duration": 1.0117547512054443,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "48643967-eae6-4722-8702-77000e54268d",
+        "trace_id": "27ef6888-accb-4db7-b5b6-634c553bd933",
+        "name": "retrieve_memories",
+        "started_at": 1741806388.8083975,
+        "ended_at": 1741806388.8083975,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "thank you"
+        }
+      },
+      {
+        "id": "5c9c0f50-f0aa-4b50-888b-5d0da0589a6e",
+        "trace_id": "27ef6888-accb-4db7-b5b6-634c553bd933",
+        "name": "process_with_tools",
+        "started_at": 1741806388.8083975,
+        "ended_at": 1741806389.8201523,
+        "duration": 1.0117547512054443,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "f74d50b9-af3d-4ef5-8855-332818b2029f",
+        "trace_id": "27ef6888-accb-4db7-b5b6-634c553bd933",
+        "name": "store_memory",
+        "started_at": 1741806389.8201523,
+        "ended_at": 1741806389.8201523,
+        "duration": 0.0,
+        "metadata": {
+          "stored_response": true
+        },
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "ec3c1216-d760-48de-92c7-cf5779a3b06a",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806388.8083975,
+    "ended_at": 1741806389.8201523,
+    "duration": 1.0117547512054443,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  },
+  {
+    "id": "a2db8146-e743-4ea3-9a72-391b08790aa1",
+    "name": "memory_task_agent.process_message",
+    "group_id": "2273608684112",
+    "started_at": 1741806420.086589,
+    "ended_at": 1741806420.7101758,
+    "duration": 0.6235866546630859,
+    "metadata": {},
+    "spans": [
+      {
+        "id": "f645acb4-9e4a-4c51-8450-4dc416f6ec8f",
+        "trace_id": "a2db8146-e743-4ea3-9a72-391b08790aa1",
+        "name": "retrieve_memories",
+        "started_at": 1741806420.086589,
+        "ended_at": 1741806420.086589,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {
+          "query": "5+6"
+        }
+      },
+      {
+        "id": "5b2f3c93-a89e-4773-80ee-48fcb3ce8da1",
+        "trace_id": "a2db8146-e743-4ea3-9a72-391b08790aa1",
+        "name": "process_with_tools",
+        "started_at": 1741806420.086589,
+        "ended_at": 1741806420.7101758,
+        "duration": 0.6235866546630859,
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "id": "961478d3-9358-4199-8be8-a783c666bc8e",
+        "trace_id": "a2db8146-e743-4ea3-9a72-391b08790aa1",
+        "name": "store_memory",
+        "started_at": 1741806420.7101758,
+        "ended_at": 1741806420.7101758,
+        "duration": 0.0,
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "error": null
+  },
+  {
+    "id": "ff99300d-2d03-47d4-b147-b53cf999ee22",
+    "name": "memory_runner.run",
+    "group_id": "groq_memory_session",
+    "started_at": 1741806420.086589,
+    "ended_at": 1741806420.7101758,
+    "duration": 0.6235866546630859,
+    "metadata": {},
+    "spans": [],
+    "error": null
+  }
+]
