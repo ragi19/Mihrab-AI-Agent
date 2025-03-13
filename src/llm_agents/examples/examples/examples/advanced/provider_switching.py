@@ -7,7 +7,7 @@ from typing import Dict, Type
 from llm_agents.models.providers.openai import OpenAIProvider
 from llm_agents.models.providers.anthropic import AnthropicProvider
 from llm_agents.models.providers.groq import GroqProvider
-from llm_agents.core.agent import Agent
+from llm_agents.core.agent import Agent, SimpleAgent
 from llm_agents.core.message import Message, MessageRole
 from llm_agents.runtime.runner import AgentRunner
 from llm_agents.runtime.context import RuntimeContext

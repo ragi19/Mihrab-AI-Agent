@@ -154,11 +154,11 @@ class MultiAgentSystem:
         )
         logger.info("\nSynthesis complete.")
         
-    return {
+        return {
             "analysis": analysis,
             "research": research,
             "synthesis": synthesis
-    }
+        }
 
 async def main():
     """Main function to run the multi-agent system"""

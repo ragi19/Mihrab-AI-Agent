@@ -105,6 +105,6 @@ class Config:
 
 # Global configuration instance
 config = Config()
-
 # Load configuration from default location on import
 config.load()
+
