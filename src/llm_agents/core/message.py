@@ -25,7 +25,7 @@ class Message:
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert message to dictionary format"""
-        result = {"role": self.role.value, "content": self.content}
+        result: Dict[str, Any] = {"role": self.role.value, "content": self.content}
 
         if self.metadata:
             result["metadata"] = self.metadata

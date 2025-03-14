@@ -8,7 +8,7 @@ import os
 from llm_agents.utils.config_generator import generate_config, load_environment_keys
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Generate LLM Agents configuration file"
     )

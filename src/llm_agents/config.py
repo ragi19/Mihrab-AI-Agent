@@ -5,15 +5,29 @@ Configuration management for the framework
 import json
 import os
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, TypedDict, cast
 
 from .utils.logging import setup_logging
+
+
+class ProviderConfig(TypedDict, total=False):
+    """Type for provider configuration"""
+    api_key: Optional[str]
+    default_model: str
+    default_parameters: Dict[str, Any]
+
+
+class LoggingConfig(TypedDict, total=False):
+    """Type for logging configuration"""
+    level: str
+    format: str
+    file: Optional[str]
 
 
 class Config:
     """Configuration manager"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._config: Dict[str, Any] = {
             "providers": {},
             "default_provider": "openai",
@@ -67,9 +81,9 @@ class Config:
         with open(save_path, "w") as f:
             json.dump(self._config, f, indent=2)
 
-    def get_provider_config(self, provider: str) -> Dict[str, Any]:
+    def get_provider_config(self, provider: str) -> ProviderConfig:
         """Get configuration for a specific provider"""
-        return self._config["providers"].get(provider, {})
+        return cast(ProviderConfig, self._config["providers"].get(provider, {}))
 
     def set_provider_config(self, provider: str, config: Dict[str, Any]) -> None:
         """Set configuration for a specific provider"""
@@ -77,15 +91,15 @@ class Config:
 
     def get_default_provider(self) -> str:
         """Get the default provider name"""
-        return self._config["default_provider"]
+        return cast(str, self._config["default_provider"])
 
     def set_default_provider(self, provider: str) -> None:
         """Set the default provider name"""
         self._config["default_provider"] = provider
 
-    def get_logging_config(self) -> Dict[str, Any]:
+    def get_logging_config(self) -> LoggingConfig:
         """Get logging configuration"""
-        return self._config["logging"]
+        return cast(LoggingConfig, self._config["logging"])
 
     def set_logging_config(self, config: Dict[str, Any]) -> None:
         """Set logging configuration and reconfigure logging"""
@@ -99,12 +113,12 @@ class Config:
     @property
     def max_history_tokens(self) -> int:
         """Get maximum history tokens"""
-        return self._config["max_history_tokens"]
+        return cast(int, self._config["max_history_tokens"])
 
     @property
     def default_system_message(self) -> str:
         """Get default system message"""
-        return self._config["default_system_message"]
+        return cast(str, self._config["default_system_message"])
 
 
 # Global configuration instance

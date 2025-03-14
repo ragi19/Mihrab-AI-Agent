@@ -6,7 +6,7 @@ import json
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, Generic, List, Optional, TypeVar
+from typing import Any, Dict, Generic, List, Optional, TypeVar, cast, Union
 
 from ..core.message import Message, MessageRole
 from ..utils.logging import get_logger
@@ -42,12 +42,12 @@ class MemoryEntry(Generic[T]):
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "MemoryEntry[T]":
+    def from_dict(cls, data: Dict[str, Any]) -> "MemoryEntry[Any]":
         """Create memory entry from dictionary"""
         content_data = data["content"]
         if isinstance(content_data, dict) and "role" in content_data:
             # Reconstruct Message object if the content was a Message
-            content = Message(
+            content: Any = Message(
                 role=MessageRole(content_data["role"]),
                 content=content_data["content"],
                 metadata=content_data.get("metadata", {}),
@@ -270,7 +270,7 @@ class Memory:
         return [entry for entry, _ in scored_memories[:k]]
 
     async def add(
-        self, content: Any, metadata: Dict[str, Any] = None, importance: float = 1.0
+        self, content: Any, metadata: Optional[Dict[str, Any]] = None, importance: float = 1.0
     ) -> None:
         """Add an item to memory
 
@@ -292,7 +292,7 @@ class Memory:
 
         # Prune if needed
         if (
-            self.long_term_memory_size
+            self.long_term_memory_size is not None
             and len(self.long_term_memory) > self.long_term_memory_size
         ):
             self._prune_long_term_memory()
@@ -318,9 +318,10 @@ class Memory:
         self.long_term_memory.sort(key=lambda x: x.importance)
 
         # Remove least important memories
-        excess = len(self.long_term_memory) - self.long_term_memory_size
-        if excess > 0:
-            self.long_term_memory = self.long_term_memory[excess:]
+        if self.long_term_memory_size is not None:
+            excess = len(self.long_term_memory) - self.long_term_memory_size
+            if excess > 0:
+                self.long_term_memory = self.long_term_memory[excess:]
 
     def clear(self) -> None:
         """Clear all memories"""
