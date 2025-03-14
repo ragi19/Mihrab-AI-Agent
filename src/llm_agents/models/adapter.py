@@ -99,9 +99,7 @@ class ModelAdapter(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    async def create_model(
-        self, model_id: str, config: ModelConfig
-    ) -> BaseModel:
+    async def create_model(self, model_id: str, config: ModelConfig) -> BaseModel:
         """Create a model instance
 
         Args:
@@ -399,9 +397,7 @@ class CachedModelAdapter(ModelAdapter):
         """
         return await self.adapter.validate_model(model_id, capabilities)
 
-    async def create_model(
-        self, model_id: str, config: ModelConfig
-    ) -> BaseModel:
+    async def create_model(self, model_id: str, config: ModelConfig) -> BaseModel:
         """Create or get a cached model instance
 
         Args:

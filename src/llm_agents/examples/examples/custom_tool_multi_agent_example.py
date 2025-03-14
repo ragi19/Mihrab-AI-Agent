@@ -176,7 +176,10 @@ class AdvancedMultiAgentSystem:
         self.model = await MultiProviderModel.create(
             primary_model="llama3-70b-8192",  # Groq's Llama 3 model
             fallback_models=[],
-            required_capabilities={ModelCapability.CHAT, ModelCapability.FUNCTION_CALLING},
+            required_capabilities={
+                ModelCapability.CHAT,
+                ModelCapability.FUNCTION_CALLING,
+            },
             optimize_for=OptimizationStrategy.PERFORMANCE,
         )
         logger.info(

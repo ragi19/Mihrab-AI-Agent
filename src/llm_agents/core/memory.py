@@ -50,7 +50,7 @@ class MemoryEntry(Generic[T]):
             content = Message(
                 role=MessageRole(content_data["role"]),
                 content=content_data["content"],
-                metadata=content_data.get("metadata", {})
+                metadata=content_data.get("metadata", {}),
             )
         else:
             content = content_data
@@ -81,10 +81,15 @@ class Memory:
         self.logger = get_logger("memory")
 
     def add_to_working_memory(
-        self, item: Any, importance: float = 1.0, metadata: Optional[Dict[str, Any]] = None
+        self,
+        item: Any,
+        importance: float = 1.0,
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Add item to working memory"""
-        entry = MemoryEntry(content=item, importance=importance, metadata=metadata or {})
+        entry = MemoryEntry(
+            content=item, importance=importance, metadata=metadata or {}
+        )
         self.working_memory.append(entry)
         self.logger.debug(f"Added item to working memory")
 
