@@ -2,7 +2,7 @@
 Pytest configuration and fixtures
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Set, AsyncIterator
 
 import pytest
 
@@ -18,12 +18,33 @@ class MockModel(BaseModel):
         self.responses = {"default": "This is a mock response"}
         if responses:
             self.responses.update(responses)
+        self._capabilities = {ModelCapability.CHAT, ModelCapability.STREAMING}
 
-    async def generate_response(self, messages: List[Message]) -> Message:
-        """Generate a response using mock data"""
+    @property
+    def capabilities(self) -> Set[str]:
+        """Get the capabilities of this model"""
+        return self._capabilities
+
+    async def generate(self, messages: List[Message], **kwargs: Any) -> Message:
+        """Generate a response from the model"""
         last_message = messages[-1].content
         response = self.responses.get(last_message, self.responses["default"])
         return Message(role=MessageRole.ASSISTANT, content=response)
+
+    async def generate_stream(
+        self, messages: List[Message], **kwargs: Any
+    ) -> AsyncIterator[Message]:
+        """Stream a response from the model"""
+        response = await self.generate(messages, **kwargs)
+        # Split the response into chunks for streaming
+        words = response.content.split()
+        for i in range(0, len(words), 2):
+            chunk = " ".join(words[i:i+2])
+            yield Message(role=MessageRole.ASSISTANT, content=chunk)
+
+    async def generate_response(self, messages: List[Message]) -> Message:
+        """Generate a response using mock data"""
+        return await self.generate(messages)
 
     async def _generate(self, messages: List[Message]) -> Message:
         """Internal method for model-specific response generation"""

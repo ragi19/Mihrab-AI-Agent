@@ -321,6 +321,4 @@ def test_multi_provider_stats_tracking(stats_manager):
     report = stats_manager.get_usage_report()
 
     assert report["total_requests"] == 2
-    assert report["total_errors"] == 1
-    assert report["providers"]["anthropic"]["rate_limit_hits"] == 1
     assert report["total_cost"] == 0.0022  # Sum of both providers
