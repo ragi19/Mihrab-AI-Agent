@@ -112,8 +112,8 @@ from llm_agents.models import (
     ProviderRegistry,
 )
 from llm_agents.models.provider_discovery import ProviderDiscovery
-from llm_agents.models.provider_stats import ProviderStatsManager
 from llm_agents.models.provider_registry import ProviderInfo
+from llm_agents.models.provider_stats import ProviderStatsManager
 
 
 class MockProvider(BaseProvider):
@@ -164,13 +164,13 @@ def test_provider_registration(provider_registry):
     """Test provider registration"""
     provider = MockProvider()
     model_info = provider.SUPPORTED_MODELS["test-model"]
-    
+
     # Create ProviderInfo from model info
     provider_info = ProviderInfo(
         name="mock",
         supported_models={"test-model"},
         features={ModelCapability.CHAT, ModelCapability.COMPLETION},
-        requires_api_key=True
+        requires_api_key=True,
     )
 
     provider_registry.register_provider("mock", MockProvider, provider_info)
@@ -184,13 +184,13 @@ def test_provider_model_support(provider_registry):
     """Test provider model support checks"""
     provider = MockProvider()
     model_info = provider.SUPPORTED_MODELS["test-model"]
-    
+
     # Create ProviderInfo from model info
     provider_info = ProviderInfo(
         name="mock",
         supported_models={"test-model"},
         features={ModelCapability.CHAT, ModelCapability.COMPLETION},
-        requires_api_key=True
+        requires_api_key=True,
     )
 
     provider_registry.register_provider("mock", MockProvider, provider_info)
@@ -205,13 +205,13 @@ async def test_provider_model_creation(provider_registry):
     """Test model creation through provider"""
     provider = MockProvider(api_key="test-key")
     model_info = provider.SUPPORTED_MODELS["test-model"]
-    
+
     # Create ProviderInfo from model info
     provider_info = ProviderInfo(
         name="mock",
         supported_models={"test-model"},
         features={ModelCapability.CHAT, ModelCapability.COMPLETION},
-        requires_api_key=True
+        requires_api_key=True,
     )
 
     provider_registry.register_provider("mock", MockProvider, provider_info)
@@ -227,13 +227,13 @@ def test_provider_config_validation(provider_registry):
     """Test provider configuration validation"""
     provider = MockProvider()
     model_info = provider.SUPPORTED_MODELS["test-model"]
-    
+
     # Create ProviderInfo from model info
     provider_info = ProviderInfo(
         name="mock",
         supported_models={"test-model"},
         features={ModelCapability.CHAT, ModelCapability.COMPLETION},
-        requires_api_key=True
+        requires_api_key=True,
     )
 
     provider_registry.register_provider("mock", MockProvider, provider_info)

@@ -2,7 +2,7 @@
 Pytest configuration and fixtures
 """
 
-from typing import Any, Dict, List, Set, AsyncIterator
+from typing import Any, AsyncIterator, Dict, List, Set
 
 import pytest
 
@@ -39,7 +39,7 @@ class MockModel(BaseModel):
         # Split the response into chunks for streaming
         words = response.content.split()
         for i in range(0, len(words), 2):
-            chunk = " ".join(words[i:i+2])
+            chunk = " ".join(words[i : i + 2])
             yield Message(role=MessageRole.ASSISTANT, content=chunk)
 
     async def generate_response(self, messages: List[Message]) -> Message:

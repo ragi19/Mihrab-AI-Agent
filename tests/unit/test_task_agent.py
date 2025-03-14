@@ -177,7 +177,7 @@ async def test_memory_task_agent_context_enrichment(memory_task_agent):
 
     # Mock the _augment_with_memories method to add a memory context message
     original_augment = memory_task_agent._augment_with_memories
-    
+
     async def mock_augment_with_memories(query):
         # Add a memory context message directly to the conversation history
         memory_task_agent.conversation_history.append(
@@ -186,7 +186,7 @@ async def test_memory_task_agent_context_enrichment(memory_task_agent):
                 content="RELEVANT MEMORIES:\n1. [2023-01-01] Previous context\n2. [2023-01-01] Previous episode",
             )
         )
-    
+
     # Replace the method with our mock
     memory_task_agent._augment_with_memories = mock_augment_with_memories
 
