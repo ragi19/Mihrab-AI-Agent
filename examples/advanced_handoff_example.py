@@ -1,15 +1,18 @@
 """
 Advanced Handoff Example
 
-Demonstrates sophisticated handoff patterns with context preservation and conditional handoffs.
+This example demonstrates advanced agent handoff patterns with specialized agents.
 """
 import asyncio
 from typing import List
-from llm_agents import create_agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.handoff import HandoffAgent, HandoffCondition, ContextPreservingHandoff
-from llm_agents.runtime.coordinator import AgentCoordinator
-from llm_agents.tools.standard import CalculatorTool, DateTimeTool
+from mihrabai import create_agent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.handoff import HandoffCoordinator
+from mihrabai.handoff.conditions import ComplexityThreshold, TopicDetection
+from mihrabai.tools.standard import CalculatorTool, DateTimeTool
+from mihrabai.tools.base import BaseTool
+from mihrabai.runtime.coordinator import AgentCoordinator
+from mihrabai.handoff import HandoffAgent, HandoffCondition, ContextPreservingHandoff
 
 class SpecializedHandoffAgent(HandoffAgent):
     def __init__(self, agent, conditions: List[HandoffCondition], expertise_areas: List[str]):

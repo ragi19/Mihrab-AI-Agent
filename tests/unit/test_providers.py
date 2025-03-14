@@ -7,16 +7,16 @@ from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.base import BaseModel, ModelCapability
-from llm_agents.models.provider_registry import (
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.base import BaseModel, ModelCapability
+from mihrabai.models.provider_registry import (
     ProviderError,
     ProviderInfo,
     ProviderRegistry,
 )
-from llm_agents.models.providers.anthropic import AnthropicProvider
-from llm_agents.models.providers.groq import GroqProvider
-from llm_agents.models.providers.openai import OpenAIProvider
+from mihrabai.models.providers.anthropic import AnthropicProvider
+from mihrabai.models.providers.groq import GroqProvider
+from mihrabai.models.providers.openai import OpenAIProvider
 
 
 class MockModel(BaseModel):
@@ -199,7 +199,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from llm_agents.models import (
+from mihrabai.models import (
     BaseModel,
     BaseProvider,
     ModelCapability,
@@ -207,9 +207,9 @@ from llm_agents.models import (
     ProviderError,
     ProviderRegistry,
 )
-from llm_agents.models.provider_discovery import ProviderDiscovery
-from llm_agents.models.provider_registry import ProviderInfo
-from llm_agents.models.provider_stats import ProviderStatsManager
+from mihrabai.models.provider_discovery import ProviderDiscovery
+from mihrabai.models.provider_registry import ProviderInfo
+from mihrabai.models.provider_stats import ProviderStatsManager
 
 
 class MockProvider(BaseProvider):
@@ -450,14 +450,26 @@ def test_usage_report(stats_manager):
 
 @pytest.mark.asyncio
 async def test_provider_discovery():
-    """Test provider discovery mechanism"""
+    """Test provider discovery functionality."""
+    from mihrabai.models import (
+        create_model,
+        get_provider,
+        list_models,
+        list_providers,
+        register_model,
+        register_provider,
+    )
+    from mihrabai.models.provider_discovery import ProviderDiscovery
+    from mihrabai.models.provider_registry import ProviderInfo
+    from mihrabai.models.provider_stats import ProviderStatsManager
+
     with patch(
-        "llm_agents.models.provider_discovery.ProviderDiscovery.discover_providers"
+        "mihrabai.models.provider_discovery.ProviderDiscovery.discover_providers"
     ) as mock_discover:
         # Mock discovered providers
         mock_discover.return_value = {"mock": MockProvider}
 
-        from llm_agents.models.provider_discovery import ProviderDiscovery
+        from mihrabai.models.provider_discovery import ProviderDiscovery
 
         # Run discovery
         providers = await asyncio.to_thread(ProviderDiscovery.discover_providers)

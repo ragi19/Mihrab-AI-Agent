@@ -7,10 +7,10 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models import ModelCapability
-from llm_agents.models.providers.anthropic import ClaudeProvider
-from llm_agents.models.providers.groq import GroqProvider
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models import ModelCapability
+from mihrabai.models.providers.anthropic import ClaudeProvider
+from mihrabai.models.providers.groq import GroqProvider
 
 STREAM: Final[str] = "streaming"  # Alias for STREAMING
 
@@ -33,7 +33,7 @@ async def test_claude_streaming():
 
         # Mock the ClaudeModel class
         with patch(
-            "llm_agents.models.providers.anthropic.ClaudeModel"
+            "mihrabai.models.providers.anthropic.ClaudeModel"
         ) as MockClaudeModel:
             # Create a mock model instance
             mock_model = AsyncMock()
@@ -94,7 +94,7 @@ async def test_groq_streaming():
 
         # Mock the GroqModel.stream_response method to avoid making actual API calls
         with patch(
-            "llm_agents.models.providers.groq.models.GroqModel.stream_response"
+            "mihrabai.models.providers.groq.models.GroqModel.stream_response"
         ) as mock_stream_response:
 
             async def mock_stream_generator():
@@ -133,7 +133,7 @@ async def test_stream_error_handling():
 
         # Mock the ClaudeModel class
         with patch(
-            "llm_agents.models.providers.anthropic.ClaudeModel"
+            "mihrabai.models.providers.anthropic.ClaudeModel"
         ) as MockClaudeModel:
             # Create a mock model instance
             mock_model = AsyncMock()

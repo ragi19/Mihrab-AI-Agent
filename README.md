@@ -2,7 +2,7 @@
 
 A flexible and extensible framework for building AI agents powered by large language models (LLMs). Like the mihrab that guides prayer in a mosque, this framework provides direction and guidance through seamless integration with multiple LLM providers, intelligent provider fallback, and memory-enabled agents.
 
-[![PyPI version](https://badge.fury.io/py/mihrabai.svg)](https://badge.fury.io/py/mihrabai)
+[![PyPI version](https://badge.fury.io/py/mihrab-ai-agent.svg)](https://badge.fury.io/py/mihrab-ai-agent)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
@@ -19,7 +19,7 @@ A flexible and extensible framework for building AI agents powered by large lang
 ## Installation
 
 ```bash
-pip install mihrabai
+pip install mihrab-ai-agent
 ```
 
 ## Quick Start
@@ -283,4 +283,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Thanks to all the LLM providers for their amazing models
 - Inspired by LangChain, AutoGPT, and other agent frameworks
-- Named after the mihrab, the niche in a mosque that indicates the direction of prayer, symbolizing guidance and direction 
+- Named after the mihrab, the niche in a mosque that indicates the direction of prayer, symbolizing guidance and direction

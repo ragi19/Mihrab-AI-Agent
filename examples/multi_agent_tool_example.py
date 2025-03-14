@@ -1,13 +1,13 @@
 """
-Tool-Enabled Multi-Agent Example
+Multi-Agent Tool Example
 
-This example demonstrates how to use standard tools (Calculator and DateTime) with multi-agent systems.
+This example demonstrates multiple agents using shared tools.
 """
 import asyncio
-from llm_agents import create_agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.tools.standard import CalculatorTool, DateTimeTool
-from llm_agents.runtime.coordinator import AgentCoordinator
+from mihrabai import create_agent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.runtime.coordinator import AgentCoordinator
+from mihrabai.tools.standard import CalculatorTool, DateTimeTool
 
 async def main():
     # Initialize tools

@@ -1,17 +1,15 @@
-"""
-Unit tests for task agent implementations
-"""
-
+"""Tests for task agent functionality."""
 import contextlib
 from unittest.mock import AsyncMock, MagicMock, Mock, create_autospec, patch
 
 import pytest
+import pytest_asyncio
 
-from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.core.task_agent import TaskAgent
-from llm_agents.models.base import BaseModel
-from llm_agents.utils.tracing import Span, Trace, TraceProvider
+from mihrabai.core.memory_task_agent import MemoryEnabledTaskAgent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.core.task_agent import TaskAgent
+from mihrabai.models.base import BaseModel
+from mihrabai.utils.tracing import Span, Trace, TraceProvider
 
 
 class MockContextManager:

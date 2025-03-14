@@ -1,15 +1,16 @@
 """
 Custom Tool Multi-Agent Example
 
-Shows how to create and use a custom Wikipedia search tool in a multi-agent system.
+This example demonstrates using custom tools with multiple agents.
 """
 import asyncio
 import json
 import aiohttp
-from llm_agents import create_agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.tools import BaseTool
-from llm_agents.runtime.coordinator import AgentCoordinator
+from mihrabai import create_agent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.runtime.coordinator import AgentCoordinator
+from mihrabai.tools import ToolConfig
+from mihrabai.tools.base import BaseTool
 
 class WikipediaSearchTool(BaseTool):
     """Custom tool for searching Wikipedia articles."""

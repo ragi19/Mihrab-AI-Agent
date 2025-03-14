@@ -1,4 +1,4 @@
-# Core dependencies
+# Core dependencies for MihrabAI Agent
 aiohttp>=3.8.5
 asyncio>=3.4.3
 pydantic>=2.0.0

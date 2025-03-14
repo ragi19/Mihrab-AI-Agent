@@ -5,9 +5,9 @@ This example demonstrates a simple system with three agents (Analyzer, Researche
 Synthesizer) working together to process user queries.
 """
 import asyncio
-from llm_agents import create_agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.runtime.coordinator import AgentCoordinator
+from mihrabai import create_agent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.runtime.coordinator import AgentCoordinator
 
 async def main():
     # Create specialized agents
