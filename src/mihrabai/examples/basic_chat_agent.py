@@ -1,6 +1,7 @@
 """
 Basic chat agent example showing simple interaction with a model
 """
+
 import asyncio
 import os
 

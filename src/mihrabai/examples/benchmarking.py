@@ -1,6 +1,7 @@
 """
 Benchmarking example showing performance comparison between different providers
 """
+
 import asyncio
 import json
 import os

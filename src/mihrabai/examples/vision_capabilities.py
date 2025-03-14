@@ -1,6 +1,7 @@
 """
 Example showing vision capabilities
 """
+
 import asyncio
 import base64
 import os

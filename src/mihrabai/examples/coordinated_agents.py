@@ -1,6 +1,7 @@
 """
 Example showing multiple agents working together in coordination
 """
+
 import asyncio
 import os
 

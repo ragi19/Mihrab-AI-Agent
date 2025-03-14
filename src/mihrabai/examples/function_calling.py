@@ -1,6 +1,7 @@
 """
 Example showing function calling capabilities
 """
+
 import asyncio
 import json
 import os

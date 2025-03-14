@@ -1,14 +1,15 @@
 """Integration tests for memory with multi-provider support"""
+
 import os
 import tempfile
 from unittest.mock import AsyncMock, patch
 
 import pytest
+
 from mihrabai.core.memory_task_agent import MemoryEnabledTaskAgent
 from mihrabai.core.message import Message, MessageRole
 from mihrabai.models.base import ModelCapability
-from mihrabai.models.multi_provider import (MultiProviderModel,
-                                              OptimizationStrategy)
+from mihrabai.models.multi_provider import MultiProviderModel, OptimizationStrategy
 from mihrabai.runtime.memory_runner import MemoryAgentRunner
 
 # Set mock API keys for testing

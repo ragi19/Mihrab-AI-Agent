@@ -1,6 +1,7 @@
 """
 Example showing error recovery and retry strategies
 """
+
 import asyncio
 import os
 import random

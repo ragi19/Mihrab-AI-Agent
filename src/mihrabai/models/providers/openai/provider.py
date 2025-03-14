@@ -1,4 +1,5 @@
 """Provider implementation for OpenAI models."""
+
 from typing import Dict, List, Optional
 
 import openai

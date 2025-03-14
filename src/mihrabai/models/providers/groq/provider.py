@@ -1,4 +1,5 @@
 """Provider implementation for Groq models."""
+
 from typing import Dict, List, Optional
 
 import groq

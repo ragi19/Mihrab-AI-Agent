@@ -1,6 +1,7 @@
 """
 Example showing streaming chat capabilities
 """
+
 import asyncio
 import os
 import sys
