@@ -1,8 +1,8 @@
-# LLM Agents
+# MihrabAI
 
-A flexible and extensible framework for building AI agents powered by large language models (LLMs). This framework enables seamless integration with multiple LLM providers, intelligent provider fallback, and memory-enabled agents.
+A flexible and extensible framework for building AI agents powered by large language models (LLMs). Like the mihrab that guides prayer in a mosque, this framework provides direction and guidance through seamless integration with multiple LLM providers, intelligent provider fallback, and memory-enabled agents.
 
-[![PyPI version](https://badge.fury.io/py/llm-agents.svg)](https://badge.fury.io/py/llm-agents)
+[![PyPI version](https://badge.fury.io/py/mihrabai.svg)](https://badge.fury.io/py/mihrabai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
@@ -19,7 +19,7 @@ A flexible and extensible framework for building AI agents powered by large lang
 ## Installation
 
 ```bash
-pip install llm-agents
+pip install mihrabai
 ```
 
 ## Quick Start
@@ -29,9 +29,9 @@ pip install llm-agents
 ```python
 import asyncio
 import os
-from llm_agents.core.agent import SimpleAgent
-from llm_agents.models import create_model
-from llm_agents.runtime.runner import AgentRunner
+from mihrabai.core.agent import SimpleAgent
+from mihrabai.models import create_model
+from mihrabai.runtime.runner import AgentRunner
 
 async def main():
     # Create a model using OpenAI
@@ -60,9 +60,9 @@ if __name__ == "__main__":
 ```python
 import asyncio
 import os
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.core.agent import SimpleAgent
-from llm_agents.runtime.runner import AgentRunner
+from mihrabai.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from mihrabai.core.agent import SimpleAgent
+from mihrabai.runtime.runner import AgentRunner
 
 async def main():
     # Create a multi-provider model
@@ -85,7 +85,7 @@ async def main():
     runner = AgentRunner(agent=agent)
     
     # Run a conversation
-    response = await runner.run("What's the capital of France?")
+    response = await runner.run("What's the capital of Morocco?")
     print(f"Response from {model.current_provider}: {response.content}")
 
 if __name__ == "__main__":
@@ -97,9 +97,9 @@ if __name__ == "__main__":
 ```python
 import asyncio
 import os
-from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.models import create_model
-from llm_agents.runtime.memory_runner import MemoryAgentRunner
+from mihrabai.core.memory_task_agent import MemoryEnabledTaskAgent
+from mihrabai.models import create_model
+from mihrabai.runtime.memory_runner import MemoryAgentRunner
 
 async def main():
     # Create a model
@@ -112,7 +112,7 @@ async def main():
     # Create a memory-enabled agent
     agent = MemoryEnabledTaskAgent(
         model=model,
-        system_message="You are a helpful assistant with memory.",
+        system_message="You are a helpful assistant with memory like the ancient scholars of the House of Wisdom.",
         max_memory_items=50,
         memory_retrieval_count=5
     )
@@ -120,21 +120,21 @@ async def main():
     # Create a memory runner
     runner = MemoryAgentRunner(
         agent=agent,
-        memory_persistence_path="./memories"
+        memory_persistence_path="./manuscripts"
     )
     
     # Start a conversation with a session ID
-    session_id = "user123"
+    session_id = "scholar123"
     
     # First interaction
-    await runner.run("My name is Alice", session_id=session_id)
+    await runner.run("My name is Hassan", session_id=session_id)
     
     # Save memory
     await runner.save_memory(session_id)
     
     # Later interaction (memory will be loaded automatically)
     response = await runner.run("What's my name?", session_id=session_id)
-    print(response.content)  # Should remember the name "Alice"
+    print(response.content)  # Should remember the name "Hassan"
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
 ## Architecture
 
-The framework is built around a modular architecture:
+The framework is built around a modular architecture like the geometric patterns of Islamic art:
 
 - **Core**: Base classes for agents, messages, and memory
 - **Models**: Provider integrations and model abstractions
@@ -161,13 +161,13 @@ The framework is built around a modular architecture:
 ### Custom Tools
 
 ```python
-from llm_agents.core.task_agent import TaskAgent, ToolConfig
-from llm_agents.core.message import Message, MessageRole
+from mihrabai.core.task_agent import TaskAgent, ToolConfig
+from mihrabai.core.message import Message, MessageRole
 
 # Define a tool function
 def get_weather(params):
-    location = params.get("location", "New York")
-    return f"The weather in {location} is sunny and 75°F"
+    location = params.get("location", "Marrakech")
+    return f"The weather in {location} is sunny and 85°F"
 
 # Create a tool configuration
 weather_tool = ToolConfig(
@@ -179,7 +179,7 @@ weather_tool = ToolConfig(
         "properties": {
             "location": {
                 "type": "string",
-                "description": "The city and state, e.g. San Francisco, CA"
+                "description": "The city and country, e.g. Marrakech, Morocco"
             }
         },
         "required": ["location"]
@@ -197,7 +197,7 @@ agent = TaskAgent(
 ### Provider Statistics
 
 ```python
-from llm_agents.models.provider_stats import ProviderStatsManager
+from mihrabai.models.provider_stats import ProviderStatsManager
 
 # Create a stats manager
 stats_manager = ProviderStatsManager()
@@ -229,7 +229,7 @@ export GROQ_API_KEY="your-groq-key"
 
 # Logging
 export LOG_LEVEL="INFO"
-export LOG_FILE="logs/llm_agents.log"
+export LOG_FILE="logs/mihrabai.log"
 
 # Runtime configuration
 export MAX_RETRIES=3
@@ -243,8 +243,8 @@ export REQUEST_TIMEOUT=30
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/llm-agents.git
-cd llm-agents
+git clone https://github.com/yourusername/mihrabai.git
+cd mihrabai
 
 # Create a virtual environment
 python -m venv venv
@@ -282,4 +282,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Thanks to all the LLM providers for their amazing models
-- Inspired by LangChain, AutoGPT, and other agent frameworks 
+- Inspired by LangChain, AutoGPT, and other agent frameworks
+- Named after the mihrab, the niche in a mosque that indicates the direction of prayer, symbolizing guidance and direction 
