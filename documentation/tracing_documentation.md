@@ -469,7 +469,7 @@ Different span types carry specialized data:
 ### Basic Usage
 
 ```python
-from llm_agents.utils.tracing import TraceProvider
+from mihrabai.utils.tracing import TraceProvider
 
 # Initialize tracing
 trace_provider = TraceProvider()

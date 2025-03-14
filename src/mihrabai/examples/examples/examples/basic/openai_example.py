@@ -5,10 +5,10 @@ Basic example using OpenAI models
 import asyncio
 import os
 
-from llm_agents.core.agent import Agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.providers.openai import OpenAIProvider
-from llm_agents.runtime.runner import AgentRunner
+from mihrabai.core.agent import Agent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.providers.openai import OpenAIProvider
+from mihrabai.runtime.runner import AgentRunner
 
 
 class SimpleAgent(Agent):

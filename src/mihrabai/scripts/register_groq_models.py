@@ -7,7 +7,7 @@ It can be run directly or imported and used programmatically.
 """
 
 # Re-export from the actual implementation
-from llm_agents.models.providers.groq.register_groq_models import (
+from mihrabai.models.providers.groq.register_groq_models import (
     AVAILABLE_GROQ_MODELS,
     MODEL_INFO,
     list_available_models,

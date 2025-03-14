@@ -91,7 +91,7 @@ class GroqModel(BaseModel):
 Each provider supports flexible configuration through the config system:
 
 ```python
-from llm_agents import config
+from mihrabai import config
 
 # OpenAI configuration
 config.set_provider_config("openai", {

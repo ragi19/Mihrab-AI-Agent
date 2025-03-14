@@ -1,7 +1,4 @@
-"""
-Tests for provider streaming capabilities
-"""
-
+"""Tests for provider streaming functionality."""
 from typing import Final
 from unittest.mock import AsyncMock, patch
 

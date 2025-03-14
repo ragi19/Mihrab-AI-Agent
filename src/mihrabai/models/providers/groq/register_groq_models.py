@@ -17,9 +17,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Import required modules
-from llm_agents.models.base import ModelCapability, ModelInfo
-from llm_agents.models.provider_registry import ProviderRegistry
-from llm_agents.models.providers.groq.models import GroqModel
+from mihrabai.models.base import ModelCapability, ModelInfo
+from mihrabai.models.provider_registry import ProviderRegistry
+from mihrabai.models.providers.groq.models import GroqModel
 
 # List of available Groq models
 AVAILABLE_GROQ_MODELS = [

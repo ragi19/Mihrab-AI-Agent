@@ -57,7 +57,7 @@ class MemoryAgentRunner(AgentRunner):
 
         self.memory_agent = agent
         self.memory_persistence_path = memory_persistence_path or os.path.expanduser(
-            "~/.llm_agents/memories/"
+            "~/.mihrabai/memories/"
         )
 
         # Create persistence directory if it doesn't exist

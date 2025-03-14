@@ -1,20 +1,16 @@
-"""
-Integration tests for memory-enabled task agent with multi-provider model
-"""
-
+"""Integration tests for memory-enabled multi-provider agents."""
 import asyncio
 import os
-import tempfile
-from pathlib import Path
+from datetime import datetime, timedelta
 from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.base import ModelCapability
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.runtime.memory_runner import MemoryAgentRunner
+from mihrabai.core.memory_task_agent import MemoryEnabledTaskAgent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.base import ModelCapability
+from mihrabai.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from mihrabai.runtime.memory_runner import MemoryAgentRunner
 
 # Set mock API keys for testing
 os.environ["OPENAI_API_KEY"] = "test-openai-key"
@@ -23,7 +19,7 @@ os.environ["GROQ_API_KEY"] = "test-groq-key"
 
 
 @pytest.mark.asyncio
-@patch("llm_agents.models.multi_provider.MultiProviderModel.create")
+@patch("mihrabai.models.multi_provider.MultiProviderModel.create")
 async def create_test_agent(mock_create):
     """Create test agent with multi-provider model"""
     # Create a mock MultiProviderModel
@@ -178,7 +174,7 @@ async def test_memory_retrieval():
 
 
 @pytest.mark.asyncio
-@patch("llm_agents.models.multi_provider.MultiProviderModel.create")
+@patch("mihrabai.models.multi_provider.MultiProviderModel.create")
 async def test_optimization_strategies(mock_create):
     """Test different provider optimization strategies"""
     # Create a mock MultiProviderModel for reliability strategy

@@ -54,7 +54,7 @@ class MemoryStoreTool(BaseTool):
 
         # Set up memory database
         self.memory_path = memory_path or os.path.join(
-            os.path.expanduser("~"), ".llm_agents", "memory.db"
+            os.path.expanduser("~"), ".mihrabai", "memory.db"
         )
         os.makedirs(os.path.dirname(self.memory_path), exist_ok=True)
         self._init_db()
@@ -233,7 +233,7 @@ class MemoryRetrieveTool(BaseTool):
 
         # Set up memory database path
         self.memory_path = memory_path or os.path.join(
-            os.path.expanduser("~"), ".llm_agents", "memory.db"
+            os.path.expanduser("~"), ".mihrabai", "memory.db"
         )
 
         logger.info(
@@ -365,7 +365,7 @@ class MemorySearchTool(BaseTool):
 
         # Set up memory database path
         self.memory_path = memory_path or os.path.join(
-            os.path.expanduser("~"), ".llm_agents", "memory.db"
+            os.path.expanduser("~"), ".mihrabai", "memory.db"
         )
 
         logger.info(
@@ -555,7 +555,7 @@ class KnowledgeBaseTool(BaseTool):
 
         # Set up knowledge base path
         self.kb_path = kb_path or os.path.join(
-            os.path.expanduser("~"), ".llm_agents", "knowledge.db"
+            os.path.expanduser("~"), ".mihrabai", "knowledge.db"
         )
         os.makedirs(os.path.dirname(self.kb_path), exist_ok=True)
         self._init_db()

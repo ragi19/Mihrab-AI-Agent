@@ -246,7 +246,7 @@ The LLM Agents framework includes comprehensive logging and profiling capabiliti
 Configure logging through the config system:
 
 ```python
-from llm_agents import config
+from mihrabai import config
 
 config.set_logging_config({
     "level": "DEBUG",  # DEBUG, INFO, WARNING, ERROR, or CRITICAL
@@ -260,7 +260,7 @@ config.set_logging_config({
 Use the command-line tool for quick setup:
 
 ```bash
-python -m llm_agents.scripts.generate_config \
+python -m mihrabai.scripts.generate_config \
     --log-level DEBUG \
     --log-file agent.log \
     --log-format "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -294,7 +294,7 @@ The framework uses a hierarchical logger structure:
 The `AgentProfiler` class provides detailed performance metrics:
 
 ```python
-from llm_agents.utils.dev_tools import AgentProfiler
+from mihrabai.utils.dev_tools import AgentProfiler
 
 profiler = AgentProfiler()
 metrics = await profiler.profile_agent(agent, messages)
@@ -316,7 +316,7 @@ Available metrics:
 Use the `@async_retry` decorator for automatic retry logic:
 
 ```python
-from llm_agents.utils.dev_tools import async_retry
+from mihrabai.utils.dev_tools import async_retry
 
 @async_retry(max_retries=3, retry_delay=1.0)
 async def my_function():

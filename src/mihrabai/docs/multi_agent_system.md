@@ -335,7 +335,7 @@ The framework includes several standard tools:
 You can create custom tools by extending the `BaseTool` class:
 
 ```python
-from llm_agents.tools.base import BaseTool
+from mihrabai.tools.base import BaseTool
 
 class WikipediaSearchTool(BaseTool):
     """Custom tool for searching Wikipedia"""

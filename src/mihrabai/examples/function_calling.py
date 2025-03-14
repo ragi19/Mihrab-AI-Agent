@@ -1,7 +1,6 @@
 """
-Example of using function calling capabilities with supported providers
+Example showing function calling capabilities
 """
-
 import asyncio
 import json
 import os
@@ -9,8 +8,8 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 
-from llm_agents import Message, MessageRole, create_agent
-from llm_agents.models.base import ModelCapability
+from mihrabai import Message, MessageRole, create_agent
+from mihrabai.models.base import ModelCapability
 
 # Load environment variables from .env file
 load_dotenv()

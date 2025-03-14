@@ -95,8 +95,8 @@ pip install llm-agents
 ### Basic Setup
 
 ```python
-from llm_agents.models.multi_provider import MultiProviderModel
-from llm_agents.handoff import HandoffAgent, HandoffConfig, HandoffInputData
+from mihrabai.models.multi_provider import MultiProviderModel
+from mihrabai.handoff import HandoffAgent, HandoffConfig, HandoffInputData
 
 # Create a model
 model = await MultiProviderModel.create(

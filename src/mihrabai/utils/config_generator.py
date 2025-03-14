@@ -50,7 +50,7 @@ def generate_config(
     """Generate a configuration file with the provided settings
 
     Args:
-        path: Path to save the configuration file (default: ~/.llm_agents/config.json)
+        path: Path to save the configuration file (default: ~/.mihrabai/config.json)
         openai_key: OpenAI API key
         anthropic_key: Anthropic API key
         groq_key: Groq API key
@@ -82,7 +82,7 @@ def generate_config(
     if path:
         save_path = Path(path)
     else:
-        save_path = Path.home() / ".llm_agents" / "config.json"
+        save_path = Path.home() / ".mihrabai" / "config.json"
 
     save_path.parent.mkdir(parents=True, exist_ok=True)
 

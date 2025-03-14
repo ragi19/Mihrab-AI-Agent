@@ -1,11 +1,9 @@
-"""
-Unit tests for the Agent base class
-"""
+"""Unit tests for the base agent class."""
 
 import pytest
 
-from llm_agents.core.agent import Agent
-from llm_agents.core.message import Message, MessageRole
+from mihrabai.core.agent import Agent
+from mihrabai.core.message import Message, MessageRole
 
 
 class SimpleTestAgent(Agent):

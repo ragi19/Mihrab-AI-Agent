@@ -11,8 +11,8 @@ import unittest
 from typing import Set
 from unittest.mock import MagicMock, patch
 
-from llm_agents.models.provider_registry import ProviderRegistry
-from llm_agents.scripts.register_groq_models import (
+from mihrabai.models.provider_registry import ProviderRegistry
+from mihrabai.scripts.register_groq_models import (
     AVAILABLE_GROQ_MODELS,
     register_additional_groq_models,
 )

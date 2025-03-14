@@ -1,14 +1,13 @@
 """
-Example of using handoff capabilities to transfer conversations between agents
+Example showing handoff capabilities
 """
-
 import asyncio
 import os
 
 from dotenv import load_dotenv
 
-from llm_agents import Message, MessageRole, create_agent
-from llm_agents.handoff import HandoffAgent, HandoffConfig, HandoffInputData
+from mihrabai import Message, MessageRole, create_agent
+from mihrabai.handoff import HandoffAgent, HandoffConfig, HandoffInputData
 
 # Load environment variables from .env file
 load_dotenv()

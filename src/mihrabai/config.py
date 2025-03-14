@@ -47,12 +47,12 @@ class Config:
         """Load configuration from file
 
         Args:
-            path: Path to config file (default: ~/.llm_agents/config.json)
+            path: Path to config file (default: ~/.mihrabai/config.json)
         """
         if path:
             config_path = Path(path)
         else:
-            config_path = Path.home() / ".llm_agents" / "config.json"
+            config_path = Path.home() / ".mihrabai" / "config.json"
 
         if config_path.exists():
             with open(config_path) as f:
@@ -77,7 +77,7 @@ class Config:
         elif self._config_path:
             save_path = self._config_path
         else:
-            save_path = Path.home() / ".llm_agents" / "config.json"
+            save_path = Path.home() / ".mihrabai" / "config.json"
 
         save_path.parent.mkdir(parents=True, exist_ok=True)
         with open(save_path, "w") as f:

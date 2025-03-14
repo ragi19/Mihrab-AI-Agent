@@ -5,8 +5,8 @@ Example demonstrating logging and profiling capabilities
 import asyncio
 from pathlib import Path
 
-from llm_agents import Message, MessageRole, config, create_agent
-from llm_agents.utils.dev_tools import AgentProfiler
+from mihrabai import Message, MessageRole, config, create_agent
+from mihrabai.utils.dev_tools import AgentProfiler
 
 
 async def main():

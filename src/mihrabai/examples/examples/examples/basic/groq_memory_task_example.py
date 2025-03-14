@@ -12,14 +12,14 @@ repo_root = Path(__file__).parent.parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.base import ModelCapability
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.runtime.memory_runner import MemoryAgentRunner
-from llm_agents.tools.standard import CalculatorTool, DateTimeTool, WebSearchTool
-from llm_agents.utils.logging import configure_logging, get_logger
-from llm_agents.utils.tracing import FileTraceProvider
+from mihrabai.core.memory_task_agent import MemoryEnabledTaskAgent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.base import ModelCapability
+from mihrabai.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from mihrabai.runtime.memory_runner import MemoryAgentRunner
+from mihrabai.tools.standard import CalculatorTool, DateTimeTool, WebSearchTool
+from mihrabai.utils.logging import configure_logging, get_logger
+from mihrabai.utils.tracing import FileTraceProvider
 
 # Configure logging
 configure_logging(console_level="INFO")

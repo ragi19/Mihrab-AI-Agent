@@ -5,14 +5,20 @@ This example demonstrates advanced agent handoff patterns with specialized agent
 """
 import asyncio
 from typing import List
+
 from mihrabai import create_agent
 from mihrabai.core.message import Message, MessageRole
-from mihrabai.handoff import HandoffCoordinator
+from mihrabai.handoff import (
+    ContextPreservingHandoff,
+    HandoffAgent,
+    HandoffCondition,
+    HandoffCoordinator,
+)
 from mihrabai.handoff.conditions import ComplexityThreshold, TopicDetection
-from mihrabai.tools.standard import CalculatorTool, DateTimeTool
-from mihrabai.tools.base import BaseTool
 from mihrabai.runtime.coordinator import AgentCoordinator
-from mihrabai.handoff import HandoffAgent, HandoffCondition, ContextPreservingHandoff
+from mihrabai.tools.base import BaseTool
+from mihrabai.tools.standard import CalculatorTool, DateTimeTool
+
 
 class SpecializedHandoffAgent(HandoffAgent):
     def __init__(self, agent, conditions: List[HandoffCondition], expertise_areas: List[str]):

@@ -1,7 +1,6 @@
 """
-Example of using vision capabilities with supported models
+Example showing vision capabilities
 """
-
 import asyncio
 import base64
 import os
@@ -10,8 +9,8 @@ from typing import Optional
 
 from dotenv import load_dotenv
 
-from llm_agents import Message, MessageRole, create_agent
-from llm_agents.models.base import ModelCapability
+from mihrabai import Message, MessageRole, create_agent
+from mihrabai.models.base import ModelCapability
 
 # Load environment variables from .env file
 load_dotenv()

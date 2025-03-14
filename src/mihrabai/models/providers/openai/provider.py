@@ -1,15 +1,13 @@
-"""
-OpenAI provider implementation
-"""
-
+"""Provider implementation for OpenAI models."""
 from typing import Dict, List, Optional
 
 import openai
 
-from llm_agents.core.message import Message
-from llm_agents.core.types import ModelParameters
-from llm_agents.models.base import BaseModel
-from llm_agents.utils.tracing import Span, TraceProvider
+from mihrabai.core.message import Message
+from mihrabai.core.types import ModelParameters
+from mihrabai.models.base import BaseModel
+from mihrabai.models.provider_registry import register_provider
+from mihrabai.utils.tracing import Span, TraceProvider
 
 
 class OpenAIProvider:

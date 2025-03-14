@@ -28,7 +28,7 @@ class ProviderDiscovery:
 
         try:
             # Get the providers package directory
-            import llm_agents.models.providers as providers_pkg
+            import mihrabai.models.providers as providers_pkg
 
             pkg_dir = os.path.dirname(providers_pkg.__file__)
 
@@ -38,7 +38,7 @@ class ProviderDiscovery:
                     try:
                         # Import the provider module
                         module = importlib.import_module(
-                            f"llm_agents.models.providers.{name}"
+                            f"mihrabai.models.providers.{name}"
                         )
 
                         # Look for provider class

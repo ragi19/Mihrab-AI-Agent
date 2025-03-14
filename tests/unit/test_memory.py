@@ -1,13 +1,12 @@
 """
-Unit tests for memory management system
+Unit tests for memory functionality.
 """
-
 from datetime import datetime, timedelta
 
 import pytest
 
-from llm_agents.core.memory import Memory, MemoryEntry
-from llm_agents.core.message import Message, MessageRole
+from mihrabai.core.memory import Memory, MemoryEntry
+from mihrabai.core.message import Message, MessageRole
 
 
 @pytest.fixture

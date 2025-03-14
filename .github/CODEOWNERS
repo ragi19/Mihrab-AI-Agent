@@ -4,10 +4,10 @@
 *       @yourusername
 
 # Specific ownership for core components
-/src/llm_agents/core/       @ragi19
-/src/llm_agents/models/     @ragi19
-/src/llm_agents/tools/      @ragi19
-/src/llm_agents/handoff/    @ragi19
+/src/mihrabai/core/       @ragi19
+/src/mihrabai/models/     @ragi19
+/src/mihrabai/tools/      @ragi19
+/src/mihrabai/handoff/    @ragi19
 
 # Test ownership
 /tests/                     @ragi19 

@@ -120,7 +120,7 @@ Built-in distributed tracing capabilities:
 Advanced debugging and performance analysis:
 
 ```python
-from llm_agents.utils.dev_tools import AgentProfiler
+from mihrabai.utils.dev_tools import AgentProfiler
 
 async def profile_agent_performance():
     profiler = AgentProfiler()
@@ -185,7 +185,7 @@ Guide for implementing new providers:
 
 1. **Environment-Based Config**
    ```python
-   from llm_agents import config
+   from mihrabai import config
    
    config.set_provider_config("custom_provider", {
        "api_key": os.getenv("CUSTOM_API_KEY"),

@@ -8,10 +8,10 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, AsyncIterator, Dict, List, Optional, Set
 
-from llm_agents.core.agent import Agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.utils.async_utils import gather_with_concurrency
-from llm_agents.utils.logging import get_logger
+from mihrabai.core.agent import Agent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.utils.async_utils import gather_with_concurrency
+from mihrabai.utils.logging import get_logger
 
 from ..core.types import ModelResponse
 from .base import BaseModel, ModelCapability, ModelError

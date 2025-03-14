@@ -5,12 +5,15 @@ This example demonstrates using custom tools with multiple agents.
 """
 import asyncio
 import json
+
 import aiohttp
+
 from mihrabai import create_agent
 from mihrabai.core.message import Message, MessageRole
 from mihrabai.runtime.coordinator import AgentCoordinator
 from mihrabai.tools import ToolConfig
 from mihrabai.tools.base import BaseTool
+
 
 class WikipediaSearchTool(BaseTool):
     """Custom tool for searching Wikipedia articles."""

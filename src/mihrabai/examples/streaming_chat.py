@@ -1,15 +1,14 @@
 """
-Example of using streaming capabilities with different providers
+Example showing streaming chat capabilities
 """
-
 import asyncio
 import os
 import sys
 
 from dotenv import load_dotenv
 
-from llm_agents import Message, MessageRole, create_agent
-from llm_agents.models.base import ModelCapability
+from mihrabai import Message, MessageRole, create_agent
+from mihrabai.models.base import ModelCapability
 
 # Load environment variables from .env file
 load_dotenv()

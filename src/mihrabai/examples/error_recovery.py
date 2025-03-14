@@ -1,16 +1,15 @@
 """
-Example of using error recovery features in the LLM Agents framework
+Example showing error recovery and retry strategies
 """
-
 import asyncio
 import os
 import random
 
 from dotenv import load_dotenv
 
-from llm_agents import Message, MessageRole, create_agent
-from llm_agents.models.base import ModelError, TokenLimitError
-from llm_agents.runtime.recovery import AgentRecovery, ExponentialBackoff, RetryStrategy
+from mihrabai import Message, MessageRole, create_agent
+from mihrabai.models.base import ModelError, TokenLimitError
+from mihrabai.runtime.recovery import AgentRecovery, ExponentialBackoff, RetryStrategy
 
 # Load environment variables from .env file
 load_dotenv()

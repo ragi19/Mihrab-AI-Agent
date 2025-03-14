@@ -1,9 +1,10 @@
 """
 Development installation script
 """
+import os
 import subprocess
 import sys
-import os
+
 
 def main():
     # Get the directory containing this script

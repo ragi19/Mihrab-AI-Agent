@@ -6,8 +6,8 @@ import asyncio
 import os
 from typing import Any, Dict, Set
 
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models import (
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models import (
     AdapterRegistry,
     BaseModel,
     ModelCapability,
@@ -18,8 +18,8 @@ from llm_agents.models import (
     create_model,
     create_model_from_config,
 )
-from llm_agents.models.providers import OpenAIAdapter
-from llm_agents.utils.logging import configure_logging, get_logger
+from mihrabai.models.providers import OpenAIAdapter
+from mihrabai.utils.logging import configure_logging, get_logger
 
 # Configure logging
 configure_logging(log_level="INFO")

@@ -8,6 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+
 def run_command(command, description):
     """Run a shell command and handle errors"""
     print(f"\n=== Running {description} ===")

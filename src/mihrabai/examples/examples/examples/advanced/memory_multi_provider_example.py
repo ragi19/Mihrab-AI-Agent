@@ -6,13 +6,13 @@ import asyncio
 import os
 from pathlib import Path
 
-from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.base import ModelCapability
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
-from llm_agents.runtime.memory_runner import MemoryAgentRunner
-from llm_agents.tools.standard import CalculatorTool
-from llm_agents.utils.logging import configure_logging, get_logger
+from mihrabai.core.memory_task_agent import MemoryEnabledTaskAgent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.base import ModelCapability
+from mihrabai.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from mihrabai.runtime.memory_runner import MemoryAgentRunner
+from mihrabai.tools.standard import CalculatorTool
+from mihrabai.utils.logging import configure_logging, get_logger
 
 # Configure logging
 configure_logging()

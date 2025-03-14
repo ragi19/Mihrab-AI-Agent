@@ -1,18 +1,15 @@
 """
-Example of benchmarking and profiling different models in the LLM Agents framework
+Benchmarking example showing performance comparison between different providers
 """
-
 import asyncio
-import json
 import os
 import time
-from datetime import datetime
 from typing import Any, Dict, List
 
 from dotenv import load_dotenv
 
-from llm_agents import Message, MessageRole, create_agent
-from llm_agents.models.base import ModelCapability
+from mihrabai import Message, MessageRole, create_agent
+from mihrabai.models.base import ModelCapability
 
 # Load environment variables from .env file
 load_dotenv()

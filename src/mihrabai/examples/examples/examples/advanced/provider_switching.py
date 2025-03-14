@@ -6,13 +6,13 @@ import asyncio
 import os
 from typing import Dict, Type
 
-from llm_agents.core.agent import Agent, SimpleAgent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.providers.anthropic import AnthropicProvider
-from llm_agents.models.providers.groq import GroqProvider
-from llm_agents.models.providers.openai import OpenAIProvider
-from llm_agents.runtime.context import RuntimeContext
-from llm_agents.runtime.runner import AgentRunner
+from mihrabai.core.agent import Agent, SimpleAgent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.providers.anthropic import AnthropicProvider
+from mihrabai.models.providers.groq import GroqProvider
+from mihrabai.models.providers.openai import OpenAIProvider
+from mihrabai.runtime.context import RuntimeContext
+from mihrabai.runtime.runner import AgentRunner
 
 
 class ProviderSwitchingAgent(Agent):

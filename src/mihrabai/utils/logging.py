@@ -30,7 +30,7 @@ def setup_logging(
     formatter = logging.Formatter(format_string or DEFAULT_LOG_FORMAT)
 
     # Configure root logger
-    root_logger = logging.getLogger("llm_agents")
+    root_logger = logging.getLogger("mihrabai")
     root_logger.setLevel(level)
 
     # Clear any existing handlers
@@ -83,7 +83,7 @@ def configure_logging(
     formatter = logging.Formatter(format_string or DEFAULT_LOG_FORMAT)
 
     # Configure root logger
-    root_logger = logging.getLogger("llm_agents")
+    root_logger = logging.getLogger("mihrabai")
     root_logger.setLevel(min(console_level_int, file_level_int))
 
     # Clear any existing handlers
@@ -109,9 +109,9 @@ def get_logger(name: str) -> logging.Logger:
     """Get a logger with the given name
 
     Args:
-        name: Logger name, will be prefixed with 'llm_agents.'
+        name: Logger name, will be prefixed with 'mihrabai.'
 
     Returns:
         Configured logger instance
     """
-    return logging.getLogger(f"llm_agents.{name}")
+    return logging.getLogger(f"mihrabai.{name}")

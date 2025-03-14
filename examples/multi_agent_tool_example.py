@@ -4,10 +4,12 @@ Multi-Agent Tool Example
 This example demonstrates multiple agents using shared tools.
 """
 import asyncio
+
 from mihrabai import create_agent
 from mihrabai.core.message import Message, MessageRole
 from mihrabai.runtime.coordinator import AgentCoordinator
 from mihrabai.tools.standard import CalculatorTool, DateTimeTool
+
 
 async def main():
     # Initialize tools

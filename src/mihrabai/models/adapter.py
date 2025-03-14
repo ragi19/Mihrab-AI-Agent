@@ -6,17 +6,7 @@ import asyncio
 import inspect
 from abc import ABC, abstractmethod
 from functools import wraps
-from typing import (
-    Any,
-    AsyncIterator,
-    Dict,
-    List,
-    NoReturn,
-    Optional,
-    Set,
-    Type,
-    Union,
-)
+from typing import Any, AsyncIterator, Dict, List, NoReturn, Optional, Set, Type, Union
 
 from ..core.message import Message
 from ..core.types import ModelParameters

@@ -34,7 +34,7 @@ class ProviderConfigManager:
 
     def _get_default_config_path(self) -> str:
         """Get default configuration path"""
-        return os.path.expanduser("~/.llm_agents/provider_config.json")
+        return os.path.expanduser("~/.mihrabai/provider_config.json")
 
     def _load_configs(self) -> None:
         """Load provider configurations from file"""

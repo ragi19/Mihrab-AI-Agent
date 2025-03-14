@@ -5,7 +5,7 @@ Configuration file generator script
 import argparse
 import os
 
-from llm_agents.utils.config_generator import generate_config, load_environment_keys
+from mihrabai.utils.config_generator import generate_config, load_environment_keys
 
 
 def main() -> None:
@@ -16,7 +16,7 @@ def main() -> None:
     # File path
     parser.add_argument(
         "--path",
-        help="Path to save the configuration file (default: ~/.llm_agents/config.json)",
+        help="Path to save the configuration file (default: ~/.mihrabai/config.json)",
     )
 
     # Provider settings
@@ -94,7 +94,7 @@ def main() -> None:
     if args.path:
         print(f"Configuration saved to: {args.path}")
     else:
-        print("Configuration saved to: ~/.llm_agents/config.json")
+        print("Configuration saved to: ~/.mihrabai/config.json")
 
     # Show provider status
     print("\nProvider Status:")

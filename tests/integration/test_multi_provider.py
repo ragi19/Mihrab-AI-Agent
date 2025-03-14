@@ -7,21 +7,21 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from llm_agents.core.agent import Agent
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.examples.advanced.multi_provider_agent import MultiProviderAgent
-from llm_agents.models import (
+from mihrabai.core.agent import Agent
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.examples.advanced.multi_provider_agent import MultiProviderAgent
+from mihrabai.models import (
     ModelCapability,
     ModelCreationError,
     ProviderRegistry,
     create_model,
 )
-from llm_agents.models.multi_provider import MultiProviderModel
-from llm_agents.models.provider_stats import ProviderStatsManager
-from llm_agents.models.providers.anthropic import AnthropicProvider
-from llm_agents.models.providers.groq import GroqProvider
-from llm_agents.models.providers.openai import OpenAIProvider
-from llm_agents.runtime.runner import AgentRunner
+from mihrabai.models.multi_provider import MultiProviderModel
+from mihrabai.models.provider_stats import ProviderStatsManager
+from mihrabai.models.providers.anthropic import AnthropicProvider
+from mihrabai.models.providers.groq import GroqProvider
+from mihrabai.models.providers.openai import OpenAIProvider
+from mihrabai.runtime.runner import AgentRunner
 
 # Set mock API keys for testing
 os.environ["OPENAI_API_KEY"] = "test-openai-key"
@@ -45,7 +45,7 @@ def stats_manager():
 @pytest.fixture
 def mock_create():
     """Mock for MultiProviderModel.create"""
-    with patch("llm_agents.models.multi_provider.MultiProviderModel.create") as mock:
+    with patch("mihrabai.models.multi_provider.MultiProviderModel.create") as mock:
         yield mock
 
 
@@ -203,7 +203,7 @@ async def test_multi_provider_error_handling():
 
 
 @pytest.mark.asyncio
-@patch("llm_agents.models.multi_provider.MultiProviderModel.create")
+@patch("mihrabai.models.multi_provider.MultiProviderModel.create")
 async def test_multi_provider_fallback(mock_create):
     """Test multi-provider fallback functionality"""
     # Create a mock MultiProviderModel
@@ -228,7 +228,7 @@ async def test_multi_provider_fallback(mock_create):
 
 
 @pytest.mark.asyncio
-@patch("llm_agents.models.multi_provider.MultiProviderModel.create")
+@patch("mihrabai.models.multi_provider.MultiProviderModel.create")
 async def test_multi_provider_capability_matching(mock_create):
     """Test capability-based provider selection"""
     # Create a mock MultiProviderModel
@@ -247,7 +247,7 @@ async def test_multi_provider_capability_matching(mock_create):
 
 
 @pytest.mark.asyncio
-@patch("llm_agents.models.multi_provider.MultiProviderModel.create")
+@patch("mihrabai.models.multi_provider.MultiProviderModel.create")
 async def test_multi_provider_cost_optimization(mock_create):
     """Test cost-based provider selection"""
     # Create a real ProviderStatsManager
@@ -288,7 +288,7 @@ async def test_multi_provider_cost_optimization(mock_create):
 
 
 @pytest.mark.asyncio
-@patch("llm_agents.models.multi_provider.MultiProviderModel.create")
+@patch("mihrabai.models.multi_provider.MultiProviderModel.create")
 async def test_multi_provider_streaming(mock_create):
     """Test streaming functionality"""
     # Create a mock MultiProviderModel with streaming capability

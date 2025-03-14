@@ -7,7 +7,7 @@ This guide explains how to use the memory-enabled task agent and multi-provider 
 The `MemoryEnabledTaskAgent` extends the base task agent with conversation memory capabilities:
 
 ```python
-from llm_agents.core.memory_task_agent import MemoryEnabledTaskAgent
+from mihrabai.core.memory_task_agent import MemoryEnabledTaskAgent
 
 agent = MemoryEnabledTaskAgent(
     model=model,
@@ -29,7 +29,7 @@ agent = MemoryEnabledTaskAgent(
 The `MultiProviderModel` enables using multiple LLM providers with automatic failover and optimization:
 
 ```python
-from llm_agents.models.multi_provider import MultiProviderModel, OptimizationStrategy
+from mihrabai.models.multi_provider import MultiProviderModel, OptimizationStrategy
 
 model = await MultiProviderModel.create(
     primary_model="claude-3-sonnet",  # Primary provider

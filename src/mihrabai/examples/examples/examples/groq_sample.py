@@ -6,8 +6,8 @@ with enhanced conversation memory and parameter control
 import asyncio
 import os
 
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.providers.groq import GroqProvider
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.providers.groq import GroqProvider
 
 
 async def main():

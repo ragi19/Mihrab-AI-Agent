@@ -1,4 +1,5 @@
 """Tests for task agent functionality."""
+
 import contextlib
 from unittest.mock import AsyncMock, MagicMock, Mock, create_autospec, patch
 

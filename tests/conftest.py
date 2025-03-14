@@ -6,8 +6,8 @@ from typing import Any, AsyncIterator, Dict, List, Set
 
 import pytest
 
-from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.base import BaseModel, ModelCapability
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.models.base import BaseModel, ModelCapability
 
 
 class MockModel(BaseModel):
