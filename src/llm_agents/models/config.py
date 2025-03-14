@@ -4,7 +4,7 @@ Model configuration and capabilities management
 
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Any, Dict, List, Optional, Set, Type, Union
+from typing import Any, Dict, List, Optional, Set, Type, Union, cast
 
 from pydantic import BaseModel, Field, validator
 
@@ -48,18 +48,23 @@ class ModelConfig(BaseModel):
         arbitrary_types_allowed = True
 
     @validator("capabilities", pre=True)
-    def parse_capabilities(cls, v):
+    def parse_capabilities(cls, v: Any) -> Set[ModelCapability]:
         """Convert capability strings to enum values"""
         if isinstance(v, set):
             return v
         if isinstance(v, list):
-            result = set()
+            result: Set[ModelCapability] = set()
             for item in v:
                 if isinstance(item, str):
                     try:
+                        # Try to match by name (case-insensitive)
                         result.add(ModelCapability[item.upper()])
                     except KeyError:
-                        pass
+                        # If that fails, try to find a capability with matching lowercase name
+                        for cap in ModelCapability:
+                            if str(cap) == item.lower():
+                                result.add(cap)
+                                break
                 elif isinstance(item, ModelCapability):
                     result.add(item)
             return result
@@ -175,12 +180,12 @@ DEFAULT_OPENAI_MODELS = {
     "gpt-4": ModelConfig(
         model_name="gpt-4",
         provider_name="openai",
-        capabilities=[
-            "text_generation",
-            "chat_completion",
-            "function_calling",
-            "tool_use",
-        ],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+            ModelCapability.FUNCTION_CALLING,
+            ModelCapability.TOOL_USE,
+        },
         context_window=8192,
         supports_streaming=True,
         supports_functions=True,
@@ -189,12 +194,12 @@ DEFAULT_OPENAI_MODELS = {
     "gpt-4-turbo": ModelConfig(
         model_name="gpt-4-turbo",
         provider_name="openai",
-        capabilities=[
-            "text_generation",
-            "chat_completion",
-            "function_calling",
-            "tool_use",
-        ],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+            ModelCapability.FUNCTION_CALLING,
+            ModelCapability.TOOL_USE,
+        },
         context_window=128000,
         supports_streaming=True,
         supports_functions=True,
@@ -203,12 +208,12 @@ DEFAULT_OPENAI_MODELS = {
     "gpt-3.5-turbo": ModelConfig(
         model_name="gpt-3.5-turbo",
         provider_name="openai",
-        capabilities=[
-            "text_generation",
-            "chat_completion",
-            "function_calling",
-            "tool_use",
-        ],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+            ModelCapability.FUNCTION_CALLING,
+            ModelCapability.TOOL_USE,
+        },
         context_window=16385,
         supports_streaming=True,
         supports_functions=True,
@@ -220,7 +225,12 @@ DEFAULT_ANTHROPIC_MODELS = {
     "claude-3-opus": ModelConfig(
         model_name="claude-3-opus",
         provider_name="anthropic",
-        capabilities=["text_generation", "chat_completion", "tool_use", "multi_modal"],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+            ModelCapability.TOOL_USE,
+            ModelCapability.MULTI_MODAL,
+        },
         context_window=200000,
         supports_streaming=True,
         supports_vision=True,
@@ -229,7 +239,12 @@ DEFAULT_ANTHROPIC_MODELS = {
     "claude-3-sonnet": ModelConfig(
         model_name="claude-3-sonnet",
         provider_name="anthropic",
-        capabilities=["text_generation", "chat_completion", "tool_use", "multi_modal"],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+            ModelCapability.TOOL_USE,
+            ModelCapability.MULTI_MODAL,
+        },
         context_window=200000,
         supports_streaming=True,
         supports_vision=True,
@@ -238,7 +253,12 @@ DEFAULT_ANTHROPIC_MODELS = {
     "claude-3-haiku": ModelConfig(
         model_name="claude-3-haiku",
         provider_name="anthropic",
-        capabilities=["text_generation", "chat_completion", "tool_use", "multi_modal"],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+            ModelCapability.TOOL_USE,
+            ModelCapability.MULTI_MODAL,
+        },
         context_window=200000,
         supports_streaming=True,
         supports_vision=True,
@@ -250,21 +270,30 @@ DEFAULT_GROQ_MODELS = {
     "llama3-70b-8192": ModelConfig(
         model_name="llama3-70b-8192",
         provider_name="groq",
-        capabilities=["text_generation", "chat_completion"],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+        },
         context_window=8192,
         supports_streaming=True,
     ),
     "mixtral-8x7b-32768": ModelConfig(
         model_name="mixtral-8x7b-32768",
         provider_name="groq",
-        capabilities=["text_generation", "chat_completion"],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+        },
         context_window=32768,
         supports_streaming=True,
     ),
     "gemma-7b-it": ModelConfig(
         model_name="gemma-7b-it",
         provider_name="groq",
-        capabilities=["text_generation", "chat_completion"],
+        capabilities={
+            ModelCapability.TEXT_GENERATION,
+            ModelCapability.CHAT_COMPLETION,
+        },
         context_window=8192,
         supports_streaming=True,
     ),
