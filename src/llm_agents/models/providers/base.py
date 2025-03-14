@@ -67,15 +67,17 @@ class BaseProvider(ABC):
             except (KeyError, AttributeError):
                 # Skip capabilities that don't match the enum
                 pass
-                
+
         return ModelConfig(
             model_name=model_name,
             provider_name=self.__class__.__name__.replace("Provider", "").lower(),
             capabilities=capabilities,
             context_window=model_info.context_window,
             max_tokens=model_info.max_tokens,
-            supports_streaming="STREAMING" in [str(c).upper() for c in model_info.capabilities],
-            supports_functions="FUNCTION_CALLING" in [str(c).upper() for c in model_info.capabilities],
+            supports_streaming="STREAMING"
+            in [str(c).upper() for c in model_info.capabilities],
+            supports_functions="FUNCTION_CALLING"
+            in [str(c).upper() for c in model_info.capabilities],
         )
 
     @classmethod
@@ -92,15 +94,17 @@ class BaseProvider(ABC):
                 except (KeyError, AttributeError):
                     # Skip capabilities that don't match the enum
                     pass
-                    
+
             config = ModelConfig(
                 model_name=model_name,
                 provider_name=cls.__name__.replace("Provider", "").lower(),
                 capabilities=capabilities,
                 context_window=model_info.context_window,
                 max_tokens=model_info.max_tokens,
-                supports_streaming="STREAMING" in [str(c).upper() for c in model_info.capabilities],
-                supports_functions="FUNCTION_CALLING" in [str(c).upper() for c in model_info.capabilities],
+                supports_streaming="STREAMING"
+                in [str(c).upper() for c in model_info.capabilities],
+                supports_functions="FUNCTION_CALLING"
+                in [str(c).upper() for c in model_info.capabilities],
             )
             configs[model_name] = config
         return configs
@@ -109,7 +113,7 @@ class BaseProvider(ABC):
     def supported_models(self) -> Dict[str, ModelConfig]:
         """Get dictionary of supported models"""
         return {
-            model_name: config 
+            model_name: config
             for model_name in self._models
             if (config := self.get_model_config(model_name)) is not None
         }

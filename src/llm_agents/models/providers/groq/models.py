@@ -107,7 +107,9 @@ class GroqModel(BaseModel):
         for key, value in parameters.items():
             self.set_config(key, value)
 
-    async def generate_response(self, messages: List[Message], **kwargs: Any) -> Message:
+    async def generate_response(
+        self, messages: List[Message], **kwargs: Any
+    ) -> Message:
         """Generate a response from the model
 
         Args:
@@ -168,7 +170,9 @@ class GroqModel(BaseModel):
             self.logger.error(f"Error generating response: {e}")
             raise
 
-    async def stream_response(self, messages: List[Message], **kwargs: Any) -> AsyncIterator[Message]:
+    async def stream_response(
+        self, messages: List[Message], **kwargs: Any
+    ) -> AsyncIterator[Message]:
         """Stream a response from the Groq API
 
         Args:
