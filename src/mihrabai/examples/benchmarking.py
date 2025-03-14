@@ -2,8 +2,10 @@
 Benchmarking example showing performance comparison between different providers
 """
 import asyncio
+import json
 import os
 import time
+from datetime import datetime
 from typing import Any, Dict, List
 
 from dotenv import load_dotenv
