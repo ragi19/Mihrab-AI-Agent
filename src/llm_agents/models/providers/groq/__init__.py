@@ -6,7 +6,7 @@ from typing import Any, Dict, Set, Type
 
 from groq import AsyncGroq
 
-from ...base import ModelInfo
+from ...base import BaseModel, ModelInfo
 from ...provider_registry import ProviderInfo, ProviderRegistry
 from ...types import ModelCapability
 from ..base import BaseProvider, ProviderError
@@ -550,7 +550,7 @@ class GroqProvider(BaseProvider):
         return model
 
     def register_model(
-        self, model_name: str, model_class: Type[GroqModel], model_info: ModelInfo
+        self, model_name: str, model_class: Type[BaseModel], model_info: ModelInfo
     ) -> None:
         """Register a model with this provider"""
         super().register_model(model_name, model_class, model_info)

@@ -19,12 +19,13 @@ class GroqModel(BaseModel):
         client: AsyncGroq,
         parameters: Optional[ModelParameters] = None,
     ):
-        super().__init__(model_name, parameters)
+        super().__init__(model_id=model_name, config=parameters or {})
         self.client = client
+        self.model_name = model_name
+        self.parameters = parameters or {}
+        self._capabilities = self._get_capabilities()
         self.provider_name = "groq"
         self.logger = get_logger("models.providers.groq")
-        self.model_name = model_name
-        self._capabilities = {ModelCapability.CHAT, ModelCapability.STREAMING}
 
         # Add function calling capability for supported models
         if "llama-3" in model_name.lower():
@@ -173,39 +174,30 @@ class GroqModel(BaseModel):
     async def stream_response(
         self, messages: List[Message], **kwargs: Any
     ) -> AsyncIterator[Message]:
-        """Stream a response from the Groq API
+        """Stream a response from the model"""
+        # Convert messages to Groq format
+        groq_messages = self._convert_messages(messages)
 
-        Args:
-            messages: List of messages in the conversation
-            **kwargs: Additional parameters to pass to the model
+        # Merge parameters with kwargs
+        params = {**self.parameters, **kwargs}
 
-        Yields:
-            Message chunks from the model
-        """
-        # Extract tools if provided
-        tools = kwargs.pop("tools", None)
-
-        # Create completion request parameters
-        params = {
-            "model": self.model_name,
-            "messages": [msg.to_dict() for msg in messages],
-            "stream": True,
-            "temperature": kwargs.get("temperature", 0.7),
-            "max_tokens": kwargs.get("max_tokens", 1024),
-            "top_p": kwargs.get("top_p", 1.0),
-        }
-
-        # Add tools if provided and model supports function calling
-        if tools and ModelCapability.FUNCTION_CALLING in self._capabilities:
-            params["tools"] = tools
-
+        # Stream response from Groq API
         try:
-            async for chunk in await self.client.chat.completions.create(**params):
-                if chunk.choices[0].delta.content is not None:
-                    yield Message(
-                        role=MessageRole.ASSISTANT,
-                        content=chunk.choices[0].delta.content,
-                    )
+            stream = await self.client.chat.completions.create(
+                model=self.model_name,
+                messages=groq_messages,
+                stream=True,
+                **params,
+            )
+
+            async for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
+                    content = chunk.choices[0].delta.content
+                    message = Message(role=MessageRole.ASSISTANT, content=content)
+                    # Add empty tool_calls attribute to avoid attribute error
+                    message.metadata = message.metadata or {}
+                    message.metadata["tool_calls"] = []
+                    yield message
         except Exception as e:
             self.logger.error(f"Error streaming response: {e}")
             raise
@@ -218,3 +210,7 @@ class GroqModel(BaseModel):
             "gpt-3.5-turbo"
         )  # Use as fallback encoding
         return len(encoding.encode(text))
+
+    def _convert_messages(self, messages: List[Message]) -> List[Dict[str, Any]]:
+        """Convert messages to Groq format"""
+        return [msg.to_dict() for msg in messages]

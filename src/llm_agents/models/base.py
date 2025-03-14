@@ -6,6 +6,8 @@ from abc import ABC, abstractmethod
 from typing import (
     Any,
     AsyncIterator,
+    Awaitable,
+    Coroutine,
     Dict,
     Final,
     List,

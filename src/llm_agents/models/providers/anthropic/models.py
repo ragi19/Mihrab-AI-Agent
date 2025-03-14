@@ -2,13 +2,13 @@
 Anthropic model implementations
 """
 
-from typing import Dict, List, Optional
+from typing import Any, AsyncIterator, Dict, List, Optional, Set
 
 from anthropic import AsyncAnthropic
 
 from ....core.message import Message, MessageRole
 from ....core.types import ModelParameters
-from ...base import BaseModel
+from ...base import BaseModel, ModelCapability
 
 
 class ClaudeModel(BaseModel):
@@ -18,34 +18,65 @@ class ClaudeModel(BaseModel):
         client: AsyncAnthropic,
         parameters: Optional[ModelParameters] = None,
     ):
-        super().__init__(model_name, parameters)
+        super().__init__(model_id=model_name, config=parameters or {})
         self.client = client
+        self.model_name = model_name
+        self.parameters = parameters or {}
+
+    @property
+    def capabilities(self) -> Set[str]:
+        """Get the capabilities of this model"""
+        return {
+            ModelCapability.CHAT,
+            ModelCapability.COMPLETION,
+            ModelCapability.STREAMING,
+            ModelCapability.FUNCTION_CALLING,
+        }
+
+    async def generate(self, messages: List[Message], **kwargs: Any) -> Message:
+        """Generate a response from the model"""
+        # Merge parameters with kwargs
+        params = {**self.parameters, **kwargs}
+        
+        # Convert messages to Anthropic format
+        prompt = self._convert_messages_to_prompt(messages)
+
+        response = await self.client.messages.create(
+            model=self.model_name,
+            messages=[{"role": "user", "content": prompt}],
+            **params,
+        )
+
+        return Message(role=MessageRole.ASSISTANT, content=response.content[0].text)
+
+    async def generate_stream(
+        self, messages: List[Message], **kwargs: Any
+    ) -> AsyncIterator[Message]:
+        """Stream a response from the model"""
+        # Merge parameters with kwargs
+        params = {**self.parameters, **kwargs}
+        
+        # Convert messages to Anthropic format
+        prompt = self._convert_messages_to_prompt(messages)
+
+        stream = await self.client.messages.create(
+            model=self.model_name,
+            messages=[{"role": "user", "content": prompt}],
+            stream=True,
+            **params,
+        )
+
+        async for chunk in stream:
+            if hasattr(chunk, "delta") and hasattr(chunk.delta, "text") and chunk.delta.text:
+                yield Message(role=MessageRole.ASSISTANT, content=chunk.delta.text)
 
     async def generate_response(self, messages: List[Message]) -> Message:
         """Generate a response using the Anthropic API"""
-        # Convert messages to Anthropic format
-        prompt = self._convert_messages_to_prompt(messages)
-
-        response = await self.client.messages.create(
-            model=self.model_name,
-            messages=[{"role": "user", "content": prompt}],
-            **self.parameters,
-        )
-
-        return Message(role=MessageRole.ASSISTANT, content=response.content[0].text)
+        return await self.generate(messages)
 
     async def _generate(self, messages: List[Message]) -> Message:
         """Internal method for model-specific response generation"""
-        # Convert messages to Anthropic format
-        prompt = self._convert_messages_to_prompt(messages)
-
-        response = await self.client.messages.create(
-            model=self.model_name,
-            messages=[{"role": "user", "content": prompt}],
-            **self.parameters,
-        )
-
-        return Message(role=MessageRole.ASSISTANT, content=response.content[0].text)
+        return await self.generate(messages)
 
     async def _prepare_messages(self, messages: List[Message]) -> List[Dict]:
         """Convert messages to Anthropic format"""
