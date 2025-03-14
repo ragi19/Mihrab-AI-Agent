@@ -437,7 +437,9 @@ class MemoryEnabledTaskAgent(TaskAgent):
                 "content": entry.content,
                 "metadata": entry.metadata,
                 "embedding": (
-                    entry.embedding.tolist() if entry.embedding is not None else None
+                    entry.embedding.tolist()
+                    if hasattr(entry, "embedding") and entry.embedding is not None
+                    else None
                 ),
                 "importance": entry.importance,
                 "timestamp": entry.timestamp.isoformat() if entry.timestamp else None,

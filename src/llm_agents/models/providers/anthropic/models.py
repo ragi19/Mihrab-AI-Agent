@@ -2,13 +2,13 @@
 Anthropic model implementations
 """
 
-from typing import Dict, List, Optional
+from typing import Any, AsyncIterator, Dict, List, Optional, Set
 
 from anthropic import AsyncAnthropic
 
 from ....core.message import Message, MessageRole
 from ....core.types import ModelParameters
-from ...base import BaseModel
+from ...base import BaseModel, ModelCapability
 
 
 class ClaudeModel(BaseModel):
@@ -20,6 +20,38 @@ class ClaudeModel(BaseModel):
     ):
         super().__init__(model_name, parameters)
         self.client = client
+        self._capabilities = {
+            ModelCapability.CHAT,
+            ModelCapability.STREAM,
+            ModelCapability.FUNCTION_CALLING,
+        }
+
+    @property
+    def capabilities(self) -> Set[str]:
+        """Get the capabilities of this model"""
+        return self._capabilities
+
+    async def generate(self, messages: List[Message], **kwargs: Any) -> Message:
+        """Generate a response from the model"""
+        return await self.generate_response(messages)
+
+    async def generate_stream(
+        self, messages: List[Message], **kwargs: Any
+    ) -> AsyncIterator[Message]:
+        """Stream a response from the model"""
+        # Convert messages to Anthropic format
+        prompt = self._convert_messages_to_prompt(messages)
+
+        response = await self.client.messages.create(
+            model=self.model_name,
+            messages=[{"role": "user", "content": prompt}],
+            stream=True,
+            **self.parameters,
+        )
+
+        async for chunk in response:
+            if hasattr(chunk, "delta") and chunk.delta.text:
+                yield Message(role=MessageRole.ASSISTANT, content=chunk.delta.text)
 
     async def generate_response(self, messages: List[Message]) -> Message:
         """Generate a response using the Anthropic API"""

@@ -23,6 +23,14 @@ from .runner import AgentRunner
 logger = get_logger("runtime.memory_runner")
 
 
+# Custom JSON encoder to handle datetime objects
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        return super().default(obj)
+
+
 class MemoryAgentRunner(AgentRunner):
     """Enhanced runner for memory-enabled agents
 
@@ -159,6 +167,7 @@ class MemoryAgentRunner(AgentRunner):
                         },
                         f,
                         indent=2,
+                        cls=DateTimeEncoder,
                     )
 
                 self.logger.info(f"Saved {len(memories)} memories to {memory_file}")
