@@ -27,6 +27,7 @@ class ModelCapability:
     FUNCTION_CALLING: Final[str] = "function_calling"
     VISION: Final[str] = "vision"
     STREAMING: Final[str] = "streaming"
+    STREAM: Final[str] = "streaming"  # Alias for STREAMING
     IMAGE_INPUT: Final[str] = "image_input"
 
 
@@ -79,6 +80,7 @@ class BaseModel(ABC):
         """
         self.model_id = model_id
         self.config = config or {}
+        self._capabilities = {ModelCapability.CHAT, ModelCapability.STREAMING}
 
     @property
     @abstractmethod

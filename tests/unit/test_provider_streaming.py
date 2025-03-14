@@ -31,7 +31,7 @@ async def test_claude_streaming():
         provider = ClaudeProvider(api_key="test-key")
         model = await provider.create_model("claude-3-opus-20240229")
 
-        assert ModelCapability.STREAM in model.model_info.capabilities
+        assert "streaming" in model.model_info.capabilities
 
         message = Message(role=MessageRole.USER, content="Test message")
         chunks = []
@@ -58,14 +58,19 @@ async def test_groq_streaming():
             for response in responses:
                 yield response
 
-        mock_client.return_value.chat.completions.create = AsyncMock(
-            return_value=mock_stream()
-        )
+        # Create a mock for the chat.completions.create method
+        mock_completions = AsyncMock()
+        mock_completions.create = AsyncMock(return_value=mock_stream())
+        
+        # Set up the mock client
+        mock_client.return_value = AsyncMock()
+        mock_client.return_value.chat = AsyncMock()
+        mock_client.return_value.chat.completions = mock_completions
 
         provider = GroqProvider(api_key="test-key")
         model = await provider.create_model("llama2-70b-4096")
 
-        assert ModelCapability.STREAM in model.model_info.capabilities
+        assert "streaming" in model.model_info.capabilities
 
         message = Message(role=MessageRole.USER, content="Test message")
         chunks = []
