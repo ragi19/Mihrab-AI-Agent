@@ -63,7 +63,7 @@ async def test_groq_streaming():
         # Create a mock for the chat.completions.create method
         mock_completions = AsyncMock()
         mock_completions.create = AsyncMock(return_value=mock_stream())
-        
+
         # Set up the mock client
         mock_client.return_value = AsyncMock()
         mock_client.return_value.chat = AsyncMock()
