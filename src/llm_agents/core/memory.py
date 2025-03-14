@@ -6,7 +6,18 @@ import json
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, Generic, List, Optional, TypeVar, cast, Union
+from typing import (
+    Any,
+    Dict,
+    Generic,
+    List,
+    Optional,
+    TypeVar,
+    cast,
+    Union,
+    overload,
+    Type,
+)
 
 from ..core.message import Message, MessageRole
 from ..utils.logging import get_logger
@@ -16,7 +27,7 @@ T = TypeVar("T")
 
 @dataclass
 class MemoryEntry(Generic[T]):
-    """A single memory entry with metadata"""
+    """Memory entry for storing information in memory"""
 
     content: T
     timestamp: datetime = field(default_factory=datetime.now)
@@ -25,17 +36,22 @@ class MemoryEntry(Generic[T]):
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert memory entry to dictionary"""
-        content = self.content
-        if isinstance(content, Message):
+        content_dict: Any
+
+        # Handle different content types
+        if isinstance(self.content, Message):
             # Convert Message to dict manually
-            content = {
-                "role": content.role.value,  # Access enum value
-                "content": content.content,
-                "metadata": content.metadata if content.metadata else {},
+            content_dict = {
+                "role": self.content.role.value,  # Access enum value
+                "content": self.content.content,
+                "metadata": self.content.metadata if self.content.metadata else {},
             }
+        else:
+            # Use content as is for other types
+            content_dict = self.content
 
         return {
-            "content": content,
+            "content": content_dict,
             "timestamp": self.timestamp.isoformat(),
             "importance": self.importance,
             "metadata": self.metadata,
@@ -43,8 +59,14 @@ class MemoryEntry(Generic[T]):
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "MemoryEntry[Any]":
-        """Create memory entry from dictionary"""
+        """Create memory entry from dictionary
+
+        This method returns a MemoryEntry with Any as the type parameter
+        since we can't know the exact type at runtime.
+        """
         content_data = data["content"]
+
+        # Handle the content based on its type
         if isinstance(content_data, dict) and "role" in content_data:
             # Reconstruct Message object if the content was a Message
             content: Any = Message(
@@ -55,7 +77,8 @@ class MemoryEntry(Generic[T]):
         else:
             content = content_data
 
-        return cls(
+        # Create a new MemoryEntry with Any type
+        return MemoryEntry[Any](
             content=content,
             timestamp=datetime.fromisoformat(data["timestamp"]),
             importance=data["importance"],
@@ -270,7 +293,10 @@ class Memory:
         return [entry for entry, _ in scored_memories[:k]]
 
     async def add(
-        self, content: Any, metadata: Optional[Dict[str, Any]] = None, importance: float = 1.0
+        self,
+        content: Any,
+        metadata: Optional[Dict[str, Any]] = None,
+        importance: float = 1.0,
     ) -> None:
         """Add an item to memory
 

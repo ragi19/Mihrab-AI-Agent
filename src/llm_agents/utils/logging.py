@@ -5,7 +5,7 @@ Logging utilities and configuration
 import logging
 import sys
 from pathlib import Path
-from typing import Optional, Union
+from typing import Optional, Union, cast
 
 DEFAULT_LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
@@ -65,22 +65,26 @@ def configure_logging(
         format_string: Custom log format (default: uses DEFAULT_LOG_FORMAT)
     """
     # Convert string levels to integers if needed
+    console_level_int: int
     if isinstance(console_level, str):
-        console_level = getattr(logging, console_level.upper())
+        console_level_int = getattr(logging, console_level.upper())
+    else:
+        console_level_int = console_level
 
+    file_level_int: int
     if file_level is None:
-        file_level = console_level
+        file_level_int = console_level_int
     elif isinstance(file_level, str):
-        file_level = getattr(logging, file_level.upper())
+        file_level_int = getattr(logging, file_level.upper())
+    else:
+        file_level_int = file_level
 
     # Create formatter
     formatter = logging.Formatter(format_string or DEFAULT_LOG_FORMAT)
 
     # Configure root logger
     root_logger = logging.getLogger("llm_agents")
-    root_logger.setLevel(
-        min(console_level, file_level if file_level is not None else console_level)
-    )
+    root_logger.setLevel(min(console_level_int, file_level_int))
 
     # Clear any existing handlers
     root_logger.handlers.clear()
@@ -88,7 +92,7 @@ def configure_logging(
     # Add console handler
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(formatter)
-    console_handler.setLevel(console_level)
+    console_handler.setLevel(console_level_int)
     root_logger.addHandler(console_handler)
 
     # Add file handler if specified
@@ -97,7 +101,7 @@ def configure_logging(
         log_path.parent.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_file)
         file_handler.setFormatter(formatter)
-        file_handler.setLevel(file_level)
+        file_handler.setLevel(file_level_int)
         root_logger.addHandler(file_handler)
 
 

@@ -86,7 +86,7 @@ class BaseModel(ABC):
         pass
 
     @abstractmethod
-    async def generate(self, messages: List[Message], **kwargs) -> Message:
+    async def generate(self, messages: List[Message], **kwargs: Any) -> Message:
         """Generate a response from the model
 
         Args:
@@ -103,7 +103,7 @@ class BaseModel(ABC):
 
     @abstractmethod
     async def generate_stream(
-        self, messages: List[Message], **kwargs
+        self, messages: List[Message], **kwargs: Any
     ) -> AsyncIterator[Message]:
         """Stream a response from the model
 

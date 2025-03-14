@@ -12,6 +12,7 @@ from .utils.logging import setup_logging
 
 class ProviderConfig(TypedDict, total=False):
     """Type for provider configuration"""
+
     api_key: Optional[str]
     default_model: str
     default_parameters: Dict[str, Any]
@@ -19,6 +20,7 @@ class ProviderConfig(TypedDict, total=False):
 
 class LoggingConfig(TypedDict, total=False):
     """Type for logging configuration"""
+
     level: str
     format: str
     file: Optional[str]
