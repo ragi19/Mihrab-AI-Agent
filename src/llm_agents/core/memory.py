@@ -12,11 +12,11 @@ from typing import (
     Generic,
     List,
     Optional,
-    TypeVar,
-    cast,
-    Union,
-    overload,
     Type,
+    TypeVar,
+    Union,
+    cast,
+    overload,
 )
 
 from ..core.message import Message, MessageRole
