@@ -6,9 +6,9 @@ from typing import Any, Dict, Set, Type
 
 from groq import AsyncGroq
 
+from ...base import ModelInfo
 from ...provider_registry import ProviderInfo, ProviderRegistry
 from ...types import ModelCapability
-from ...base import ModelInfo
 from ..base import BaseProvider, ProviderError
 from .models import GroqModel
 

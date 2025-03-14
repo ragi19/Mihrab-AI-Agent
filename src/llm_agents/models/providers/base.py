@@ -5,9 +5,9 @@ Base provider interface definition
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Set, Type, cast
 
+from ...core.message import Message
 from ...core.types import ModelParameters
 from ...utils.logging import get_logger
-from ...core.message import Message
 from ..base import BaseModel, ModelError, ModelInfo
 from ..config import ModelCapability as ConfigModelCapability
 from ..config import ModelConfig
