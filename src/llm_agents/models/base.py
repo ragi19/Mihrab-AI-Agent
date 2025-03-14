@@ -3,7 +3,16 @@ Base model definitions for LLM Agents
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, AsyncIterator, Dict, List, Optional, Set, Union
+from typing import (
+    Any,
+    AsyncIterator,
+    Dict,
+    Final,
+    List,
+    Optional,
+    Set,
+    Union,
+)
 
 from ..core.message import Message
 from ..core.types import ModelParameters
@@ -12,12 +21,12 @@ from ..core.types import ModelParameters
 class ModelCapability:
     """Capabilities that a model may support"""
 
-    CHAT = "chat"
-    COMPLETION = "completion"
-    EMBEDDING = "embedding"
-    FUNCTION_CALLING = "function_calling"
-    VISION = "vision"
-    STREAMING = "streaming"
+    CHAT: Final[str] = "chat"
+    COMPLETION: Final[str] = "completion"
+    EMBEDDING: Final[str] = "embedding"
+    FUNCTION_CALLING: Final[str] = "function_calling"
+    VISION: Final[str] = "vision"
+    STREAMING: Final[str] = "streaming"
 
 
 class ModelInfo:

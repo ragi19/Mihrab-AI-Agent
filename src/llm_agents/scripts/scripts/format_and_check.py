@@ -19,7 +19,7 @@ def run_command(command: list[str], description: str) -> bool:
         return False
 
 
-def main():
+def main() -> None:
     # Get project root directory
     root_dir = Path(__file__).parent.parent
 

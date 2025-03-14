@@ -7,20 +7,23 @@ import os
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-DEFAULT_CONFIG = {
+# Define the type for the config dictionary
+ConfigDict = Dict[str, Any]
+
+DEFAULT_CONFIG: ConfigDict = {
     "providers": {
         "openai": {
-            "api_key": "",
+            "api_key": None,
             "default_model": "gpt-3.5-turbo",
             "default_parameters": {"temperature": 0.7, "max_tokens": 1000},
         },
         "anthropic": {
-            "api_key": "",
+            "api_key": None,
             "default_model": "claude-3-opus-20240229",
             "default_parameters": {"temperature": 0.7, "max_tokens": 1000},
         },
         "groq": {
-            "api_key": "",
+            "api_key": None,
             "default_model": "llama2-70b-4096",
             "default_parameters": {"temperature": 0.7, "max_tokens": 1000},
         },
@@ -43,7 +46,7 @@ def generate_config(
     groq_key: Optional[str] = None,
     logging_config: Optional[Dict[str, Any]] = None,
     **custom_settings: Any,
-) -> Dict[str, Any]:
+) -> ConfigDict:
     """Generate a configuration file with the provided settings
 
     Args:
@@ -58,7 +61,7 @@ def generate_config(
         The generated configuration dictionary
     """
     # Start with default config
-    config = DEFAULT_CONFIG.copy()
+    config: ConfigDict = DEFAULT_CONFIG.copy()
 
     # Update API keys if provided
     if openai_key:
@@ -89,7 +92,7 @@ def generate_config(
     return config
 
 
-def load_environment_keys() -> Dict[str, str]:
+def load_environment_keys() -> Dict[str, Optional[str]]:
     """Load API keys from environment variables"""
     return {
         "openai_key": os.getenv("OPENAI_API_KEY"),

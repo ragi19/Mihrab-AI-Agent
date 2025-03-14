@@ -6,7 +6,17 @@ import asyncio
 import inspect
 from abc import ABC, abstractmethod
 from functools import wraps
-from typing import Any, AsyncIterator, Dict, List, Optional, Set, Type, Union
+from typing import (
+    Any,
+    AsyncIterator,
+    Dict,
+    List,
+    NoReturn,
+    Optional,
+    Set,
+    Type,
+    Union,
+)
 
 from ..core.message import Message
 from ..core.types import ModelParameters
@@ -24,7 +34,7 @@ class ModelAdapter(ABC):
     model providers, handling provider-specific implementation details.
     """
 
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the adapter
 
         Args:
@@ -58,76 +68,168 @@ class ModelAdapter(ABC):
         Returns:
             List of model identifiers
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    async def get_model_info(self, model_name: str) -> ModelInfo:
+    async def get_model_info(self, model_id: str) -> ModelInfo:
         """Get information about a specific model
 
         Args:
-            model_name: Name of the model
+            model_id: Model identifier
 
         Returns:
-            Model information
+            ModelInfo object containing model details
 
         Raises:
-            ModelError: If model information cannot be retrieved
+            ModelError: If model info cannot be retrieved
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    async def create_model(self, model_name: str, **kwargs) -> BaseModel:
+    async def validate_model(self, model_id: str, capabilities: Set[str]) -> bool:
+        """Validate that a model exists and supports required capabilities
+
+        Args:
+            model_id: Model identifier
+            capabilities: Set of required capabilities
+
+        Returns:
+            True if model is valid, False otherwise
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    async def create_model(
+        self, model_id: str, config: ModelConfig
+    ) -> BaseModel:
         """Create a model instance
 
         Args:
-            model_name: Name of the model to create
-            **kwargs: Additional model-specific parameters
+            model_id: Model identifier
+            config: Model configuration
 
         Returns:
-            Initialized model instance
+            Model instance
 
         Raises:
-            ModelError: If model creation fails
+            ModelError: If model cannot be created
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    async def generate(
-        self, model_name: str, messages: List[Message], **kwargs
+    async def chat(
+        self,
+        model: BaseModel,
+        messages: List[Message],
+        parameters: Optional[ModelParameters] = None,
     ) -> Message:
-        """Generate a response using the specified model
+        """Generate a chat response
 
         Args:
-            model_name: Name of the model to use
-            messages: List of conversation messages
-            **kwargs: Additional generation parameters
+            model: Model instance
+            messages: List of chat messages
+            parameters: Optional model parameters
 
         Returns:
-            Model's response message
+            Response message
 
         Raises:
-            ModelError: If generation fails
+            ModelError: If chat fails
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    async def generate_stream(
-        self, model_name: str, messages: List[Message], **kwargs
+    async def stream_chat(
+        self,
+        model: BaseModel,
+        messages: List[Message],
+        parameters: Optional[ModelParameters] = None,
     ) -> AsyncIterator[Message]:
-        """Generate a streaming response using the specified model
+        """Stream a chat response
 
         Args:
-            model_name: Name of the model to use
-            messages: List of conversation messages
-            **kwargs: Additional generation parameters
+            model: Model instance
+            messages: List of chat messages
+            parameters: Optional model parameters
 
-        Yields:
-            Partial response messages
+        Returns:
+            AsyncIterator yielding response message chunks
 
         Raises:
-            ModelError: If generation fails
+            ModelError: If chat streaming fails
         """
-        pass
+        raise NotImplementedError()
+
+    @abstractmethod
+    async def complete(
+        self,
+        model: BaseModel,
+        prompt: str,
+        parameters: Optional[ModelParameters] = None,
+    ) -> str:
+        """Generate a completion response
+
+        Args:
+            model: Model instance
+            prompt: Input prompt
+            parameters: Optional model parameters
+
+        Returns:
+            Completion text
+
+        Raises:
+            ModelError: If completion fails
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    async def stream_complete(
+        self,
+        model: BaseModel,
+        prompt: str,
+        parameters: Optional[ModelParameters] = None,
+    ) -> AsyncIterator[str]:
+        """Stream a completion response
+
+        Args:
+            model: Model instance
+            prompt: Input prompt
+            parameters: Optional model parameters
+
+        Returns:
+            AsyncIterator yielding completion text chunks
+
+        Raises:
+            ModelError: If completion streaming fails
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    async def embed(
+        self,
+        model: BaseModel,
+        text: Union[str, List[str]],
+        parameters: Optional[ModelParameters] = None,
+    ) -> List[List[float]]:
+        """Generate embeddings
+
+        Args:
+            model: Model instance
+            text: Input text or list of texts
+            parameters: Optional model parameters
+
+        Returns:
+            List of embedding vectors
+
+        Raises:
+            ModelError: If embedding fails
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    async def close(self) -> None:
+        """Close the adapter and cleanup resources"""
+        raise NotImplementedError()
 
     def get_config(self, key: str, default: Any = None) -> Any:
         """Get a configuration value
@@ -137,7 +239,7 @@ class ModelAdapter(ABC):
             default: Default value if key not found
 
         Returns:
-            Configuration value or default
+            Configuration value
         """
         return self.config.get(key, default)
 
@@ -190,87 +292,248 @@ class ModelAdapter(ABC):
         # This is a hook for adapter implementations
         pass
 
-
-class CachedModelAdapter(ModelAdapter):
-    """Adapter that caches model instances and information"""
-
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the adapter
+    def require_init(self, func: Any) -> Any:
+        """Decorator to ensure adapter is initialized before method call
 
         Args:
+            func: Function to wrap
+
+        Returns:
+            Wrapped function that checks initialization
+
+        Raises:
+            ModelError: If adapter is not initialized
+        """
+        if inspect.iscoroutinefunction(func):
+
+            @wraps(func)
+            async def async_wrapper(self, *args: Any, **kwargs: Any) -> Any:
+                if not self.is_initialized:
+                    raise ModelError("Adapter not initialized")
+                return await func(self, *args, **kwargs)
+
+            return async_wrapper
+        else:
+
+            @wraps(func)
+            def sync_wrapper(self, *args: Any, **kwargs: Any) -> Any:
+                if not self.is_initialized:
+                    raise ModelError("Adapter not initialized")
+                return func(self, *args, **kwargs)
+
+            return sync_wrapper
+
+    def __repr__(self) -> str:
+        """Get string representation of adapter
+
+        Returns:
+            String representation
+        """
+        return f"{self.__class__.__name__}(config={self.config})"
+
+
+class CachedModelAdapter(ModelAdapter):
+    """Model adapter with caching support
+
+    This adapter wraps another adapter and caches model instances
+    to avoid recreating them unnecessarily.
+    """
+
+    def __init__(
+        self,
+        adapter: ModelAdapter,
+        config: Optional[Dict[str, Any]] = None,
+    ) -> None:
+        """Initialize the cached adapter
+
+        Args:
+            adapter: Base adapter to wrap
             config: Optional configuration dictionary
         """
         super().__init__(config)
-        self._model_cache: Dict[str, BaseModel] = {}
-        self._model_info_cache: Dict[str, ModelInfo] = {}
+        self.adapter = adapter
+        self.models: Dict[str, BaseModel] = {}
 
-    async def get_model(self, model_name: str, **kwargs) -> BaseModel:
-        """Get a cached model instance or create a new one
+    async def initialize(self) -> None:
+        """Initialize the adapter
+
+        This initializes the underlying adapter.
+
+        Raises:
+            ModelError: If initialization fails
+        """
+        await self.adapter.initialize()
+        self._initialized = True
+
+    async def get_available_models(self) -> List[str]:
+        """Get list of available models
+
+        Returns:
+            List of model identifiers
+        """
+        return await self.adapter.get_available_models()
+
+    async def get_model_info(self, model_id: str) -> ModelInfo:
+        """Get information about a specific model
 
         Args:
-            model_name: Name of the model
-            **kwargs: Additional model parameters
+            model_id: Model identifier
+
+        Returns:
+            ModelInfo object containing model details
+
+        Raises:
+            ModelError: If model info cannot be retrieved
+        """
+        return await self.adapter.get_model_info(model_id)
+
+    async def validate_model(self, model_id: str, capabilities: Set[str]) -> bool:
+        """Validate that a model exists and supports required capabilities
+
+        Args:
+            model_id: Model identifier
+            capabilities: Set of required capabilities
+
+        Returns:
+            True if model is valid, False otherwise
+        """
+        return await self.adapter.validate_model(model_id, capabilities)
+
+    async def create_model(
+        self, model_id: str, config: ModelConfig
+    ) -> BaseModel:
+        """Create or get a cached model instance
+
+        Args:
+            model_id: Model identifier
+            config: Model configuration
 
         Returns:
             Model instance
 
         Raises:
-            ModelError: If model creation fails
+            ModelError: If model cannot be created
         """
-        cache_key = f"{model_name}:{hash(frozenset(kwargs.items()))}"
+        if model_id not in self.models:
+            self.models[model_id] = await self.adapter.create_model(model_id, config)
+        return self.models[model_id]
 
-        if cache_key in self._model_cache:
-            return self._model_cache[cache_key]
-
-        model = await self.create_model(model_name, **kwargs)
-        self._model_cache[cache_key] = model
-        return model
-
-    async def get_model_info(self, model_name: str) -> ModelInfo:
-        """Get cached model information or fetch it
+    async def chat(
+        self,
+        model: BaseModel,
+        messages: List[Message],
+        parameters: Optional[ModelParameters] = None,
+    ) -> Message:
+        """Generate a chat response
 
         Args:
-            model_name: Name of the model
+            model: Model instance
+            messages: List of chat messages
+            parameters: Optional model parameters
 
         Returns:
-            Model information
+            Response message
 
         Raises:
-            ModelError: If model information cannot be retrieved
+            ModelError: If chat fails
         """
-        if model_name in self._model_info_cache:
-            return self._model_info_cache[model_name]
+        return await self.adapter.chat(model, messages, parameters)
 
-        # Implementation should override this to fetch info
-        # This is just a placeholder
-        raise NotImplementedError("Subclasses must implement get_model_info")
-
-    def clear_cache(self) -> None:
-        """Clear all cached models and information"""
-        self._model_cache.clear()
-        self._model_info_cache.clear()
-        self.logger.info("Cleared model cache")
-
-    def remove_from_cache(self, model_name: str) -> None:
-        """Remove a specific model from cache
+    async def stream_chat(
+        self,
+        model: BaseModel,
+        messages: List[Message],
+        parameters: Optional[ModelParameters] = None,
+    ) -> AsyncIterator[Message]:
+        """Stream a chat response
 
         Args:
-            model_name: Name of the model to remove
+            model: Model instance
+            messages: List of chat messages
+            parameters: Optional model parameters
+
+        Returns:
+            AsyncIterator yielding response message chunks
+
+        Raises:
+            ModelError: If chat streaming fails
         """
-        # Remove model instances
-        keys_to_remove = []
-        for key in self._model_cache:
-            if key.startswith(f"{model_name}:"):
-                keys_to_remove.append(key)
+        async for chunk in self.adapter.stream_chat(model, messages, parameters):
+            yield chunk
 
-        for key in keys_to_remove:
-            del self._model_cache[key]
+    async def complete(
+        self,
+        model: BaseModel,
+        prompt: str,
+        parameters: Optional[ModelParameters] = None,
+    ) -> str:
+        """Generate a completion response
 
-        # Remove model info
-        if model_name in self._model_info_cache:
-            del self._model_info_cache[model_name]
+        Args:
+            model: Model instance
+            prompt: Input prompt
+            parameters: Optional model parameters
 
-        self.logger.info(f"Removed model {model_name} from cache")
+        Returns:
+            Completion text
+
+        Raises:
+            ModelError: If completion fails
+        """
+        return await self.adapter.complete(model, prompt, parameters)
+
+    async def stream_complete(
+        self,
+        model: BaseModel,
+        prompt: str,
+        parameters: Optional[ModelParameters] = None,
+    ) -> AsyncIterator[str]:
+        """Stream a completion response
+
+        Args:
+            model: Model instance
+            prompt: Input prompt
+            parameters: Optional model parameters
+
+        Returns:
+            AsyncIterator yielding completion text chunks
+
+        Raises:
+            ModelError: If completion streaming fails
+        """
+        async for chunk in self.adapter.stream_complete(model, prompt, parameters):
+            yield chunk
+
+    async def embed(
+        self,
+        model: BaseModel,
+        text: Union[str, List[str]],
+        parameters: Optional[ModelParameters] = None,
+    ) -> List[List[float]]:
+        """Generate embeddings
+
+        Args:
+            model: Model instance
+            text: Input text or list of texts
+            parameters: Optional model parameters
+
+        Returns:
+            List of embedding vectors
+
+        Raises:
+            ModelError: If embedding fails
+        """
+        return await self.adapter.embed(model, text, parameters)
+
+    async def close(self) -> None:
+        """Close the adapter and cleanup resources
+
+        This closes all cached models and the underlying adapter.
+        """
+        for model in self.models.values():
+            await model.close()
+        self.models.clear()
+        await self.adapter.close()
 
 
 class AdapterRegistry:

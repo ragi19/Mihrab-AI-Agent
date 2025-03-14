@@ -29,9 +29,9 @@ class MemoryEntry(Generic[T]):
         if isinstance(content, Message):
             # Convert Message to dict manually
             content = {
-                "role": content.role,
+                "role": content.role.value,  # Access enum value
                 "content": content.content,
-                "metadata": content.metadata if hasattr(content, "metadata") else {},
+                "metadata": content.metadata if content.metadata else {},
             }
 
         return {
@@ -44,8 +44,19 @@ class MemoryEntry(Generic[T]):
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "MemoryEntry[T]":
         """Create memory entry from dictionary"""
+        content_data = data["content"]
+        if isinstance(content_data, dict) and "role" in content_data:
+            # Reconstruct Message object if the content was a Message
+            content = Message(
+                role=MessageRole(content_data["role"]),
+                content=content_data["content"],
+                metadata=content_data.get("metadata", {})
+            )
+        else:
+            content = content_data
+
         return cls(
-            content=data["content"],
+            content=content,
             timestamp=datetime.fromisoformat(data["timestamp"]),
             importance=data["importance"],
             metadata=data["metadata"],
@@ -60,7 +71,7 @@ class Memory:
         working_memory_size: int = 10,
         long_term_memory_size: Optional[int] = None,
         importance_threshold: float = 0.5,
-    ):
+    ) -> None:
         self.working_memory: deque[MemoryEntry[Any]] = deque(maxlen=working_memory_size)
         self.long_term_memory: List[MemoryEntry[Any]] = []
         self.semantic_memory: Dict[str, MemoryEntry[Any]] = {}
@@ -70,10 +81,10 @@ class Memory:
         self.logger = get_logger("memory")
 
     def add_to_working_memory(
-        self, item: Any, importance: float = 1.0, **metadata
+        self, item: Any, importance: float = 1.0, metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Add item to working memory"""
-        entry = MemoryEntry(content=item, importance=importance, metadata=metadata)
+        entry = MemoryEntry(content=item, importance=importance, metadata=metadata or {})
         self.working_memory.append(entry)
         self.logger.debug(f"Added item to working memory")
 
@@ -81,15 +92,19 @@ class Memory:
         if importance >= self.importance_threshold:
             self._consolidate_to_long_term(entry)
 
-    def add_to_semantic_memory(self, key: str, item: Any, **metadata) -> None:
+    def add_to_semantic_memory(
+        self, key: str, item: Any, metadata: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Add item to semantic memory with a key"""
-        entry = MemoryEntry(content=item, metadata=metadata)
+        entry = MemoryEntry(content=item, metadata=metadata or {})
         self.semantic_memory[key] = entry
         self.logger.debug(f"Added item to semantic memory with key '{key}'")
 
-    def add_to_episodic_memory(self, item: Any, **metadata) -> None:
+    def add_to_episodic_memory(
+        self, item: Any, metadata: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Add item to episodic memory"""
-        entry = MemoryEntry(content=item, metadata=metadata)
+        entry = MemoryEntry(content=item, metadata=metadata or {})
         self.episodic_memory.append(entry)
         self.logger.debug(f"Added item to episodic memory")
 

@@ -2,7 +2,7 @@
 Condition functions for handoffs
 """
 
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable, Dict, List, Optional
 
 
 def keyword_based_condition(
@@ -28,7 +28,7 @@ def keyword_based_condition(
 
 
 def complexity_based_condition(
-    threshold: int = 20, technical_terms: List[str] = None
+    threshold: int = 20, technical_terms: Optional[List[str]] = None
 ) -> Callable[[str, Dict[str, Any]], bool]:
     """
     Create a condition function based on message complexity
@@ -70,7 +70,7 @@ def complexity_based_condition(
 
 
 def sentiment_based_condition(
-    negative_terms: List[str] = None,
+    negative_terms: Optional[List[str]] = None,
 ) -> Callable[[str, Dict[str, Any]], bool]:
     """
     Create a condition function based on message sentiment

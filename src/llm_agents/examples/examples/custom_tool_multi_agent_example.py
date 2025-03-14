@@ -33,7 +33,7 @@ from llm_agents.tools.standard import CalculatorTool
 class WikipediaSearchTool(BaseTool):
     """Custom tool for searching Wikipedia"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             name="wikipedia_search",
             description="Search Wikipedia for information on a given topic",
@@ -124,15 +124,15 @@ class CustomToolAgent:
     """Agent wrapper with custom tool capabilities for the multi-agent system"""
 
     def __init__(
-        self, name: str, system_prompt: str, tools: Optional[List[ToolConfig]] = None
-    ):
+        self, name: str, system_prompt: str, tools: Optional[List[BaseTool]] = None
+    ) -> None:
         self.name = name
         self.system_prompt = system_prompt
-        self.tools = tools or []
+        self.tools = [ToolConfig(tool) for tool in (tools or [])]
         self.agent = None
         self.runner = None
 
-    async def initialize(self, model: MultiProviderModel):
+    async def initialize(self, model: MultiProviderModel) -> None:
         """Initialize the agent with a model and tools"""
         # Create memory
         memory = Memory(working_memory_size=10, long_term_memory_size=50)
@@ -152,7 +152,7 @@ class CustomToolAgent:
 
         logger.info(f"Initialized agent: {self.name} with {len(self.tools)} tools")
 
-    async def process(self, message: str, session_id: str = None) -> str:
+    async def process(self, message: str, session_id: Optional[str] = None) -> str:
         """Process a message and return the response"""
         response = await self.runner.run(message, session_id=session_id)
         return response.content
@@ -161,11 +161,11 @@ class CustomToolAgent:
 class AdvancedMultiAgentSystem:
     """Advanced multi-agent system with custom tools"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.agents = {}
         self.model = None
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the multi-agent system with custom tools"""
         # Check for API key
         api_key = os.environ.get("GROQ_API_KEY")
@@ -176,10 +176,7 @@ class AdvancedMultiAgentSystem:
         self.model = await MultiProviderModel.create(
             primary_model="llama3-70b-8192",  # Groq's Llama 3 model
             fallback_models=[],
-            required_capabilities={
-                ModelCapability.CHAT,
-                ModelCapability.FUNCTION_CALLING,
-            },
+            required_capabilities={ModelCapability.CHAT, ModelCapability.FUNCTION_CALLING},
             optimize_for=OptimizationStrategy.PERFORMANCE,
         )
         logger.info(
@@ -250,53 +247,49 @@ class AdvancedMultiAgentSystem:
 
         # Step 3: Synthesizer combines everything (can use both tools)
         synthesis = await self.agents["synthesizer"].process(
-            f"Create a concise response using:\nAnalysis: {analysis}\nResearch: {research}\nQuestion: {query}\n"
-            f"Use calculator or Wikipedia search tools if needed to verify or enhance your response.",
+            f"Create a comprehensive response using:\nAnalysis: {analysis}\nResearch: {research}\nQuestion: {query}",
             session_id="synthesizer_session",
         )
         logger.info("\nSynthesis complete.")
 
-        return {"analysis": analysis, "research": research, "synthesis": synthesis}
+        return {
+            "analysis": analysis,
+            "research": research,
+            "synthesis": synthesis,
+        }
 
 
-async def main():
+async def main() -> None:
     """Main function to run the advanced multi-agent system"""
     try:
-        # Initialize advanced multi-agent system
+        # Initialize multi-agent system
         system = AdvancedMultiAgentSystem()
         await system.initialize()
 
-        # Process user queries
-        while True:
-            # Get user query
-            query = input("\nEnter your question (or 'exit' to quit): ")
+        # Example queries to demonstrate tool usage
+        queries = [
+            "What is the population growth rate of Japan and how does it affect their economy?",
+            "Calculate the compound interest on $10000 invested for 5 years at 7% annual rate.",
+            "What are quantum computers and how many qubits are in the most powerful one?",
+        ]
 
-            # Check if user wants to exit
-            if query.lower() == "exit":
-                break
-
-            # Process the query
+        for query in queries:
+            print(f"\n\n=== Processing Query: {query} ===")
             results = await system.process_query(query)
 
-            # Display results
-            print("\n" + "=" * 80)
-            print("ANALYZER'S BREAKDOWN (with calculator):")
-            print("-" * 80)
+            print("\nAnalyzer's Breakdown:")
             print(results["analysis"])
 
-            print("\n" + "=" * 80)
-            print("RESEARCHER'S FINDINGS (with Wikipedia):")
-            print("-" * 80)
+            print("\nResearcher's Findings:")
             print(results["research"])
 
-            print("\n" + "=" * 80)
-            print("SYNTHESIZER'S FINAL RESPONSE (with all tools):")
-            print("-" * 80)
+            print("\nSynthesizer's Final Response:")
             print(results["synthesis"])
-            print("=" * 80)
+
+            print("\n" + "=" * 80)
 
     except Exception as e:
-        logger.error(f"Error in advanced multi-agent system: {e}")
+        logger.error(f"Error in demo: {e}")
         raise
 
 
