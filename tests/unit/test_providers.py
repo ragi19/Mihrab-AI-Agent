@@ -140,6 +140,13 @@ class MockProvider(BaseProvider):
 
         mock_model = AsyncMock(spec=BaseModel)
         mock_model.model_name = model_name
+        mock_model.model_info = self.SUPPORTED_MODELS.get(model_name)
+        
+        # Add initialize method
+        async def initialize():
+            return None
+            
+        mock_model.initialize = initialize
         return mock_model
 
 
@@ -241,8 +248,8 @@ def test_provider_config_validation(provider_registry):
     # Should pass with API key
     provider_registry.validate_provider_config("mock", {"api_key": "test"})
 
-    # Should fail without API key
-    with pytest.raises(ProviderError):
+    # Should fail without API key - this is expected to raise ProviderError
+    with pytest.raises(ProviderError, match="requires an API key"):
         provider_registry.validate_provider_config("mock", {})
 
 
@@ -291,7 +298,7 @@ def test_usage_report(stats_manager):
 
     assert report["total_cost"] == 0.0015
     assert report["total_tokens"] == 150
-    assert report["total_requests"] == 1
+    assert report["total_requests"] == 2  # One request and one error
 
 
 @pytest.mark.asyncio

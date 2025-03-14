@@ -7,7 +7,7 @@ from typing import Any, AsyncIterator, Dict, List, Set
 import pytest
 
 from llm_agents.core.message import Message, MessageRole
-from llm_agents.models.base import BaseModel
+from llm_agents.models.base import BaseModel, ModelCapability
 
 
 class MockModel(BaseModel):
@@ -19,6 +19,7 @@ class MockModel(BaseModel):
         if responses:
             self.responses.update(responses)
         self._capabilities = {ModelCapability.CHAT, ModelCapability.STREAMING}
+        self.model_name = "mock-model"
 
     @property
     def capabilities(self) -> Set[str]:
