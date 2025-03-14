@@ -121,7 +121,7 @@ MODEL_INFO = {
 }
 
 
-def register_additional_groq_models():
+def register_additional_groq_models() -> int:
     """Register additional Groq models that aren't in the default provider"""
     # Get the Groq provider
     groq_provider = None
@@ -132,7 +132,7 @@ def register_additional_groq_models():
 
     if not groq_provider:
         logger.warning("Groq provider not found, cannot register additional models")
-        return
+        return 0
 
     # Define additional models
     additional_models = {}
@@ -175,17 +175,15 @@ def register_additional_groq_models():
     return registered_count
 
 
-def list_available_models():
+def list_available_models() -> Set[str]:
     """List all available Groq models"""
     if "groq" in ProviderRegistry._provider_info:
         supported_models = ProviderRegistry._provider_info["groq"].supported_models
         print("\nAvailable Groq models:")
         for i, model in enumerate(sorted(supported_models)):
             print(f"{i+1}. {model}")
-        return supported_models
-    else:
-        print("Groq provider not found")
-        return set()
+        return set(supported_models)
+    return set()
 
 
 if __name__ == "__main__":

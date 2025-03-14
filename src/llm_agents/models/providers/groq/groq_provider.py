@@ -73,4 +73,4 @@ class GroqModel(BaseModel):
             temperature=temperature,
             stop=stop,
         )
-        return response["text"]
+        return str(response["text"])
