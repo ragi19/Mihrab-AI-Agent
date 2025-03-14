@@ -141,11 +141,11 @@ class MockProvider(BaseProvider):
         mock_model = AsyncMock(spec=BaseModel)
         mock_model.model_name = model_name
         mock_model.model_info = self.SUPPORTED_MODELS.get(model_name)
-        
+
         # Add initialize method
         async def initialize():
             return None
-            
+
         mock_model.initialize = initialize
         return mock_model
 

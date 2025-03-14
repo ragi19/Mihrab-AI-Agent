@@ -18,7 +18,7 @@ class MockModel(BaseModel):
         self.responses = {"default": "This is a mock response"}
         if responses:
             self.responses.update(responses)
-        self._capabilities = {ModelCapability.CHAT, ModelCapability.STREAMING}
+        self._capabilities = {"chat", "streaming"}
         self.model_name = "mock-model"
 
     @property
