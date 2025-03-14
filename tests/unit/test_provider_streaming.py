@@ -11,6 +11,8 @@ from llm_agents.models import ModelCapability
 from llm_agents.models.providers.anthropic import ClaudeProvider
 from llm_agents.models.providers.groq import GroqProvider
 
+STREAM: Final[str] = "streaming"  # Alias for STREAMING
+
 
 @pytest.mark.asyncio
 async def test_claude_streaming():
@@ -31,7 +33,7 @@ async def test_claude_streaming():
         provider = ClaudeProvider(api_key="test-key")
         model = await provider.create_model("claude-3-opus-20240229")
 
-        assert "streaming" in model.model_info.capabilities
+        assert STREAM in model.model_info.capabilities
 
         message = Message(role=MessageRole.USER, content="Test message")
         chunks = []
@@ -70,7 +72,7 @@ async def test_groq_streaming():
         provider = GroqProvider(api_key="test-key")
         model = await provider.create_model("llama2-70b-4096")
 
-        assert "streaming" in model.model_info.capabilities
+        assert STREAM in model.model_info.capabilities
 
         message = Message(role=MessageRole.USER, content="Test message")
         chunks = []
