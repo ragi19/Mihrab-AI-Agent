@@ -1,8 +1,6 @@
 """
-Custom provider implementation
+Template for implementing custom model providers
 """
-
-# type: ignore
 
 from typing import Any, Dict, Set
 

@@ -8,7 +8,7 @@ It can be run directly or imported and used programmatically.
 
 import logging
 import os
-from typing import Any, Dict, List, Optional, Set, TypedDict, cast
+from typing import Any, Dict, List, Optional, Set
 
 # Configure logging
 logging.basicConfig(
@@ -43,68 +43,40 @@ AVAILABLE_GROQ_MODELS = [
     "qwen-qwq-32b",
 ]
 
-
-class ModelInfoDict(TypedDict):
-    context_window: int
-    max_tokens: int
-    capabilities: Set[str]
-
-
 # Model information mapping
-MODEL_INFO: Dict[str, ModelInfoDict] = {
+MODEL_INFO = {
     "deepseek-r1-distill-llama-70b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "deepseek-r1-distill-qwen-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "distil-whisper-large-v3-en": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-3.2-1b-preview": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-3.2-3b-preview": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-3.2-11b-vision-preview": {
         "context_window": 8192,
         "max_tokens": 4096,
         "capabilities": {
             ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
             ModelCapability.STREAMING,
-            ModelCapability.VISION,
+            ModelCapability.IMAGE_INPUT,
         },
     },
     "llama-3.2-90b-vision-preview": {
@@ -112,64 +84,39 @@ MODEL_INFO: Dict[str, ModelInfoDict] = {
         "max_tokens": 4096,
         "capabilities": {
             ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
             ModelCapability.STREAMING,
-            ModelCapability.VISION,
+            ModelCapability.IMAGE_INPUT,
         },
     },
     "llama-3.3-70b-specdec": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "llama-guard-3-8b": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "mistral-saba-24b": {
         "context_window": 8192,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "qwen-2.5-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "qwen-2.5-coder-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
     "qwen-qwq-32b": {
         "context_window": 32768,
         "max_tokens": 4096,
-        "capabilities": {
-            ModelCapability.CHAT,
-            ModelCapability.COMPLETION,
-            ModelCapability.STREAMING,
-        },
+        "capabilities": {ModelCapability.CHAT, ModelCapability.STREAMING},
     },
 }
 
@@ -194,16 +141,9 @@ def register_additional_groq_models() -> int:
             id=model_name,
             name=model_name,
             provider="groq",
-            capabilities=cast(Set[str], info["capabilities"]),
+            capabilities=info["capabilities"],
             context_window=info["context_window"],
             max_tokens=info["max_tokens"],
-            metadata={
-                "supports_streaming": ModelCapability.STREAMING
-                in cast(Set[str], info["capabilities"]),
-                "supports_vision": ModelCapability.VISION
-                in cast(Set[str], info["capabilities"]),
-                "pricing_per_1k_tokens": 0.0003,
-            },
         )
 
     # Register each model with the Groq provider

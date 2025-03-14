@@ -2,9 +2,7 @@
 Groq model implementations
 """
 
-# type: ignore
-
-from typing import Any, AsyncIterator, Coroutine, Dict, List, Optional, Set
+from typing import Any, AsyncIterator, Dict, List, Optional, Set
 
 from groq import AsyncGroq
 
@@ -21,26 +19,16 @@ class GroqModel(BaseModel):
         client: AsyncGroq,
         parameters: Optional[ModelParameters] = None,
     ):
-        super().__init__(model_id=model_name, config=parameters or {})
+        super().__init__(model_name, parameters)
         self.client = client
-        self.model_name = model_name
-        self.parameters = parameters or {}
         self.provider_name = "groq"
         self.logger = get_logger("models.providers.groq")
+        self.model_name = model_name
         self._capabilities = {ModelCapability.CHAT, ModelCapability.STREAMING}
 
         # Add function calling capability for supported models
-        if model_name in [
-            "llama3-70b-8192",
-            "llama3-8b-8192",
-            "mixtral-8x7b-32768",
-            "gemma2-27b-it",
-        ]:
+        if "llama-3" in model_name.lower():
             self._capabilities.add(ModelCapability.FUNCTION_CALLING)
-
-        # Add vision capability for vision models
-        if "vision" in model_name.lower():
-            self._capabilities.add(ModelCapability.VISION)
 
         # Set model context window and max tokens based on model name
         context_window = 8192  # Default
@@ -96,15 +84,28 @@ class GroqModel(BaseModel):
 
     async def generate_stream(
         self, messages: List[Message], **kwargs: Any
-    ) -> AsyncIterator[Message]:  # type: ignore
+    ) -> AsyncIterator[Message]:
         """Stream a response from the model"""
         try:
-            async for chunk in self.stream_response(messages, **kwargs):
+            async for chunk in self.stream_response(messages):
                 yield chunk
         except Exception as e:
             if "maximum token" in str(e).lower():
                 raise TokenLimitError(str(e))
             raise ModelError(f"Groq API error: {str(e)}")
+
+    def update_parameters(self, parameters: Dict[str, Any]) -> None:
+        """Update model parameters
+
+        Args:
+            parameters: Dictionary of parameters to update
+        """
+        if not parameters:
+            return
+
+        # Update the model's configuration with the provided parameters
+        for key, value in parameters.items():
+            self.set_config(key, value)
 
     async def generate_response(
         self, messages: List[Message], **kwargs: Any
@@ -172,40 +173,39 @@ class GroqModel(BaseModel):
     async def stream_response(
         self, messages: List[Message], **kwargs: Any
     ) -> AsyncIterator[Message]:
-        """Stream a response from the model"""
-        # Convert messages to Groq format
-        groq_messages = self._convert_messages(messages)
+        """Stream a response from the Groq API
 
-        # Merge parameters with kwargs
-        params = {**self.parameters, **kwargs}
+        Args:
+            messages: List of messages in the conversation
+            **kwargs: Additional parameters to pass to the model
 
-        # Stream response from Groq API
+        Yields:
+            Message chunks from the model
+        """
+        # Extract tools if provided
+        tools = kwargs.pop("tools", None)
+
+        # Create completion request parameters
+        params = {
+            "model": self.model_name,
+            "messages": [msg.to_dict() for msg in messages],
+            "stream": True,
+            "temperature": kwargs.get("temperature", 0.7),
+            "max_tokens": kwargs.get("max_tokens", 1024),
+            "top_p": kwargs.get("top_p", 1.0),
+        }
+
+        # Add tools if provided and model supports function calling
+        if tools and ModelCapability.FUNCTION_CALLING in self._capabilities:
+            params["tools"] = tools
+
         try:
-            # Use the client directly to avoid type errors
-            response = await self.client.chat.completions.create(  # type: ignore
-                model=self.model_name,
-                messages=groq_messages,  # type: ignore
-                stream=True,
-                **params,
-            )
-
-            # Handle the streaming response
-            if hasattr(response, "__aiter__"):
-                async for chunk in response:
-                    if (
-                        chunk.choices
-                        and chunk.choices[0].delta
-                        and chunk.choices[0].delta.content
-                    ):
-                        content = chunk.choices[0].delta.content
-                        message = Message(role=MessageRole.ASSISTANT, content=content)
-                        # Add metadata to avoid attribute error
-                        if not message.metadata:
-                            message.metadata = {}
-                        # Add tool_calls attribute to avoid attribute error
-                        if message.metadata:
-                            message.metadata["tool_calls"] = []  # type: ignore
-                        yield message
+            async for chunk in await self.client.chat.completions.create(**params):
+                if chunk.choices[0].delta.content is not None:
+                    yield Message(
+                        role=MessageRole.ASSISTANT,
+                        content=chunk.choices[0].delta.content,
+                    )
         except Exception as e:
             self.logger.error(f"Error streaming response: {e}")
             raise
@@ -218,7 +218,3 @@ class GroqModel(BaseModel):
             "gpt-3.5-turbo"
         )  # Use as fallback encoding
         return len(encoding.encode(text))
-
-    def _convert_messages(self, messages: List[Message]) -> List[Dict[str, Any]]:
-        """Convert messages to Groq format"""
-        return [msg.to_dict() for msg in messages]

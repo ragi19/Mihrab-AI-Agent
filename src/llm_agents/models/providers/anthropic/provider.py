@@ -2,9 +2,7 @@
 Anthropic provider implementation
 """
 
-# type: ignore
-
-from typing import Any, Dict, List, Optional, Set, Type
+from typing import Dict, List, Optional
 
 import anthropic
 

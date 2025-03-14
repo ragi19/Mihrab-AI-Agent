@@ -6,7 +6,7 @@ from typing import Any, Dict, Set
 
 from anthropic import AsyncAnthropic
 
-from ...base import BaseModel, ModelCapability, ModelInfo
+from ...types import ModelCapability, ModelInfo
 from ..base import BaseProvider, ProviderError
 from .models import ClaudeModel
 
@@ -17,56 +17,49 @@ class AnthropicProvider(BaseProvider):
     # Supported models and their capabilities
     SUPPORTED_MODELS = {
         "claude-3-opus-20240229": ModelInfo(
-            id="claude-3-opus-20240229",
             name="claude-3-opus-20240229",
-            provider="anthropic",
             capabilities={
                 ModelCapability.CHAT,
                 ModelCapability.COMPLETION,
-                ModelCapability.STREAMING,
+                ModelCapability.SYSTEM_MESSAGES,
+                ModelCapability.TOKEN_COUNTING,
                 ModelCapability.FUNCTION_CALLING,
+                ModelCapability.STREAM,
             },
-            context_window=200000,
             max_tokens=200000,
-            metadata={
-                "supports_streaming": True,
-                "supports_functions": True,
-                "pricing_per_1k_tokens": 0.015,
-            },
+            context_window=200000,
+            supports_streaming=True,
+            supports_functions=True,
+            pricing_per_1k_tokens=0.015,
         ),
         "claude-3-sonnet-20240229": ModelInfo(
-            id="claude-3-sonnet-20240229",
             name="claude-3-sonnet-20240229",
-            provider="anthropic",
             capabilities={
                 ModelCapability.CHAT,
                 ModelCapability.COMPLETION,
-                ModelCapability.STREAMING,
+                ModelCapability.SYSTEM_MESSAGES,
+                ModelCapability.TOKEN_COUNTING,
                 ModelCapability.FUNCTION_CALLING,
+                ModelCapability.STREAM,
             },
-            context_window=200000,
             max_tokens=200000,
-            metadata={
-                "supports_streaming": True,
-                "supports_functions": True,
-                "pricing_per_1k_tokens": 0.003,
-            },
+            context_window=200000,
+            supports_streaming=True,
+            supports_functions=True,
+            pricing_per_1k_tokens=0.003,
         ),
         "claude-2.1": ModelInfo(
-            id="claude-2.1",
             name="claude-2.1",
-            provider="anthropic",
             capabilities={
                 ModelCapability.CHAT,
                 ModelCapability.COMPLETION,
-                ModelCapability.STREAMING,
+                ModelCapability.SYSTEM_MESSAGES,
+                ModelCapability.TOKEN_COUNTING,
             },
-            context_window=100000,
             max_tokens=100000,
-            metadata={
-                "supports_streaming": True,
-                "pricing_per_1k_tokens": 0.008,
-            },
+            context_window=100000,
+            supports_streaming=True,
+            pricing_per_1k_tokens=0.008,
         ),
     }
 

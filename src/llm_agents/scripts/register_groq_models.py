@@ -17,4 +17,4 @@ from llm_agents.models.providers.groq.register_groq_models import (
 if __name__ == "__main__":
     # Run the registration process
     register_additional_groq_models()
-    list_available_models()
+    list_available_models() 
