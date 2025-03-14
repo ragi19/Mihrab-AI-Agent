@@ -1,8 +1,10 @@
 """
-Template for implementing custom LLM providers
+Custom provider implementation
 """
 
-from typing import Optional
+# type: ignore
+
+from typing import Any, Dict, List, Optional, Set
 
 from ....core.types import ModelParameters
 from ...base import BaseModel

@@ -114,57 +114,63 @@ class ProviderStats:
 
 class ProviderStatsManager(ProviderStats):
     """Manager for provider statistics with singleton pattern"""
-    
+
     _instance = None
-    
+
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(ProviderStatsManager, cls).__new__(cls)
             cls._instance._stats = {}
             cls._instance._start_times = {}
         return cls._instance
-    
+
     @classmethod
     def get_instance(cls):
         """Get the singleton instance"""
         if cls._instance is None:
             cls._instance = cls()
         return cls._instance
-        
-    def record_request(self, provider: str, model: str, prompt_tokens: int = 0, 
-                       completion_tokens: int = 0, cost: float = 0.0):
+
+    def record_request(
+        self,
+        provider: str,
+        model: str,
+        prompt_tokens: int = 0,
+        completion_tokens: int = 0,
+        cost: float = 0.0,
+    ):
         """Record a successful request with token usage"""
         self.record_success(
-            provider=provider,
-            tokens=prompt_tokens + completion_tokens,
-            cost=cost
+            provider=provider, tokens=prompt_tokens + completion_tokens, cost=cost
         )
-        
-    def record_error(self, provider: str, model: str, error: str, is_rate_limit: bool = False):
+
+    def record_error(
+        self, provider: str, model: str, error: str, is_rate_limit: bool = False
+    ):
         """Record an error from a provider"""
         self.record_failure(provider)
-        
+
     def get_provider_stats(self, provider: str):
         """Get statistics for a specific provider"""
         return self.get_provider_metrics(provider)
-        
+
     def get_usage_report(self):
         """Get a usage report for all providers"""
         stats = self.get_all_stats()
-        
+
         # Calculate totals
         total_tokens = 0
         total_cost = 0.0
         total_requests = 0
-        
+
         for provider, metrics in stats.items():
             total_tokens += metrics.get("total_tokens", 0)
             total_cost += metrics.get("total_cost", 0.0)
             total_requests += metrics.get("successes", 0) + metrics.get("failures", 0)
-            
+
         return {
             "providers": stats,
             "total_tokens": total_tokens,
             "total_cost": total_cost,
-            "total_requests": total_requests
+            "total_requests": total_requests,
         }

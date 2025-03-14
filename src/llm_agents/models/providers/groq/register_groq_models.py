@@ -43,10 +43,12 @@ AVAILABLE_GROQ_MODELS = [
     "qwen-qwq-32b",
 ]
 
+
 class ModelInfoDict(TypedDict):
     context_window: int
     max_tokens: int
     capabilities: Set[str]
+
 
 # Model information mapping
 MODEL_INFO: Dict[str, ModelInfoDict] = {
@@ -196,8 +198,10 @@ def register_additional_groq_models() -> int:
             context_window=info["context_window"],
             max_tokens=info["max_tokens"],
             metadata={
-                "supports_streaming": ModelCapability.STREAMING in cast(Set[str], info["capabilities"]),
-                "supports_vision": ModelCapability.VISION in cast(Set[str], info["capabilities"]),
+                "supports_streaming": ModelCapability.STREAMING
+                in cast(Set[str], info["capabilities"]),
+                "supports_vision": ModelCapability.VISION
+                in cast(Set[str], info["capabilities"]),
                 "pricing_per_1k_tokens": 0.0003,
             },
         )

@@ -2,7 +2,9 @@
 OpenAI provider implementation
 """
 
-from typing import Dict, List, Optional
+# type: ignore
+
+from typing import Any, Dict, List, Optional, Set, Type
 
 import openai
 

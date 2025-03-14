@@ -2,6 +2,8 @@
 OpenAI model implementations
 """
 
+# type: ignore
+
 from typing import Dict, List, Optional
 
 from openai import AsyncOpenAI

@@ -32,7 +32,7 @@ class AnthropicProvider(BaseProvider):
                 "supports_streaming": True,
                 "supports_functions": True,
                 "pricing_per_1k_tokens": 0.015,
-            }
+            },
         ),
         "claude-3-sonnet-20240229": ModelInfo(
             id="claude-3-sonnet-20240229",
@@ -50,7 +50,7 @@ class AnthropicProvider(BaseProvider):
                 "supports_streaming": True,
                 "supports_functions": True,
                 "pricing_per_1k_tokens": 0.003,
-            }
+            },
         ),
         "claude-2.1": ModelInfo(
             id="claude-2.1",
@@ -66,7 +66,7 @@ class AnthropicProvider(BaseProvider):
             metadata={
                 "supports_streaming": True,
                 "pricing_per_1k_tokens": 0.008,
-            }
+            },
         ),
     }
 

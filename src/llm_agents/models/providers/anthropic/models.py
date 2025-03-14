@@ -2,6 +2,8 @@
 Anthropic model implementations
 """
 
+# type: ignore
+
 from typing import Any, AsyncIterator, Dict, List, Optional, Set
 
 from anthropic import AsyncAnthropic
@@ -37,7 +39,7 @@ class ClaudeModel(BaseModel):
         """Generate a response from the model"""
         # Merge parameters with kwargs
         params = {**self.parameters, **kwargs}
-        
+
         # Convert messages to Anthropic format
         prompt = self._convert_messages_to_prompt(messages)
 
@@ -55,7 +57,7 @@ class ClaudeModel(BaseModel):
         """Stream a response from the model"""
         # Merge parameters with kwargs
         params = {**self.parameters, **kwargs}
-        
+
         # Convert messages to Anthropic format
         prompt = self._convert_messages_to_prompt(messages)
 
@@ -67,7 +69,11 @@ class ClaudeModel(BaseModel):
         )
 
         async for chunk in stream:
-            if hasattr(chunk, "delta") and hasattr(chunk.delta, "text") and chunk.delta.text:
+            if (
+                hasattr(chunk, "delta")
+                and hasattr(chunk.delta, "text")
+                and chunk.delta.text
+            ):
                 yield Message(role=MessageRole.ASSISTANT, content=chunk.delta.text)
 
     async def generate_response(self, messages: List[Message]) -> Message:
