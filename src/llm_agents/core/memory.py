@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Dict, Generic, List, Optional, TypeVar
 
-from ..core.message import Message
+from ..core.message import Message, MessageRole
 from ..utils.logging import get_logger
 
 T = TypeVar("T")
