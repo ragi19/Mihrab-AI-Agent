@@ -104,6 +104,7 @@ from unittest.mock import Mock, patch
 import pytest
 
 from llm_agents.models import (
+    BaseModel,
     BaseProvider,
     ModelCapability,
     ModelInfo,
@@ -119,7 +120,9 @@ class MockProvider(BaseProvider):
 
     SUPPORTED_MODELS = {
         "test-model": ModelInfo(
+            id="test-model",
             name="test-model",
+            provider="mock",
             capabilities={ModelCapability.CHAT, ModelCapability.COMPLETION},
             max_tokens=1000,
             context_window=1000,
@@ -128,8 +131,14 @@ class MockProvider(BaseProvider):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        for model_name, model_info in self.SUPPORTED_MODELS.items():
-            self.register_model(model_name, Mock, model_info)
+        
+    async def create_model(self, model_name: str) -> BaseModel:
+        """Create a mock model instance"""
+        # This is just a stub for testing
+        from unittest.mock import AsyncMock
+        mock_model = AsyncMock(spec=BaseModel)
+        mock_model.model_name = model_name
+        return mock_model
 
 
 @pytest.fixture

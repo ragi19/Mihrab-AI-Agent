@@ -76,7 +76,7 @@ MODEL_INFO = {
         "capabilities": {
             ModelCapability.CHAT,
             ModelCapability.STREAMING,
-            ModelCapability.IMAGE_INPUT,
+            ModelCapability.VISION,
         },
     },
     "llama-3.2-90b-vision-preview": {
@@ -85,7 +85,7 @@ MODEL_INFO = {
         "capabilities": {
             ModelCapability.CHAT,
             ModelCapability.STREAMING,
-            ModelCapability.IMAGE_INPUT,
+            ModelCapability.VISION,
         },
     },
     "llama-3.3-70b-specdec": {

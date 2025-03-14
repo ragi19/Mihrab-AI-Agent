@@ -32,6 +32,12 @@ class ProviderError(ModelError):
     pass
 
 
+class ModelCreationError(ProviderError):
+    """Exception raised when model creation fails"""
+
+    pass
+
+
 class ProviderRegistry:
     """Registry for managing model providers"""
 

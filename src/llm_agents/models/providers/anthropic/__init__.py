@@ -11,7 +11,7 @@ from ..base import BaseProvider, ProviderError
 from .models import ClaudeModel
 
 
-class ClaudeProvider(BaseProvider):
+class AnthropicProvider(BaseProvider):
     """Provider implementation for Anthropic Claude models"""
 
     # Supported models and their capabilities
@@ -121,3 +121,10 @@ class ClaudeProvider(BaseProvider):
             return True
         except Exception as e:
             raise ProviderError(f"Invalid Anthropic API key: {e}")
+
+
+# For backward compatibility
+ClaudeProvider = AnthropicProvider
+
+# Export the provider
+__all__ = ["AnthropicProvider", "ClaudeProvider", "ClaudeModel"]
