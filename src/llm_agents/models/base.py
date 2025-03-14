@@ -27,6 +27,7 @@ class ModelCapability:
     FUNCTION_CALLING: Final[str] = "function_calling"
     VISION: Final[str] = "vision"
     STREAMING: Final[str] = "streaming"
+    IMAGE_INPUT: Final[str] = "image_input"
 
 
 class ModelInfo:
