@@ -3,12 +3,14 @@ Base provider interface definition
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional, Set, Type
+from typing import Any, Dict, Optional, Set, Type, cast
 
 from ...core.types import ModelParameters
 from ...utils.logging import get_logger
-from ..base import BaseModel, ModelError
-from ..types import ModelConfig, ModelInfo
+from ...core.message import Message
+from ..base import BaseModel, ModelError, ModelInfo
+from ..config import ModelCapability as ConfigModelCapability
+from ..config import ModelConfig
 
 
 class ProviderError(ModelError):
@@ -23,7 +25,7 @@ class BaseProvider(ABC):
     # Supported models and their capabilities - should be overridden by subclasses
     SUPPORTED_MODELS: Dict[str, ModelInfo] = {}
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         """Initialize provider with configuration"""
         self._config = kwargs
         self._models: Dict[str, Type[BaseModel]] = {}
@@ -36,7 +38,7 @@ class BaseProvider(ABC):
         pass
 
     def register_model(
-        self, model_name: str, model_class: type, model_info: ModelInfo
+        self, model_name: str, model_class: Type[BaseModel], model_info: ModelInfo
     ) -> None:
         """Register a model with this provider"""
         self._models[model_name] = model_class
@@ -45,7 +47,10 @@ class BaseProvider(ABC):
 
     def get_default_parameters(self, model_name: str) -> Dict[str, Any]:
         """Get default parameters for a model"""
-        return self._config.get("default_parameters", {})
+        default_params = self._config.get("default_parameters", {})
+        if not isinstance(default_params, dict):
+            return {}
+        return default_params
 
     def get_model_config(self, model_name: str) -> Optional[ModelConfig]:
         """Get configuration for a specific model"""
@@ -53,14 +58,24 @@ class BaseProvider(ABC):
             return None
 
         model_info = self._model_info[model_name]
+        # Convert string capabilities to ModelCapability enum values
+        capabilities = set()
+        for cap in model_info.capabilities:
+            try:
+                # Try to convert string capability to enum
+                capabilities.add(ConfigModelCapability[cap.upper()])
+            except (KeyError, AttributeError):
+                # Skip capabilities that don't match the enum
+                pass
+                
         return ModelConfig(
             model_name=model_name,
             provider_name=self.__class__.__name__.replace("Provider", "").lower(),
-            capabilities=model_info.capabilities,
+            capabilities=capabilities,
             context_window=model_info.context_window,
             max_tokens=model_info.max_tokens,
-            supports_streaming=model_info.supports_streaming,
-            supports_functions=model_info.supports_functions,
+            supports_streaming="STREAMING" in [str(c).upper() for c in model_info.capabilities],
+            supports_functions="FUNCTION_CALLING" in [str(c).upper() for c in model_info.capabilities],
         )
 
     @classmethod
@@ -68,14 +83,24 @@ class BaseProvider(ABC):
         """Register supported models and their configurations"""
         configs = {}
         for model_name, model_info in cls.SUPPORTED_MODELS.items():
+            # Convert string capabilities to ModelCapability enum values
+            capabilities = set()
+            for cap in model_info.capabilities:
+                try:
+                    # Try to convert string capability to enum
+                    capabilities.add(ConfigModelCapability[cap.upper()])
+                except (KeyError, AttributeError):
+                    # Skip capabilities that don't match the enum
+                    pass
+                    
             config = ModelConfig(
                 model_name=model_name,
                 provider_name=cls.__name__.replace("Provider", "").lower(),
-                capabilities=model_info.capabilities,
+                capabilities=capabilities,
                 context_window=model_info.context_window,
                 max_tokens=model_info.max_tokens,
-                supports_streaming=model_info.supports_streaming,
-                supports_functions=model_info.supports_functions,
+                supports_streaming="STREAMING" in [str(c).upper() for c in model_info.capabilities],
+                supports_functions="FUNCTION_CALLING" in [str(c).upper() for c in model_info.capabilities],
             )
             configs[model_name] = config
         return configs
@@ -84,7 +109,9 @@ class BaseProvider(ABC):
     def supported_models(self) -> Dict[str, ModelConfig]:
         """Get dictionary of supported models"""
         return {
-            model_name: self.get_model_config(model_name) for model_name in self._models
+            model_name: config 
+            for model_name in self._models
+            if (config := self.get_model_config(model_name)) is not None
         }
 
     @classmethod

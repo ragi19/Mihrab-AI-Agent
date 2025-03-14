@@ -71,7 +71,7 @@ class ProviderRegistry:
                         model_name=model_name,
                         provider_name=name,
                         # Default capabilities - providers should update these
-                        capabilities=[],
+                        capabilities=set(),
                     )
                     for model_name in provider_info.supported_models
                 },
