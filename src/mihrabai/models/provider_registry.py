@@ -289,3 +289,27 @@ class ProviderRegistry:
         logger.info(
             f"Registered model configuration: {model_name} for provider {provider_name}"
         )
+
+
+# Add module-level function that redirects to the class method
+def register_provider(
+    name: str, 
+    provider_class: Type[Any], 
+    provider_info: ProviderInfo, 
+    provider_factory: Optional[Callable] = None
+) -> None:
+    """
+    Module-level function that redirects to ProviderRegistry.register_provider
+    
+    Args:
+        name: Provider identifier
+        provider_class: Provider class implementation
+        provider_info: Provider capability information
+        provider_factory: Optional factory function to create provider instances
+    """
+    ProviderRegistry.register_provider(
+        name=name,
+        provider_class=provider_class,
+        provider_info=provider_info,
+        provider_factory=provider_factory
+    )
