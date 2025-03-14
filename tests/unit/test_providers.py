@@ -131,11 +131,12 @@ class MockProvider(BaseProvider):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+
     async def create_model(self, model_name: str) -> BaseModel:
         """Create a mock model instance"""
         # This is just a stub for testing
         from unittest.mock import AsyncMock
+
         mock_model = AsyncMock(spec=BaseModel)
         mock_model.model_name = model_name
         return mock_model
