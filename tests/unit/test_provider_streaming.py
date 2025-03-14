@@ -2,6 +2,7 @@
 Tests for provider streaming capabilities
 """
 
+from typing import Final
 from unittest.mock import AsyncMock, patch
 
 import pytest
