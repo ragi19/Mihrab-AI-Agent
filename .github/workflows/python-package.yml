@@ -41,4 +41,4 @@ jobs:
       if: matrix.python-version == '3.12'
       run: |
         pip install dist/*.whl
-        python -c "import mihrabai; print(f'Successfully imported mihrabai version {mihrabai.__version__}')" 
+        python -c "import mihrabai; print(f'Successfully imported mihrabai package')" 
