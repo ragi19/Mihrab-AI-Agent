@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "mihrab-ai-agent"
 version = "0.2.0"
@@ -23,8 +27,53 @@ dependencies = [
 ]
 requires-python = ">=3.9"
 readme = "README.md"
-license = { file = "LICENSE" }  # Correct way for Hatchling
+license = { text = "MIT" }
 keywords = ["llm", "agents", "ai", "openai", "anthropic", "groq", "framework"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/ragishehab/mihrab-ai-agent"
+"Bug Tracker" = "https://github.com/ragishehab/mihrab-ai-agent/issues"
+"Documentation" = "https://github.com/ragishehab/mihrab-ai-agent/blob/main/README.md"
 
 [project.scripts]
 mihrabai = "mihrabai.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = [
+    "mihrabai",
+    "mihrabai.common",
+    "mihrabai.core",
+    "mihrabai.docs",
+    "mihrabai.docs.documentation",
+    "mihrabai.docs.guide",
+    "mihrabai.examples",
+    "mihrabai.examples.advanced",
+    "mihrabai.examples.basic",
+    "mihrabai.examples.tools",
+    "mihrabai.handoff",
+    "mihrabai.models",
+    "mihrabai.models.providers",
+    "mihrabai.models.providers.anthropic",
+    "mihrabai.models.providers.custom",
+    "mihrabai.models.providers.groq",
+    "mihrabai.models.providers.openai",
+    "mihrabai.runtime",
+    "mihrabai.scripts",
+    "mihrabai.scripts.scripts",
+    "mihrabai.tools",
+    "mihrabai.tools.standard",
+    "mihrabai.utils"
+]

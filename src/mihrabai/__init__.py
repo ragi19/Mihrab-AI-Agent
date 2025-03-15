@@ -1,49 +1,35 @@
 """
-LLM Agents - A framework for building and running LLM-powered agents
+Mihrab AI Agent Framework
+
+A flexible framework for building and deploying LLM-powered agents with multiple provider support,
+inspired by the mihrab that guides prayer in a mosque.
 """
 
 __version__ = "0.2.0"
 
-from .core import Agent, ChatAgent, Message, MessageRole
-from .core import MemoryEnabledTaskAgent as MemoryTaskAgent, TaskAgent
-from .models import BaseModel, ModelRegistry, ProviderRegistry
-from .models.provider_registry import ProviderRegistry as _ProviderRegistry
+# Core components
+from mihrabai.core.message import Message, MessageRole
+from mihrabai.core.agent import Agent
+from mihrabai.core.task_agent import TaskAgent
+from mihrabai.core.memory_task_agent import MemoryTaskAgent
 
-# Import create_model from provider_registry
-create_model = _ProviderRegistry.create_model
-from .config import config
-from .factory import create_agent, create_memory_task_agent, create_task_agent
-from .handoff import HandoffAgent, HandoffConfig, HandoffInputData
-from .runtime import AgentRunner, AgentCoordinator, RuntimeContext
-from .tools import BaseTool, ToolRegistry
+# Factory functions
+from mihrabai.factory import create_task_agent, create_memory_agent
 
+# Handoff system
+from mihrabai.handoff.agent import HandoffAgent
+from mihrabai.handoff.config import HandoffConfig
+from mihrabai.handoff.input_data import HandoffInputData
+
+# Make commonly used components available at the top level
 __all__ = [
-    # Core
     "Agent",
-    "ChatAgent",
     "TaskAgent",
     "MemoryTaskAgent",
     "Message",
     "MessageRole",
-    # Models
-    "BaseModel",
-    "ProviderRegistry",
-    "ModelRegistry",
-    "create_model",
-    # Runtime
-    "RuntimeContext",
-    "AgentRunner",
-    "AgentCoordinator",
-    # Tools
-    "BaseTool",
-    "ToolRegistry",
-    # Factory
-    "create_agent",
     "create_task_agent",
-    "create_memory_task_agent",
-    # Config
-    "config",
-    # Handoff
+    "create_memory_agent",
     "HandoffAgent",
     "HandoffConfig",
     "HandoffInputData",
