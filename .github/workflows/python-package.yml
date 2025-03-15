@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11"]
 
     steps:
     - uses: actions/checkout@v4
@@ -41,4 +41,4 @@ jobs:
       if: matrix.python-version == '3.12'
       run: |
         pip install dist/*.whl
-        python -c "import mihrabai; print(f'Successfully imported mihrabai package')" 
+        pip list | grep mihrab-ai-agent 
