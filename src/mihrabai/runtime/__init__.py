@@ -3,7 +3,7 @@ Runtime package exports
 """
 
 from .context import RuntimeContext
-from .coordinator import CoordinatedAgentGroup
+from .coordinator import CoordinatedAgentGroup as AgentCoordinator
 from .runner import AgentRunner
 
-__all__ = ["RuntimeContext", "AgentRunner", "CoordinatedAgentGroup"]
+__all__ = ["RuntimeContext", "AgentRunner", "AgentCoordinator"]

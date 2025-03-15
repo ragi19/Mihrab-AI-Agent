@@ -66,8 +66,15 @@ class TaskAgent(Agent):
         """Create a tracing span with safe fallback for tests"""
         try:
             # Try to create normal span
-            return self._create_span(name, data)
-        except RuntimeError:
+            span = self._create_span(name, data)
+            # Check if span supports context manager protocol
+            if hasattr(span, "__enter__") and hasattr(span, "__exit__"):
+                return span
+            else:
+                # Wrap span in a dummy context manager
+                self.logger.debug(f"Wrapping span in dummy context manager for {name}")
+                return contextlib.nullcontext(span)
+        except (RuntimeError, AttributeError, TypeError):
             # Fallback for tests - use dummy context manager
             self.logger.debug(f"Creating dummy span for {name} in testing environment")
             return contextlib.nullcontext()

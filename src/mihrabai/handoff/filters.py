@@ -2,7 +2,8 @@
 Filter functions for handoffs
 """
 
-from typing import List
+from typing import List, Dict, Any, Optional, Callable
+import re
 
 from ..core.message import Message, MessageRole
 from .config import HandoffInputData
@@ -138,32 +139,284 @@ def remove_sensitive_information(input_data: HandoffInputData) -> HandoffInputDa
 
 
 def preserve_context(
-    input_data: HandoffInputData, max_messages: int = 5
-) -> HandoffInputData:
+    max_messages: int = 5
+) -> Callable[[HandoffInputData], HandoffInputData]:
     """
-    Filter that preserves the most recent messages for context
+    Create a filter that preserves the most recent messages for context
 
     This filter is useful when you want to preserve some context
     but don't want to transfer the entire conversation history.
 
     Args:
-        input_data: The handoff input data to filter
         max_messages: Maximum number of messages to preserve
 
     Returns:
-        Filtered handoff input data with limited context
+        A filter function that preserves context
     """
-    # Get the most recent messages
-    recent_messages = (
-        input_data.conversation_history[-max_messages:]
-        if input_data.conversation_history
-        else []
+    def filter_function(input_data: HandoffInputData) -> HandoffInputData:
+        """
+        Filter that preserves the most recent messages for context
+
+        Args:
+            input_data: The handoff input data to filter
+
+        Returns:
+            Filtered handoff input data with preserved context
+        """
+        # If we have fewer messages than the max, return all of them
+        if len(input_data.conversation_history) <= max_messages:
+            return input_data
+
+        # Otherwise, keep only the most recent messages
+        preserved_history = input_data.conversation_history[-max_messages:]
+
+        return HandoffInputData(
+            conversation_history=preserved_history,
+            system_message=input_data.system_message,
+            metadata=input_data.metadata,
+            source_agent=input_data.source_agent,
+            handoff_chain=input_data.handoff_chain,
+        )
+    
+    return filter_function
+
+
+def extract_key_information(
+    input_data: HandoffInputData, 
+    key_patterns: Dict[str, str]
+) -> HandoffInputData:
+    """
+    Filter that extracts key information from conversation history
+
+    This filter identifies and extracts important information from the conversation
+    based on provided patterns, and adds it to the metadata for the target agent.
+
+    Args:
+        input_data: The handoff input data to filter
+        key_patterns: Dictionary mapping metadata keys to regex patterns
+
+    Returns:
+        Filtered handoff input data with extracted information in metadata
+    """
+    # Create a copy of the metadata
+    enhanced_metadata = input_data.metadata.copy()
+    
+    # Extract information from all messages
+    for msg in input_data.conversation_history:
+        for key, pattern in key_patterns.items():
+            matches = re.findall(pattern, msg.content)
+            if matches:
+                # Store the first match in metadata
+                enhanced_metadata[key] = matches[0]
+    
+    return HandoffInputData(
+        conversation_history=input_data.conversation_history,
+        system_message=input_data.system_message,
+        metadata=enhanced_metadata,
+        source_agent=input_data.source_agent,
+        handoff_chain=input_data.handoff_chain,
     )
 
+
+def prioritize_messages(
+    input_data: HandoffInputData,
+    priority_keywords: List[str],
+) -> HandoffInputData:
+    """
+    Filter that reorders messages to prioritize important ones
+
+    This filter moves messages containing priority keywords to the front
+    of the conversation history, ensuring they get more attention.
+
+    Args:
+        input_data: The handoff input data to filter
+        priority_keywords: List of keywords indicating priority
+
+    Returns:
+        Filtered handoff input data with reordered messages
+    """
+    # Separate messages into priority and non-priority
+    priority_messages = []
+    normal_messages = []
+    
+    for msg in input_data.conversation_history:
+        # Check if message contains any priority keywords
+        if any(kw.lower() in msg.content.lower() for kw in priority_keywords):
+            priority_messages.append(msg)
+        else:
+            normal_messages.append(msg)
+    
+    # Combine priority messages first, then normal messages
+    reordered_history = priority_messages + normal_messages
+    
     return HandoffInputData(
-        conversation_history=recent_messages,
+        conversation_history=reordered_history,
         system_message=input_data.system_message,
         metadata=input_data.metadata,
+        source_agent=input_data.source_agent,
+        handoff_chain=input_data.handoff_chain,
+    )
+
+
+def add_handoff_context(
+    context_generator: Callable[[HandoffInputData], str],
+) -> Callable[[HandoffInputData], HandoffInputData]:
+    """
+    Create a filter that adds contextual information about the handoff
+
+    This filter adds a system message with context about why the handoff
+    occurred and what the target agent should focus on.
+
+    Args:
+        context_generator: Function that generates context from input data
+
+    Returns:
+        A filter function that adds handoff context
+    """
+    def filter_function(input_data: HandoffInputData) -> HandoffInputData:
+        # Generate context information
+        context_info = context_generator(input_data)
+        
+        # Add context to system message
+        enhanced_system = (
+            input_data.system_message + "\n\n" + context_info
+            if input_data.system_message
+            else context_info
+        )
+        
+        return HandoffInputData(
+            conversation_history=input_data.conversation_history,
+            system_message=enhanced_system,
+            metadata=input_data.metadata,
+            source_agent=input_data.source_agent,
+            handoff_chain=input_data.handoff_chain,
+        )
+    
+    return filter_function
+
+
+def transform_message_format(
+    input_data: HandoffInputData,
+    format_transformer: Callable[[str], str],
+) -> HandoffInputData:
+    """
+    Filter that transforms message format for the target agent
+
+    This filter applies a transformation function to each message,
+    which can be useful for adapting content to different agent capabilities.
+
+    Args:
+        input_data: The handoff input data to filter
+        format_transformer: Function that transforms message content
+
+    Returns:
+        Filtered handoff input data with transformed messages
+    """
+    # Transform each message
+    transformed_history = []
+    for msg in input_data.conversation_history:
+        transformed_content = format_transformer(msg.content)
+        transformed_msg = Message(role=msg.role, content=transformed_content)
+        transformed_history.append(transformed_msg)
+    
+    return HandoffInputData(
+        conversation_history=transformed_history,
+        system_message=input_data.system_message,
+        metadata=input_data.metadata,
+        source_agent=input_data.source_agent,
+        handoff_chain=input_data.handoff_chain,
+    )
+
+
+def merge_related_messages(
+    input_data: HandoffInputData,
+    time_threshold: int = 60,  # seconds
+) -> HandoffInputData:
+    """
+    Filter that merges related messages from the same user
+
+    This filter combines consecutive messages from the same user that
+    were sent within a short time period, reducing fragmentation.
+
+    Args:
+        input_data: The handoff input data to filter
+        time_threshold: Maximum time difference (in seconds) to merge messages
+
+    Returns:
+        Filtered handoff input data with merged messages
+    """
+    if not input_data.conversation_history:
+        return input_data
+        
+    # Initialize merged history with the first message
+    merged_history = [input_data.conversation_history[0]]
+    
+    # Merge consecutive messages from the same user
+    for i in range(1, len(input_data.conversation_history)):
+        current_msg = input_data.conversation_history[i]
+        prev_msg = merged_history[-1]
+        
+        # Check if messages are from the same user and within time threshold
+        same_user = current_msg.role == prev_msg.role
+        
+        # If timestamps are available, check time difference
+        time_close = True
+        if hasattr(current_msg, 'timestamp') and hasattr(prev_msg, 'timestamp'):
+            time_diff = abs(current_msg.timestamp - prev_msg.timestamp)
+            time_close = time_diff <= time_threshold
+        
+        if same_user and time_close:
+            # Merge with previous message
+            merged_content = prev_msg.content + "\n\n" + current_msg.content
+            merged_msg = Message(role=prev_msg.role, content=merged_content)
+            
+            # Replace the previous message with the merged one
+            merged_history[-1] = merged_msg
+        else:
+            # Add as a new message
+            merged_history.append(current_msg)
+    
+    return HandoffInputData(
+        conversation_history=merged_history,
+        system_message=input_data.system_message,
+        metadata=input_data.metadata,
+        source_agent=input_data.source_agent,
+        handoff_chain=input_data.handoff_chain,
+    )
+
+
+def add_feedback_loop(
+    input_data: HandoffInputData,
+    feedback_message: str = "Please provide feedback on this response to improve future handoffs.",
+) -> HandoffInputData:
+    """
+    Filter that adds a feedback request to the conversation
+
+    This filter adds a system message requesting feedback from the user
+    about the handoff, which can be used to improve future handoffs.
+
+    Args:
+        input_data: The handoff input data to filter
+        feedback_message: Message requesting feedback
+
+    Returns:
+        Filtered handoff input data with feedback request
+    """
+    # Add a system message requesting feedback
+    feedback_msg = Message(role=MessageRole.SYSTEM, content=feedback_message)
+    
+    # Add to the end of conversation history
+    updated_history = input_data.conversation_history.copy()
+    updated_history.append(feedback_msg)
+    
+    # Add metadata flag indicating feedback is requested
+    updated_metadata = input_data.metadata.copy()
+    updated_metadata["feedback_requested"] = True
+    
+    return HandoffInputData(
+        conversation_history=updated_history,
+        system_message=input_data.system_message,
+        metadata=updated_metadata,
         source_agent=input_data.source_agent,
         handoff_chain=input_data.handoff_chain,
     )

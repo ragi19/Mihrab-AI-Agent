@@ -1,10 +1,9 @@
 # MihrabAI
-
+![MihrabAI](image.webp)
 A flexible and extensible framework for building AI agents powered by large language models (LLMs). Like the mihrab that guides prayer in a mosque, this framework provides direction and guidance through seamless integration with multiple LLM providers, intelligent provider fallback, and memory-enabled agents.
 
-[![PyPI version](https://badge.fury.io/py/mihrab-ai-agent.svg)](https://badge.fury.io/py/mihrab-ai-agent)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.9+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 
 ## Features
 
@@ -15,6 +14,15 @@ A flexible and extensible framework for building AI agents powered by large lang
 - **Streaming Support**: Stream responses for real-time interaction
 - **Tool Integration**: Easily extend agents with custom tools and functions
 - **Provider Statistics**: Track usage, costs, and performance across providers
+
+## New in Version 0.2.0
+
+- **Command-Line Interface**: Interact with agents directly from the terminal
+- **Memory Task Agents**: Enhanced agents with built-in memory capabilities
+- **Improved Factory Functions**: Easily create specialized agents with a single function call
+- **Extended Provider Support**: Better integration with more LLM providers, including Groq
+- **Enhanced Documentation**: More examples and clearer usage instructions
+- **Groq Integration**: Full support for Groq's high-performance LLM models, including Llama 3
 
 ## Installation
 
@@ -153,7 +161,10 @@ The framework is built around a modular architecture like the geometric patterns
 
 - **OpenAI**: GPT-3.5, GPT-4, and other models
 - **Anthropic**: Claude 3 Opus, Claude 3 Sonnet, and other models
-- **Groq**: Llama 2, Llama 3, Mixtral, and other models
+- **Groq**: Llama 3-70B, Llama 3-8B, Llama 2-70B, Mixtral, and other models
+  - High-performance inference with low latency
+  - Cost-effective alternative to other providers
+  - See our [Groq Integration Guide](src/mihrabai/docs/guide/using_groq_provider.md) for details
 - Easily extensible to other providers
 
 ## Advanced Usage
@@ -236,6 +247,18 @@ export MAX_RETRIES=3
 export RETRY_DELAY=2
 export REQUEST_TIMEOUT=30
 ```
+
+## Documentation
+
+Comprehensive documentation is available in the `src/mihrabai/docs` directory:
+
+- [Quick Start Guide](src/mihrabai/docs/guide/quick_start_guide.md)
+- [Using Mihrab with Tools](src/mihrabai/docs/guide/using_mihrab_with_tools.md)
+- [API Reference](src/mihrabai/docs/guide/api_reference.md)
+- [Creating Custom Tools](src/mihrabai/docs/guide/creating_custom_tools.md)
+- [Using Groq Provider](src/mihrabai/docs/guide/using_groq_provider.md)
+- [Multi-Agent Systems](src/mihrabai/docs/multi_agent_system.md)
+- [Handoff System](src/mihrabai/docs/handoff_system.md)
 
 ## Development
 

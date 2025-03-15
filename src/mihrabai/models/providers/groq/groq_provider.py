@@ -29,9 +29,13 @@ class GroqAdapter:
         stop: Optional[List[str]] = None,
     ) -> Dict[str, Any]:
         try:
+            # Create a clean messages array without any timestamp properties
+            messages = [{"role": "user", "content": prompt}]
+            
+            # Create a clean request without any unsupported properties
             response = self.client.chat.completions.create(
                 model=model,
-                messages=[{"role": "user", "content": prompt}],
+                messages=messages,
                 max_tokens=max_tokens,
                 temperature=temperature,
                 stop=stop,
@@ -47,6 +51,7 @@ class GroqAdapter:
                 },
             }
         except APIError as e:
+            logger.error(f"Groq API error: {str(e)}")
             if "maximum token" in str(e).lower():
                 raise TokenLimitError(str(e))
             raise GroqError(str(e))

@@ -107,6 +107,13 @@ class GroqModel(BaseModel):
         for key, value in parameters.items():
             self.set_config(key, value)
 
+    def _convert_message_for_groq(self, message: Message) -> Dict[str, str]:
+        """Convert a Message object to Groq API format, removing unsupported fields"""
+        return {
+            "role": message.role.value,
+            "content": message.content
+        }
+
     async def generate_response(
         self, messages: List[Message], **kwargs: Any
     ) -> Message:
@@ -124,7 +131,7 @@ class GroqModel(BaseModel):
 
         try:
             # Convert messages to Groq format
-            groq_messages = [msg.to_dict() for msg in messages]
+            groq_messages = [self._convert_message_for_groq(msg) for msg in messages]
 
             # Create completion request parameters
             params = {
@@ -185,10 +192,10 @@ class GroqModel(BaseModel):
         # Extract tools if provided
         tools = kwargs.pop("tools", None)
 
-        # Create completion request parameters
+        # Create completion request parameters with clean message format
         params = {
             "model": self.model_name,
-            "messages": [msg.to_dict() for msg in messages],
+            "messages": [self._convert_message_for_groq(msg) for msg in messages],
             "stream": True,
             "temperature": kwargs.get("temperature", 0.7),
             "max_tokens": kwargs.get("max_tokens", 1024),

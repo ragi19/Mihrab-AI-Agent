@@ -104,20 +104,28 @@ class Span(Generic[T]):
             result["parent_id"] = self.parent_id
 
         if self.error:
-            result["error"] = {"message": self.error.message, "data": self.error.data}
+            result["error"] = asdict(self.error)
 
-        # Handle data serialization based on type
-        if hasattr(self.data, "to_dict"):
-            result["data"] = self.data.to_dict()
-        elif isinstance(self.data, dict):
+        # Include data but handle non-serializable objects
+        try:
             result["data"] = self.data
-        else:
-            try:
-                result["data"] = str(self.data)
-            except:
-                result["data"] = "Unserializable data"
+        except (TypeError, ValueError):
+            result["data"] = str(self.data)
 
         return result
+        
+    # Context manager protocol methods
+    def __enter__(self) -> 'Span[T]':
+        """Enter the context manager, starting the span"""
+        self.start()
+        return self
+        
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Exit the context manager, ending the span"""
+        if exc_val:
+            self.end(error=exc_val)
+        else:
+            self.end()
 
 
 @dataclass
