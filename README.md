@@ -1,6 +1,7 @@
 # MihrabAI
 ![MihrabAI](image.webp)
 A flexible and extensible framework for building AI agents powered by large language models (LLMs). Like the mihrab that guides prayer in a mosque, this framework provides direction and guidance through seamless integration with multiple LLM providers, intelligent provider fallback, and memory-enabled agents.
+
 [![PyPI version](https://badge.fury.io/py/mihrab-ai-agent.svg)](https://pypi.org/project/mihrab-ai-agent/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
