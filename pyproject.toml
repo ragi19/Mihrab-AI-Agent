@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mihrab-ai-agent"
-version = "0.2.0"
+version = "0.2.1"
 description = "A flexible framework for building and deploying LLM-powered agents with multiple provider support, inspired by the mihrab that guides prayer in a mosque"
 authors = [
     { name = "Ragii Abdullah Shehab", email = "ragi.shehab1@gmail.com" }
