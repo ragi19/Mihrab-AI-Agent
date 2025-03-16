@@ -5,7 +5,7 @@ A flexible framework for building and deploying LLM-powered agents with multiple
 inspired by the mihrab that guides prayer in a mosque.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 # Core components
 from mihrabai.core.message import Message, MessageRole
