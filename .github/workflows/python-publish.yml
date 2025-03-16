@@ -3,7 +3,7 @@ name: Upload Python Package
 on:
   push:
     tags:
-      - 'v*'
+      - 'v0.2.1'
 
 jobs:
   publish:
@@ -28,7 +28,18 @@ jobs:
     - name: Build package
       run: python -m build
 
+    - name: Check if package exists on PyPI
+      id: check-package
+      run: |
+        PACKAGE_NAME="mihrab_ai_agent"
+        VERSION=$(python setup.py --version)
+        if twine check dist/${PACKAGE_NAME}-${VERSION}-py3-none-any.whl; then
+          echo "Package ${PACKAGE_NAME}-${VERSION} already exists on PyPI"
+          exit 1
+        fi
+
     - name: Publish package
+      if: steps.check-package.outcome != 'failure'
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
